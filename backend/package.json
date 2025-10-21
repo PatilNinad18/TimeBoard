@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "active-win": "^8.2.1",
+    "better-sqlite3": "^12.4.1",
+    "electron": "^38.2.2"
+  }
+}
