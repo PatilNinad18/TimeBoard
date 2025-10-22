@@ -8,7 +8,7 @@ import timeIcon from "../assets/time-management.png"
 
 export default function Sidebar() {
   return (
-    <div className="w-80 bg-white text-black p-6 shadow-md">
+    <div className="w-70 bg-white text-black p-6 shadow-md">
       <div className="flex items-center gap-3 mb-6">
         <img src={timeIcon} alt="TimeBoard Icon" className="w-10 h-10" />
         <h1 style={{ fontSize: '2.2rem' }}>TimeBoard</h1>
