@@ -10,7 +10,7 @@ const ProductivityChart = () => {
     <div className="bg-white rounded-2xl shadow-md p-5">
       <h4 className="text-lg text-black font-medium mb-3">Time By Application </h4>
 
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="85%" height={250}>
         <PieChart>
           <Pie
             data={appUsageData}
@@ -23,7 +23,7 @@ const ProductivityChart = () => {
             dataKey="hours"
             nameKey="app"
             // label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-            label={({ name, value, percent }) => `${name}: ${value} hrs (${(percent * 100).toFixed(0)}%)`}
+            label={({ name, value, percent }) => `${name} : ${value} hrs`}
           >
             {appUsageData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -32,10 +32,10 @@ const ProductivityChart = () => {
 
           <Tooltip formatter={(value) => `${value} hrs`} />
           <Legend
-            verticalAlign="bottom"
-            height={36}
+            layout="vertical"
+            verticalAlign="middle"
+            align="right"
             iconType="circle"
-            wrapperStyle={{ paddingTop: "10px" }}
             />
             </PieChart>
       </ResponsiveContainer>

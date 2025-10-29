@@ -7,10 +7,10 @@ function FocusCard() {
 
     return (
         <div className='bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all'>
-            <div className=' p-5 flex justify-center gap-4 '>
+            <div className=' p-3 flex justify-center gap-4 '>
                 <div className='text-black font-semibold font-mono'>Focus Score</div>
             </div>
-            <div className='text-black p-5 flex justify-center'>
+            <div className='text-black p-2 flex justify-center'>
                 <div className="relative">
                     <svg height="100" width="100" viewBox="0 0 100 100">
                         {/* Gradient Definition */}
@@ -30,11 +30,11 @@ function FocusCard() {
                        {progress}%
                      </div>
                 </div>
-                <button className='bg-blue-500 text-white font-bold py-2 px-4 rounded w-30 flex justify-center h-20'
-                onClick={()=>{
-                    setProgress((prev) => (prev >= 100 ? 0 : prev + 10))
-                }}
-                >Increase Progress</button>
+                {/* <button className='bg-blue-500 text-white font-bold py-2 px-4 rounded w-30 flex justify-center h-20' */}
+                {/* onClick={()=>{ */}
+                    {/* setProgress((prev) => (prev >= 100 ? 0 : prev + 10)) */}
+                {/* }} */}
+                {/* >Increase Progress</button> */}
             </div>
         </div>
     )

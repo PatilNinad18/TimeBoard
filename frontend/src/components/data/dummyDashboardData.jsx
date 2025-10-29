@@ -12,3 +12,4 @@ export const tasks = [
   { title: "Leetcode practice (2 problems)", status: "In Progress" },
   { title: "Write blog draft", status: "Pending" },
 ];
+
