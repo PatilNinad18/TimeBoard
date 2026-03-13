@@ -1,28 +1,69 @@
-const { app, BrowserWindow } = require("electron");
-const path = require("path");
+import { app, BrowserWindow } from "electron";
+import path from "path";
+import { fileURLToPath } from "url";
+import { ipcMain } from "electron/main";
+import { getTodayUsage } from "./services/dataAggregator.js";
+import startTracking from "./services/appTracker.js";
 
-const isDev = !app.isPackaged; // true during development
+
+
+// recreate __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const isDev = !app.isPackaged;
+
+let mainWindow;
 
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-    },
+      contextIsolation: true,
+      nodeIntegration: false
+    }
   });
 
   if (isDev) {
-    // 🧑‍💻 Development: Load from Vite dev server
-    win.loadURL("http://localhost:5173");
+    // Development: Vite server
+    mainWindow.loadURL("http://localhost:5173");
   } else {
-    // 🏗️ Production: Load the built index.html file
-    win.loadFile(path.join(__dirname, "../frontend/dist/index.html"));
+    // Production build
+    mainWindow.loadFile(
+      path.join(__dirname, "../frontend/dist/index.html")
+    );
   }
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+
+  createWindow();
+
+  // Start app usage tracking
+  startTracking();
+
+  setInterval(() => {
+  const usage = getTodayUsage();
+  console.log("------ COMBINED DATA ------");
+  console.log(usage);
+  }, 10000);
+
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
+
+});
+
+ipcMain.handle("get-usage", () => {
+  return getTodayUsage();
+});
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
 });

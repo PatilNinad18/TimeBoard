@@ -21,7 +21,7 @@ function App() {
 
   return (
     <Router>
-      {isLandingCompleted ? (
+      {/* {isLandingCompleted ? ( */}
         <div className="flex w-screen h-screen overflow-hidden bg-gray-50">
           {/* Sidebar */}
           <div className="w-[260px] flex-shrink-0">
@@ -42,9 +42,11 @@ function App() {
             </Routes>
           </div>
         </div>
-      ) : (
+      {/* ) : */}
+       (
         <LandingPage onComplete={handleLandingComplete} />
-      )}
+      )
+      {/* } */}
     </Router>
   );
 }

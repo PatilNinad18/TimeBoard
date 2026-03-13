@@ -2,16 +2,19 @@
   "devDependencies": {
     "concurrently": "^9.2.1",
     "electron": "^38.3.0",
+    "electron-rebuild": "^3.2.9",
     "wait-on": "^9.0.1"
   },
   "name": "timeboard",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "active-win": "^8.2.1",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
     "asynckit": "^0.4.0",
     "axios": "^1.12.2",
+    "better-sqlite3": "^12.6.2",
     "call-bind-apply-helpers": "^1.0.2",
     "chalk": "^4.1.2",
     "cliui": "^8.0.1",

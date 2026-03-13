@@ -2,6 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "start": "electron ."
   },
@@ -13,5 +14,8 @@
     "active-win": "^8.2.1",
     "better-sqlite3": "^12.4.1",
     "electron": "^38.2.2"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^3.2.9"
   }
 }

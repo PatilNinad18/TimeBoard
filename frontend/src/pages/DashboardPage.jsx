@@ -8,6 +8,7 @@ import AppUsage from "../components/Dashboard/AppUsage";
 import ProductiveVsDistracting from "../components/Dashboard/ProductiveVsDistracting";
 import DistractingAppsModal from "../components/Dashboard/DistractingAppsModal";
 import LandingPage from "../components/LandingPage/LandingPage";
+import Header from "../components/Header";
 
 const Dashboard = (landingData) => (
   <div className="flex h-screen w-screen bg-gray-50">
@@ -17,7 +18,8 @@ const Dashboard = (landingData) => (
 
       {/* Header */}
       <div className="flex-shrink-0 mb-2">
-        <DashboardHeader />
+        {/* <DashboardHeader /> */}
+        <Header/>
       </div>
 
       {/* Main scrollable section */}
