@@ -58,6 +58,9 @@ app.whenReady().then(() => {
 
 });
 
+app.use("/stats", statsRoutes);
+
+
 ipcMain.handle("get-usage", () => {
   return getTodayUsage();
 });
