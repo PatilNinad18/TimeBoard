@@ -9,7 +9,7 @@ export function classifyApp(appName, domain){
     if(domain) {
         const productiveDomains = ["leetcode", "github", "stackoverflow"];
 
-        if(productiveDomains.some(d => domain.toLowerCase().include(d))){
+        if(productiveDomains.some(d => domain.toLowerCase().includes(d))){
             return 1;
         }
     }

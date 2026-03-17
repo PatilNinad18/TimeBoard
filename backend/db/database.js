@@ -52,6 +52,16 @@ CREATE TABLE IF NOT EXISTS user_productive_apps (
     );
 `);
 
+const columns = db.prepare(`PRAGMA table_info(app_usage)`).all();
+
+const hasDomain = columns.some(col => col.name === "domain");
+
+if(!hasDomain) {
+    db.exec(`ALTER TABLE app_usage ADD COLUMN domain TEXT`);
+    console.log("Added domain column");
+    
+}
+
 db.exec(`
 
 CREATE INDEX IF NOT EXISTS idx_app_usage_timestamp

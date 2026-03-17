@@ -2,80 +2,88 @@ import activeWindow from "active-win";
 import db from "../db/database.js";
 
 import { classifyApp } from "./appClassifier.js";
-import { isUserIdle } from "./idleDetector.js";
 import { extractDomain } from "./domainExtractor.js";
 import { isBlocked } from "./blockChecker.js";
+import { isUserIdle } from "./idleService.js";
 
-let currentApp = null;
+let currentSession = null;
 let startTime = null;
+let wasIdle = false;
+let idleStartTime = null;
 
 async function trackActiveApp() {
-    try {
 
-        if (isUserIdle()) {
-            return;
-        }
+  try {
 
-        const window = await activeWindow();
-        if (!window) return;
+    
 
-        const appName = window.owner.name;
-        const windowTitle = window.title;
+    const window = await activeWindow();
+    if (!window) return;
 
-        const domain = extractDomain(appName, windowTitle);
-        const productivity = classifyApp(appName, windowTitle, domain);
+    const appName = window.owner.name;
+    const windowTitle = window.title;
 
-        if (isBlocked(appName)) {
-            console.log("Blocked app detected:", appName);
-        }
+    const domain = extractDomain(appName, windowTitle);
 
-        if (!currentApp) {
-            currentApp = {
-                name: appName,
-                title: windowTitle
-            };
-
-            startTime = Date.now();
-            return;
-        }
-
-        if (
-            currentApp.name !== appName ||
-            currentApp.title !== windowTitle
-        ) {
-
-            const endTime = Date.now();
-            const duration = (endTime - startTime) / 1000;
-
-            db.prepare(`
-                INSERT INTO app_usage
-                (app_name, window_title, duration, is_productive)
-                VALUES (?, ?, ?, ?)
-            `).run(
-                currentApp.name,
-                currentApp.title,
-                duration,
-                productivity
-            );
-
-            console.log(`Saved : ${currentApp.name} - ${duration}s`);
-
-            currentApp = {
-                name: appName,
-                title: windowTitle
-            };
-
-            startTime = Date.now();
-        }
-
-    } catch (error) {
-        console.error("Tracking error:", error);
+    // 🔴 BLOCK CHECK
+    if (isBlocked(appName)) {
+      console.log("Blocked:", appName);
+      return;
     }
+
+    // FIRST SESSION
+    if (!currentSession) {
+      currentSession = { name: appName, title: windowTitle };
+      startTime = Date.now();
+      return;
+    }
+
+    // APP CHANGE
+    if (
+      currentSession.name !== appName ||
+      currentSession.title !== windowTitle
+    ) {
+
+      const endTime = Date.now();
+      const duration = Number(((endTime-startTime)/1000).toFixed(2));
+
+      const prevDomain = extractDomain(
+        currentSession.name,
+        currentSession.title
+      );
+
+      const productivity = classifyApp(
+        currentSession.name,
+        prevDomain
+      );
+
+      db.prepare(`
+        INSERT INTO app_usage
+        (app_name, window_title, domain, duration, is_productive)
+        VALUES (?, ?, ?, ?, ?)
+      `).run(
+        currentSession.name,
+        currentSession.title,
+        prevDomain,
+        duration,
+        productivity
+      );
+
+      console.log(`Saved : ${currentSession.name} - ${duration}s`);
+
+      // Start new session
+      currentSession = { name: appName, title: windowTitle };
+      startTime = Date.now();
+    }
+
+  } catch (error) {
+    console.error("Tracking error:", error);
+  }
 }
 
 function startTracking() {
-    console.log("App tracking started...");
-    setInterval(trackActiveApp, 1000);
+  console.log("Tracking started...");
+  setInterval(trackActiveApp, 1000);
 }
 
 export default startTracking;
