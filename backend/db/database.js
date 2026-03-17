@@ -45,8 +45,25 @@ CREATE TABLE IF NOT EXISTS user_settings (
     setting_key TEXT UNIQUE,
     setting_value TEXT
 );
+
+CREATE TABLE IF NOT EXISTS user_productive_apps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    app_name TEXT UNIQUE
+    );
 `);
 
+db.exec(`
+
+CREATE INDEX IF NOT EXISTS idx_app_usage_timestamp
+ON app_usage(timestamp);
+
+CREATE INDEX IF NOT EXISTS idx_app_usage_app_name
+ON app_usage(app_name);
+
+CREATE INDEX IF NOT EXISTS idx_app_usage_productive
+ON app_usage(is_productive);
+
+`);
 console.log("Database initialized");
 
 export default db;

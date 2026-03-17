@@ -1,67 +1,81 @@
 import activeWindow from "active-win";
 import db from "../db/database.js";
-// import { func } from "joi";
+
+import { classifyApp } from "./appClassifier.js";
+import { isUserIdle } from "./idleDetector.js";
+import { extractDomain } from "./domainExtractor.js";
+import { isBlocked } from "./blockChecker.js";
 
 let currentApp = null;
 let startTime = null;
 
 async function trackActiveApp() {
     try {
-        const window = await activeWindow();
 
-        if(!window) return;
+        if (isUserIdle()) {
+            return;
+        }
+
+        const window = await activeWindow();
+        if (!window) return;
 
         const appName = window.owner.name;
         const windowTitle = window.title;
 
-        // first time initialization
-        if(!currentApp){
-            currentApp = {
-                name: appName,
-                title : windowTitle
+        const domain = extractDomain(appName, windowTitle);
+        const productivity = classifyApp(appName, windowTitle, domain);
 
-            };
-            startTime = Date.now();
-            return ;
-
+        if (isBlocked(appName)) {
+            console.log("Blocked app detected:", appName);
         }
 
-        // detect app change
-        if(currentApp.name !== appName || currentApp.title !== windowTitle){
-            const endTime = Date.now();
-            const duration = Math.floor((endTime - startTime)) / 1000;
+        if (!currentApp) {
+            currentApp = {
+                name: appName,
+                title: windowTitle
+            };
 
-            // save previous session
+            startTime = Date.now();
+            return;
+        }
+
+        if (
+            currentApp.name !== appName ||
+            currentApp.title !== windowTitle
+        ) {
+
+            const endTime = Date.now();
+            const duration = (endTime - startTime) / 1000;
 
             db.prepare(`
-                INSERT INTO app_usage (app_name, window_title, duration)
-                VALUES (?,?,?)
-                `).run(currentApp.name, currentApp.title, duration);
+                INSERT INTO app_usage
+                (app_name, window_title, duration, is_productive)
+                VALUES (?, ?, ?, ?)
+            `).run(
+                currentApp.name,
+                currentApp.title,
+                duration,
+                productivity
+            );
 
             console.log(`Saved : ${currentApp.name} - ${duration}s`);
 
-            // start new session
             currentApp = {
-                name : appName,
-                title : windowTitle
+                name: appName,
+                title: windowTitle
             };
 
             startTime = Date.now();
-            
         }
 
-
     } catch (error) {
-        console.error("Tracking error : ", error)
+        console.error("Tracking error:", error);
     }
-    
 }
 
-function startTracking(){
+function startTracking() {
     console.log("App tracking started...");
-
-    setInterval(trackActiveApp, 1000)
-    
+    setInterval(trackActiveApp, 1000);
 }
 
 export default startTracking;

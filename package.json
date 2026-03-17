@@ -22,6 +22,7 @@
     "color-name": "^1.1.4",
     "combined-stream": "^1.0.8",
     "delayed-stream": "^1.0.0",
+    "desktop-idle": "^1.3.0",
     "dunder-proto": "^1.0.1",
     "emoji-regex": "^8.0.0",
     "es-define-property": "^1.0.1",

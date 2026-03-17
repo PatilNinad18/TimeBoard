@@ -1,11 +1,27 @@
+// import "./server.js"
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ipcMain } from "electron/main";
 import { getTodayUsage } from "./services/dataAggregator.js";
 import startTracking from "./services/appTracker.js";
+import {
+  getTodayStats,
+  getTopApps,
+  getProductivityStats
+} from "./services/statsService.js";
 
+ipcMain.handle("stats:today", () => {
+  return getTodayStats();
+});
 
+ipcMain.handle("stats:top-apps", () => {
+  return getTopApps();
+});
+
+ipcMain.handle("stats:productivity", () => {
+  return getProductivityStats();
+});
 
 // recreate __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -57,8 +73,6 @@ app.whenReady().then(() => {
   });
 
 });
-
-app.use("/stats", statsRoutes);
 
 
 ipcMain.handle("get-usage", () => {
