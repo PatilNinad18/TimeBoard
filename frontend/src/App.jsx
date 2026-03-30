@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Dashboard from "./pages/DashboardPage";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
-import Reports from "./pages/Reports";
+import Activity from "./pages/Activity";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Sidebar from "./components/Sidebar";
 
@@ -38,13 +38,13 @@ function App() {
               <Route path="/dashboard" element={<Dashboard landingData={landingData} />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/reports" element={<Reports />} />
+              <Route path="/activity" element={<Activity />} />
             </Routes>
           </div>
         </div>
       {/* ) : */}
        (
-        <LandingPage onComplete={handleLandingComplete} />
+        {/* <LandingPage onComplete={handleLandingComplete} /> */}
       )
       {/* } */}
     </Router>

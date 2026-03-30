@@ -1,8 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-function FocusCard() {
 
-    const [progress, setProgress] = useState(0)
+
+function FocusCard({score}) {
+
+    // const [progress, setProgress] = useState(0)
+    const progress = Math.round(score);
     const circumference = 2 * Math.PI * 45; // 2πr for r=45
 
     return (

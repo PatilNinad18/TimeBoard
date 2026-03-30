@@ -5,10 +5,12 @@ import { fileURLToPath } from "url";
 import { ipcMain } from "electron/main";
 import { getTodayUsage } from "./services/dataAggregator.js";
 import startTracking from "./services/appTracker.js";
+import "./ipc/statsHandlers.js";
 import {
-  getTodayStats,
-  getTopApps,
-  getProductivityStats
+  // getTodayStats,
+  // getTopApps,
+  // getProductivityStats,
+  getTodayProductivityStats
 } from "./services/statsService.js";
 
 ipcMain.handle("stats:today", () => {

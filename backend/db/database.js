@@ -62,6 +62,15 @@ if(!hasDomain) {
     
 }
 
+// const columns = db.prepare(`PRAGMA table_info(app_usage)`).all();
+
+const hasIdle = columns.some(col => col.name === "is_idle");
+
+if (!hasIdle) {
+  db.exec(`ALTER TABLE app_usage ADD COLUMN is_idle INTEGER DEFAULT 0`);
+  console.log("Added is_idle column");
+}
+
 db.exec(`
 
 CREATE INDEX IF NOT EXISTS idx_app_usage_timestamp

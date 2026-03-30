@@ -5,7 +5,7 @@ import {FaClock } from "react-icons/fa";
 import ReportsHeader from '../components/Reports/ReportsHeader';
 import SearchBar from '../components/Reports/SearchBar';
 import ExportButtons from '../components/Reports/ExportButtons';
-import ReportsTable from '../components/Reports/ReportsTable';
+// import ReportsTable from '../components/Reports/ReportsTable';
 
 function Reports() {
     return (
@@ -45,10 +45,10 @@ function Reports() {
               <SearchBar/>
               <ExportButtons/>
             </div>
-          i</div>
+          </div>
 
           </div>
-          <ReportsTable/>
+          {/* <ReportsTable/> */}
 
           {/* ReportsTable */}
           {/* ExportButtons */}

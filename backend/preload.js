@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { getProductiveApps, setProductiveApps } from "./services/productivityService.js";
+import { getTodayProductivityStats } from "./services/statsService.js";
 
 contextBridge.exposeInMainWorld("statsAPI", {
 
@@ -17,5 +18,8 @@ contextBridge.executeInMainWorld("api", {
     ipcRenderer.invoke("set-productive-apps", apps),
 
   getProductiveApps: ()=>
-    ipcRenderer.invoke("get-productive-apps")
+    ipcRenderer.invoke("get-productive-apps"),
+
+  getTodayProductivityStats: () =>
+  ipcRenderer.invoke("get-productivity-stats")
 })

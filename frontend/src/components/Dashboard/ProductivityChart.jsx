@@ -1,11 +1,11 @@
 import React from "react";
 import { PieChart, Pie, Legend, ResponsiveContainer, Cell, Tooltip } from "recharts";
-import { appUsageData } from "../data/dummyDashboardData"; // Make sure path matches your file
+// import { data } from "../data/dummyDashboardData"; // Make sure path matches your file
 
 // Optional: colors for each app slice
 const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff7f50", "#8dd1e1", "#a28fd0"];
 
-const ProductivityChart = () => {
+const ProductivityChart = ({data}) => {
   return (
     <div className="bg-white rounded-2xl shadow-md p-5">
       <h4 className="text-lg text-black font-medium mb-3">Time By Application </h4>
@@ -13,7 +13,7 @@ const ProductivityChart = () => {
       <ResponsiveContainer width="85%" height={250}>
         <PieChart>
           <Pie
-            data={appUsageData}
+            data={data}
             cx="50%"
             cy="50%"
             innerRadius={60}
@@ -25,7 +25,7 @@ const ProductivityChart = () => {
             // label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
             label={({ name, value, percent }) => `${name} : ${value} hrs`}
           >
-            {appUsageData.map((entry, index) => (
+            {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
