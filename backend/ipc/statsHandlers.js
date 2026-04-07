@@ -1,7 +1,7 @@
-import { ipcMain } from "electron";
-import { getTodayProductivityStats } from "../services/statsService.js";
+// import { ipcMain } from "electron";
+// import { getTodayProductivityStats } from "../services/statsService.js";
 
-ipcMain.handle("get-productive-stats", () => {
-    return getTodayProductivityStats();
+// ipcMain.handle("get-productive-stats", () => {
+//     return getTodayProductivityStats();
     
-})
+// })

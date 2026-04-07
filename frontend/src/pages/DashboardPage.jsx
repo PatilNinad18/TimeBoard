@@ -8,55 +8,59 @@ import AppUsage from "../components/Dashboard/AppUsage";
 import ProductiveVsDistracting from "../components/Dashboard/ProductiveVsDistracting";
 import Header from "../components/Header";
 
-function formatTime(seconds){
+function formatTime(seconds) {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   return `${h}h ${m}m`;
-
 }
 
-
 const Dashboard = ({ landingData }) => {
-
   const [stats, setStats] = useState({
     productive: 0,
     distracting: 0,
     idle: 0,
-    score: 0
+    score: 0,
   });
 
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
     async function loadData() {
-     const statsData = await window.api.getProductivityStats();
-     const usageData = await window.api.getUsage();
+      if (!window.api) {
+        console.warn("[Dashboard] window.api not available - running outside Electron?");
+        return;
+      }
 
-      setStats(statsData);
-      setStats(usageData);
+      try {
+        const [statsData, usageData] = await Promise.all([
+          window.api.getTodayProductivityStats(),
+          window.api.getUsage(),
+        ]);
 
+        if (statsData) setStats(statsData);
+        if (usageData) setApps(usageData);
+      } catch (error) {
+        console.error("[Dashboard] Error loading data:", error);
+      }
     }
 
     loadData();
-
     const interval = setInterval(loadData, 5000);
-
-    return ()=> clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
-
-      <div className="flex flex-col px-6 pt-3 pb-6 overflow-hidden" style={{ width: 'calc(100% - 288px)' }}>
-
+      <div
+        className="flex flex-col px-6 pt-3 pb-6 overflow-hidden"
+        style={{ width: "calc(100% - 288px)" }}
+      >
         <div className="flex-shrink-0 mb-2">
           <Header />
         </div>
 
         <div className="flex-1 overflow-auto">
-
           <div className="flex gap-4 h-full">
-
             <div className="flex-[2] flex flex-col gap-4">
               <div className="grid grid-cols-2 gap-4 w-full">
                 <SummaryCard
@@ -69,7 +73,6 @@ const Dashboard = ({ landingData }) => {
                   value={stats.distracting}
                   icon={<FaChartLine />}
                 />
-
                 <SummaryCard
                   title="Idle Time"
                   value={formatTime(stats.idle)}
@@ -78,11 +81,12 @@ const Dashboard = ({ landingData }) => {
               </div>
 
               <div className="flex-1">
-                <ProductivityChart data={apps.map(a=>({
-                  app : a.app,
-                  hours : (a.seconds / 3600).toFixed(2)
-                }))} />
-
+                <ProductivityChart
+                  data={apps.map((a) => ({
+                    app: a.app,
+                    hours: (a.seconds / 3600).toFixed(2),
+                  }))}
+                />
               </div>
             </div>
 
@@ -92,13 +96,12 @@ const Dashboard = ({ landingData }) => {
                 <AppUsage apps={apps} />
               </div>
             </div>
-
           </div>
 
-          <ProductiveVsDistracting 
-          apps={apps}
-          distractingApps={landingData?.distractingApps} />
-
+          <ProductiveVsDistracting
+            apps={apps}
+            distractingApps={landingData?.distractingApps}
+          />
         </div>
       </div>
     </div>

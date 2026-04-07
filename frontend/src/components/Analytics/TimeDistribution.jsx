@@ -2,9 +2,9 @@ import React from "react";
 import { useState } from "react";
 
 const DEFAULT_DATA = [
-  { label: "Productive", value: 75, color: "#F5C518" },
-  { label: "Distracting", value: 20, color: "#4B4B5A" },
-  { label: "Idle", value: 5, color: "#D1D1DC" },
+  { label: "Productive", value: 0, color: "#F5C518" },
+  { label: "Distracting", value: 0, color: "#4B4B5A" },
+  { label: "Idle", value: 0, color: "#D1D1DC" },
 ];
 
 function DonutChart({ data, size = 200, thickness = 44 }) {
@@ -62,6 +62,10 @@ function DonutChart({ data, size = 200, thickness = 44 }) {
 }
 
 export default function TimeDistribution({ data = DEFAULT_DATA, showDates = false, onToggleDates }) {
+  const productive = data.find(d => d.label === "Productive");
+  const distracting = data.find(d => d.label === "Distracting");
+  const idle = data.find(d => d.label === "Idle");
+
   return (
     <div className="analytics-card time-distribution">
       <div className="card-header">
@@ -74,12 +78,12 @@ export default function TimeDistribution({ data = DEFAULT_DATA, showDates = fals
 
       <div className="donut-section">
         <div className="donut-axis-labels">
-          <span style={{ color: "#D1D1DC" }}>Id%</span>
+          <span style={{ color: "#D1D1DC" }}>{idle ? idle.value : 0}%</span>
         </div>
         <DonutChart data={data} />
         <div className="donut-pct-labels">
-          <span style={{ color: "#4B4B5A" }}>25%</span>
-          <span style={{ color: "#F5C518" }}>75%</span>
+          <span style={{ color: "#4B4B5A" }}>{distracting ? distracting.value : 0}%</span>
+          <span style={{ color: "#F5C518" }}>{productive ? productive.value : 0}%</span>
         </div>
       </div>
 

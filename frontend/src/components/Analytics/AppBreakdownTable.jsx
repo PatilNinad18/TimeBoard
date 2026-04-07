@@ -2,15 +2,7 @@ import { useState } from "react";
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const DEFAULT_APPS = [
-  { id: 1, name: "Notion", icon: "N", iconBg: "#000", time: "35h 15m", category: "Productive" },
-  { id: 2, name: "Slack", icon: "S", iconBg: "#4A154B", time: "2h 45m", category: "Neutral" },
-  { id: 3, name: "VS Code", icon: "⌨", iconBg: "#007ACC", time: "4h 30m", category: "Distracting" },
-  { id: 4, name: "Chrome", icon: "C", iconBg: "#4285F4", time: "3h 12m", category: "Distracting" },
-  { id: 5, name: "Twitter", icon: "𝕏", iconBg: "#111", time: "2h 45m", category: "Distracting" },
-  { id: 6, name: "YouTube", icon: "▶", iconBg: "#FF0000", time: "1h 30m", category: "Distracting" },
-  { id: 7, name: "Figma", icon: "F", iconBg: "#A259FF", time: "5h 10m", category: "Productive" },
-];
+const DEFAULT_APPS = [];
 
 const PAGE_SIZE = 5;
 
@@ -42,6 +34,13 @@ export default function AppBreakdownTable({ apps = DEFAULT_APPS }) {
           </tr>
         </thead>
         <tbody>
+          {visible.length === 0 && (
+            <tr>
+              <td colSpan={3} style={{ textAlign: "center", color: "#888", padding: "1.5rem 0" }}>
+                No app usage tracked yet
+              </td>
+            </tr>
+          )}
           {visible.map((app) => (
             <tr key={app.id} className="app-row-tr">
               <td>

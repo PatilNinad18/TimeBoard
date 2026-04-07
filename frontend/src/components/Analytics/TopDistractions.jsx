@@ -1,11 +1,6 @@
 import React from "react";
 
-const DEFAULT_DISTRACTIONS = [
-  { id: 1, name: "Twitter", icon: "𝕏", iconBg: "#111", time: "3h 12m", minutes: 192, maxMinutes: 192 },
-  { id: 2, name: "YouTube", icon: "▶", iconBg: "#FF0000", time: "2h 45m", minutes: 165, maxMinutes: 192 },
-  { id: 3, name: "Slack", icon: "S", iconBg: "#4A154B", time: "2h 20m", minutes: 140, maxMinutes: 192 },
-  { id: 4, name: "Reddit", icon: "R", iconBg: "#FF4500", time: "1h 05m", minutes: 65, maxMinutes: 192 },
-];
+const DEFAULT_DISTRACTIONS = [];
 
 const BAR_COLORS = ["#F5C518", "#E8A000", "#D4880A", "#C06E14"];
 
@@ -19,6 +14,11 @@ export default function TopDistractions({ apps = DEFAULT_DISTRACTIONS }) {
       <p className="section-sub">Top Distracting Apps</p>
 
       <div className="distraction-list">
+        {apps.length === 0 && (
+          <p style={{ color: "var(--text-secondary, #888)", fontSize: 13, textAlign: "center", padding: "1rem 0" }}>
+            No distracting apps tracked yet
+          </p>
+        )}
         {apps.map((app, i) => (
           <div key={app.id} className="distraction-row">
             <div className="dist-app-info">

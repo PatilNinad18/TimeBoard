@@ -1,8 +1,7 @@
 import React from "react";
-// import { apps } from "../data/dummyDashboardData";
 
-function ProductiveVsDistracting({ apps }) {
-  // Classify apps based on what user selected in LandingPage
+function ProductiveVsDistracting({ apps, distractingApps = [] }) {
+  // Classify apps based on what user selected in Settings
   const distracting = apps.filter(app =>
     distractingApps.includes(app.app)
   );

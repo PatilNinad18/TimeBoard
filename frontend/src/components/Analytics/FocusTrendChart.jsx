@@ -1,9 +1,9 @@
 import React from "react";
 
 const DEFAULT_TREND = {
-  labels: ["Mo", "2d", "3d", "4h", "5n", "6n", "7d"],
-  focusScore: [2.1, 1.4, 1.8, 2.6, 2.4, 2.9, 2.7],
-  productiveTime: [1.2, 0.8, 1.5, 1.1, 1.8, 2.1, 1.9],
+  labels: [],
+  focusScore: [],
+  productiveTime: [],
 };
 
 function LinePath({ points, color, fill = false, width = 200, height = 100 }) {
@@ -41,10 +41,12 @@ export default function FocusTrendChart({ data = DEFAULT_TREND }) {
   const W = 260;
   const H = 120;
 
-  const focusPts = toPoints(data.focusScore, W, H);
-  const prodPts = toPoints(data.productiveTime, W, H);
+  const hasData = data.labels.length > 0 && data.focusScore.length > 0;
 
-  const yMax = Math.ceil(Math.max(...data.focusScore) * 1.15);
+  const focusPts = hasData ? toPoints(data.focusScore, W, H) : [];
+  const prodPts = hasData ? toPoints(data.productiveTime, W, H) : [];
+
+  const yMax = hasData ? Math.ceil(Math.max(...data.focusScore) * 1.15) : 1;
   const yTicks = Array.from({ length: yMax + 1 }, (_, i) => i);
 
   return (
@@ -63,6 +65,11 @@ export default function FocusTrendChart({ data = DEFAULT_TREND }) {
       </div>
 
       <div className="chart-wrap">
+        {!hasData ? (
+          <p style={{ color: "var(--text-secondary, #888)", fontSize: 13, textAlign: "center", padding: "2rem 0" }}>
+            No trend data yet — check back after a day of tracking
+          </p>
+        ) : (
         <svg width="100%" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet">
           {/* grid lines */}
           {yTicks.map((t) => {
@@ -86,6 +93,7 @@ export default function FocusTrendChart({ data = DEFAULT_TREND }) {
             );
           })}
         </svg>
+        )}
       </div>
     </div>
   );
