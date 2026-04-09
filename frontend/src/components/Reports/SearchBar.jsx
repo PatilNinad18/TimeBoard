@@ -1,17 +1,31 @@
-import React from 'react'
+import React from 'react';
 import { Search } from 'lucide-react';
 
-function SearchBar() {
-    return (
-      <div className='bg-white text-black rounded-4xl shadow-2xl p-4 flex justify-between w-200'>
-        <div className='text-black flex items-baseline gap-10'>
-            <p>Daily</p>
-            <p>Weekly</p>
-            <p>Monthly</p>
-        </div>
-        <Search/>        
+const PERIODS = ["Daily", "Weekly", "Monthly"];
+
+function SearchBar({ selected = "weekly", onPeriodChange }) {
+  return (
+    <div className="bg-white text-black rounded-4xl shadow-2xl p-4 flex justify-between w-200">
+      <div className="text-black flex items-baseline gap-10">
+        {PERIODS.map((p) => (
+          <p
+            key={p}
+            onClick={() => onPeriodChange?.(p.toLowerCase())}
+            style={{
+              cursor: "pointer",
+              fontWeight: selected === p.toLowerCase() ? "bold" : "normal",
+              color: selected === p.toLowerCase() ? "#3b82f6" : "inherit",
+              borderBottom: selected === p.toLowerCase() ? "2px solid #3b82f6" : "none",
+              paddingBottom: "2px",
+            }}
+          >
+            {p}
+          </p>
+        ))}
       </div>
-    )
+      <Search />
+    </div>
+  );
 }
 
-export default SearchBar
+export default SearchBar;

@@ -89,6 +89,8 @@ export default function Analytics() {
       }
     }
     loadAnalyticsData();
+    const interval = setInterval(loadAnalyticsData, 10000);
+    return () => clearInterval(interval);
   }, [filter]);
 
   return (

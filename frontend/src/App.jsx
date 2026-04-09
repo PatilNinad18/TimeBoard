@@ -4,6 +4,7 @@ import Dashboard from "./pages/DashboardPage";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Activity from "./pages/Activity";
+import Reports from "./pages/Reports";
 import Sidebar from "./components/Sidebar";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             />
             <Route path="/dashboard" element={<Dashboard landingData={landingData} />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/activity" element={<Activity />} />
           </Routes>
@@ -38,3 +40,4 @@ function App() {
 }
 
 export default App;
+

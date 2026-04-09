@@ -1,34 +1,9 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import ActivityHeader from "../components/Activity/ActivityHeader";
 import ActivityFilters from "../components/Activity/ActivityFilters";
 import ActivitySearch from "../components/Activity/ActivitySearch";
 import ActivityTimeline from "../components/Activity/ActivityTimeline";
 import "./Activity.css";
-
-// ── Mock data ────────────────────────────────────────────────────────────────
-// In production, fetch this from your backend/store and pass as props.
-const RAW_SESSIONS = [
-  // 09:00 – 10:00
-  { id: 1,  appName: "VS Code",  windowTitle: "index.js — timeboard-app",          duration: "42 min", durationMinutes: 42, category: "Productive",  timestamp: "09:04" },
-  { id: 2,  appName: "Chrome",   windowTitle: "Stack Overflow – async/await",       duration: "18 min", durationMinutes: 18, category: "Distracting", timestamp: "09:47" },
-  // 10:00 – 11:00
-  { id: 3,  appName: "Spotify",  windowTitle: "Lo-fi Beats – Focus Playlist",       duration: "27 min", durationMinutes: 27, category: "Neutral",     timestamp: "10:02" },
-  { id: 4,  appName: "VS Code",  windowTitle: "Analytics.css — timeboard-app",      duration: "1h 12m", durationMinutes: 72, category: "Productive",  timestamp: "10:31" },
-  // 11:00 – 12:00
-  { id: 5,  appName: "Notion",   windowTitle: "Sprint Planning – Q3",               duration: "35 min", durationMinutes: 35, category: "Productive",  timestamp: "11:00" },
-  { id: 6,  appName: "Twitter",  windowTitle: "Twitter / Home",                     duration: "22 min", durationMinutes: 22, category: "Distracting", timestamp: "11:38" },
-  { id: 7,  appName: null,       windowTitle: null,                                 duration: "15 min", durationMinutes: 15, category: "Idle",        timestamp: "11:59" },
-  // 12:00 – 13:00
-  { id: 8,  appName: "Slack",    windowTitle: "#engineering – team standup",        duration: "18 min", durationMinutes: 18, category: "Productive",  timestamp: "12:05" },
-  { id: 9,  appName: "YouTube",  windowTitle: "How React Compiler works – Theo",   duration: "31 min", durationMinutes: 31, category: "Distracting", timestamp: "12:25" },
-  { id: 10, appName: null,       windowTitle: null,                                 duration: "10 min", durationMinutes: 10, category: "Idle",        timestamp: "12:57" },
-  // 14:00 – 15:00
-  { id: 11, appName: "Figma",    windowTitle: "Timeboard — Settings Mockup v3",     duration: "55 min", durationMinutes: 55, category: "Productive",  timestamp: "14:00" },
-  { id: 12, appName: "Chrome",   windowTitle: "Reddit – r/webdev",                  duration: "14 min", durationMinutes: 14, category: "Distracting", timestamp: "14:58" },
-  // 15:00 – 16:00
-  { id: 13, appName: "VS Code",  windowTitle: "Activity.jsx — timeboard-app",       duration: "48 min", durationMinutes: 48, category: "Productive",  timestamp: "15:03" },
-  { id: 14, appName: "Finder",   windowTitle: "Downloads",                           duration: "5 min",  durationMinutes: 5,  category: "Neutral",     timestamp: "15:52" },
-];
 
 // Group sessions into hour blocks
 function groupByHour(sessions) {
@@ -56,12 +31,50 @@ function computeTotals(sessions) {
 }
 
 export default function Activity() {
-  const [filter, setFilter]   = useState("All");
-  const [search, setSearch]   = useState("");
-  const [date,   setDate]     = useState("Today");
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [date, setDate] = useState("Today");
+  const [sessions, setSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadSessions = useCallback(async () => {
+    if (!window.api) {
+      console.warn("[Activity] window.api not available - running outside Electron?");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      // Determine the date string to pass
+      let dateStr = null; // null means today on backend
+      if (date === "Yesterday") {
+        const d = new Date();
+        d.setDate(d.getDate() - 1);
+        dateStr = d.toISOString().split("T")[0];
+      }
+      // "Today" = null (backend defaults to today)
+
+      const data = await window.api.getActivitySessions(dateStr);
+      if (data) {
+        setSessions(data);
+      }
+    } catch (error) {
+      console.error("[Activity] Failed to load sessions:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [date]);
+
+  useEffect(() => {
+    loadSessions();
+    // Refresh every 10 seconds
+    const interval = setInterval(loadSessions, 10000);
+    return () => clearInterval(interval);
+  }, [loadSessions]);
 
   const filtered = useMemo(() => {
-    return RAW_SESSIONS.filter((s) => {
+    return sessions.filter((s) => {
       const matchFilter =
         filter === "All" ||
         s.category === filter ||
@@ -72,10 +85,10 @@ export default function Activity() {
         s.windowTitle?.toLowerCase().includes(search.toLowerCase());
       return matchFilter && matchSearch;
     });
-  }, [filter, search]);
+  }, [filter, search, sessions]);
 
   const groups = useMemo(() => groupByHour(filtered), [filtered]);
-  const { totalSessions, totalActiveTime } = useMemo(() => computeTotals(RAW_SESSIONS), []);
+  const { totalSessions, totalActiveTime } = useMemo(() => computeTotals(sessions), [sessions]);
 
   return (
     <div className="activity-page">
@@ -90,7 +103,20 @@ export default function Activity() {
         <ActivitySearch value={search} onChange={setSearch} />
       </div>
 
-      <ActivityTimeline groups={groups} />
+      {loading ? (
+        <div style={{ textAlign: "center", color: "#888", padding: "3rem 0" }}>
+          Loading activity data...
+        </div>
+      ) : sessions.length === 0 ? (
+        <div style={{ textAlign: "center", color: "#888", padding: "3rem 0" }}>
+          <p style={{ fontSize: "1.1rem" }}>No activity tracked yet today</p>
+          <p style={{ fontSize: "0.85rem", marginTop: "0.5rem" }}>
+            Start using apps and TimeBoard will record your sessions
+          </p>
+        </div>
+      ) : (
+        <ActivityTimeline groups={groups} />
+      )}
     </div>
   );
 }

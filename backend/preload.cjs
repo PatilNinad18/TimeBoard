@@ -16,6 +16,14 @@ try {
     getTopDistractions: () => ipcRenderer.invoke("get-top-distractions"),
     getDailyTrends: (days) => ipcRenderer.invoke("get-daily-trends", days),
     getFocusSessions: () => ipcRenderer.invoke("get-focus-sessions"),
+
+    // Reports
+    getReportSummary: (period) => ipcRenderer.invoke("get-report-summary", period),
+    getReportTable: (period) => ipcRenderer.invoke("get-report-table", period),
+    getReportCSV: (period) => ipcRenderer.invoke("get-report-csv", period),
+
+    // Activity
+    getActivitySessions: (dateStr) => ipcRenderer.invoke("get-activity-sessions", dateStr),
   });
 
   console.log("[Preload] API exposed to window.api successfully");

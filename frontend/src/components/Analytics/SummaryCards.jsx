@@ -2,10 +2,10 @@ import React from "react";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 const DEFAULT_STATS = {
-  productiveTime: { label: "Total Productive Time", value: "35h 15m", trend: "up", delta: "+12%" },
-  distractingTime: { label: "Total Distracting Time", value: "12h 05m", trend: "down", delta: "-8%" },
-  idleTime: { label: "Total Idle Time", value: "4h 30m", trend: "neutral", delta: "0%" },
-  focusScore: { label: "Focus Score %", value: "75%", trend: "up", scoreRaw: 75 },
+  productiveTime: { label: "Total Productive Time", value: "0h 0m", trend: "neutral", delta: "0%" },
+  distractingTime: { label: "Total Distracting Time", value: "0h 0m", trend: "neutral", delta: "0%" },
+  idleTime: { label: "Total Idle Time", value: "0h 0m", trend: "neutral", delta: "0%" },
+  focusScore: { label: "Focus Score %", value: "0%", trend: "neutral", scoreRaw: 0 },
 };
 
 const TrendIcon = ({ trend }) => {

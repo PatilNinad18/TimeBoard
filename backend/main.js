@@ -7,6 +7,8 @@ import startTracking from "./services/appTracker.js";
 import { getTodayProductivityStats } from "./services/statsService.js";
 import { setProductiveApps, getProductiveApps } from "./services/productivityService.js";
 import { getAppBreakdown, getTopDistractions, getDailyTrends, getFocusSessions, getTimeDistribution } from "./services/analyticsService.js";
+import { getReportSummary, getReportTable, getReportCSV } from "./services/reportsService.js";
+import { getActivitySessions } from "./services/activityService.js";
 
 // recreate __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -92,6 +94,28 @@ app.whenReady().then(() => {
   ipcMain.handle("get-focus-sessions", () => {
     console.log("[IPC] get-focus-sessions called");
     return getFocusSessions();
+  });
+
+  // Reports
+  ipcMain.handle("get-report-summary", (_, period) => {
+    console.log("[IPC] get-report-summary called, period:", period);
+    return getReportSummary(period || "weekly");
+  });
+
+  ipcMain.handle("get-report-table", (_, period) => {
+    console.log("[IPC] get-report-table called, period:", period);
+    return getReportTable(period || "weekly");
+  });
+
+  ipcMain.handle("get-report-csv", (_, period) => {
+    console.log("[IPC] get-report-csv called, period:", period);
+    return getReportCSV(period || "weekly");
+  });
+
+  // Activity
+  ipcMain.handle("get-activity-sessions", (_, dateStr) => {
+    console.log("[IPC] get-activity-sessions called, date:", dateStr);
+    return getActivitySessions(dateStr || null);
   });
 
   console.log("[Main] IPC handlers registered");

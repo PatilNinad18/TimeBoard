@@ -1,6 +1,8 @@
 import React from "react";
 
-function ReportsHeader() {
+function ReportsHeader({ period = "weekly", trackedDays = 0 }) {
+  const periodLabel = period.charAt(0).toUpperCase() + period.slice(1);
+
   return (
     <header className="flex justify-between items-center bg-white/80 backdrop-blur-lg border border-gray-200 shadow-md p-5 rounded-2xl mb-6">
       {/* Left Section */}
@@ -12,11 +14,9 @@ function ReportsHeader() {
           </h3>
         </div>
         <p className="text-sm text-gray-500 mt-1">
-          Track your daily and weekly productivity insights
+          {periodLabel} report &bull; {trackedDays} day{trackedDays !== 1 ? "s" : ""} tracked
         </p>
       </div>
-
-      
     </header>
   );
 }

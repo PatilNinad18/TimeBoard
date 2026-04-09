@@ -2,8 +2,8 @@ import React from "react";
 import { Zap, Repeat } from "lucide-react";
 
 export default function FocusSessions({
-  longestStreak = 145,
-  sessionCount = 24,
+  longestStreak = 0,
+  sessionCount = 0,
   sessionThreshold = 25,
 }) {
   return (

@@ -81,6 +81,28 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink
+          to="/reports"
+          style={{ color: 'black', textDecoration: 'none' }}
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-2 rounded transition-all duration-200 text-xl ${
+              isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"
+            }`
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <img 
+                src={reportsIcon} 
+                alt="Reports" 
+                className="w-8 h-8 transition-all duration-200" 
+                style={{ filter: isActive ? 'none' : 'grayscale(100%)' }}
+              />
+              Reports
+            </>
+          )}
+        </NavLink>
+
+        <NavLink
           to="/settings"
           style={{ color: 'black', textDecoration: 'none' }}
           className={({ isActive }) =>
