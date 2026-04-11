@@ -24,7 +24,7 @@ function ProductiveVsDistracting({ apps, distractingApps = [] }) {
                 className="flex justify-between items-center border-b border-gray-100 py-1"
               >
                 <span>{app.app}</span>
-                <span className="text-green-700 font-medium">{app.hours} hrs</span>
+                <span className="text-green-700 font-medium">{app.minutes} min</span>
               </li>
             ))}
             {productive.length === 0 && (
@@ -43,7 +43,7 @@ function ProductiveVsDistracting({ apps, distractingApps = [] }) {
                 className="flex justify-between items-center border-b border-gray-100 py-1"
               >
                 <span>{app.app}</span>
-                <span className="text-red-700 font-medium">{app.hours} hrs</span>
+                <span className="text-red-700 font-medium">{app.minutes} min</span>
               </li>
             ))}
             {distracting.length === 0 && (

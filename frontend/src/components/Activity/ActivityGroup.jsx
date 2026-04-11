@@ -9,13 +9,20 @@ export default function ActivityGroup({ group }) {
   const mins  = totalMinutes % 60;
   const totalStr = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
 
+  // Get the time range of actual activities in this group
+  const firstItemTime = items[0]?.exactTime || '';
+  const lastItemTime = items[items.length - 1]?.exactTime || '';
+  const timeRange = firstItemTime && lastItemTime && firstItemTime !== lastItemTime 
+    ? `${firstItemTime} - ${lastItemTime}` 
+    : timeLabel;
+
   return (
     <div className="activity-group">
       {/* Group header */}
       <div className="group-header">
         <div className="group-header-left">
           <Clock size={13} className="group-clock-icon" />
-          <span className="group-time-label">{timeLabel}</span>
+          <span className="group-time-label">{timeRange}</span>
         </div>
         <span className="group-total">{totalStr} total</span>
       </div>

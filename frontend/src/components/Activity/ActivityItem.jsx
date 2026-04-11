@@ -57,7 +57,7 @@ export default function ActivityItem({ item, isIdle = false }) {
       {/* Right side */}
       <div className="item-right">
         <span className="item-duration">{item.duration}</span>
-        <span className="item-timestamp">{item.timestamp}</span>
+        <span className="item-timestamp">{item.exactTime}</span>
       </div>
 
       {/* Duration bar accent */}

@@ -25,22 +25,38 @@ const Dashboard = ({ landingData }) => {
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
+    console.log("🔍 Dashboard component mounted");
+    console.log("🔍 window.api available:", !!window.api);
+    
+    if (!window.api) {
+      console.warn("⚠️ window.api not available - running outside Electron?");
+      return;
+    }
+
     async function loadData() {
-      if (!window.api) {
-        console.warn("[Dashboard] window.api not available - running outside Electron?");
-        return;
-      }
-
       try {
-        const [statsData, usageData] = await Promise.all([
-          window.api.getTodayProductivityStats(),
-          window.api.getUsage(),
-        ]);
+        console.log("🔄 Starting data load...");
+        
+        const statsData = await window.api.getTodayProductivityStats();
+        console.log("📊 Stats data received:", statsData);
+        
+        const usageData = await window.api.getUsage();
+        console.log("📊 Usage data received:", usageData);
 
-        if (statsData) setStats(statsData);
-        if (usageData) setApps(usageData);
+        // Format stats to show minutes instead of seconds
+        const formattedStats = {
+          ...statsData,
+          productive: formatTime(statsData.productive || 0),
+          distracting: formatTime(statsData.distracting || 0),
+          idle: formatTime(statsData.idle || 0),
+        };
+
+        setStats(formattedStats);
+        setApps(usageData);
+        console.log("✅ State updated with real data");
+
       } catch (error) {
-        console.error("[Dashboard] Error loading data:", error);
+        console.error("❌ Error loading dashboard data:", error);
       }
     }
 
@@ -59,9 +75,9 @@ const Dashboard = ({ landingData }) => {
           <Header />
         </div>
 
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-y-auto">
           <div className="flex gap-4 h-full">
-            <div className="flex-[2] flex flex-col gap-4">
+            <div className="flex-[2] flex flex-col gap-4 min-h-fit">
               <div className="grid grid-cols-2 gap-4 w-full">
                 <SummaryCard
                   title="Total Productive Time"
@@ -73,24 +89,20 @@ const Dashboard = ({ landingData }) => {
                   value={stats.distracting}
                   icon={<FaChartLine />}
                 />
-                <SummaryCard
-                  title="Idle Time"
-                  value={formatTime(stats.idle)}
-                  icon={<FaClock />}
-                />
               </div>
 
-              <div className="flex-1">
+              <div className="flex-1 min-h-[300px]">
                 <ProductivityChart
-                  data={apps.map((a) => ({
-                    app: a.app,
-                    hours: (a.seconds / 3600).toFixed(2),
+                  data={apps.map((app) => ({
+                    app: app.name,
+                    minutes: Math.round(app.totalSeconds / 60),
+                    category: app.category,
                   }))}
                 />
               </div>
             </div>
 
-            <div className="flex-[1] flex flex-col gap-4">
+            <div className="flex-[1] flex flex-col gap-4 min-h-fit">
               <FocusCard score={stats.score} />
               <div className="flex-1 overflow-auto">
                 <AppUsage apps={apps} />

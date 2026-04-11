@@ -4,10 +4,22 @@ import { fileURLToPath } from "url";
 import fs from "fs";
 import { getTodayUsage } from "./services/dataAggregator.js";
 import startTracking from "./services/appTracker.js";
+import { generateProductivityInsights } from "./services/aiInsightsService.js";
+import "./ipc/statsHandlers.js";
 import { getTodayProductivityStats } from "./services/statsService.js";
 import { setProductiveApps, getProductiveApps } from "./services/productivityService.js";
-import { getAppBreakdown, getTopDistractions, getDailyTrends, getFocusSessions, getTimeDistribution } from "./services/analyticsService.js";
-import { getReportSummary, getReportTable, getReportCSV } from "./services/reportsService.js";
+import { 
+  getAppBreakdown, 
+  getTopDistractions, 
+  getDailyTrends, 
+  getFocusSessions, 
+  getTimeDistribution 
+} from "./services/analyticsService.js";
+import { 
+  getReportSummary, 
+  getReportTable, 
+  getReportCSV 
+} from "./services/reportsService.js";
 import { getActivitySessions } from "./services/activityService.js";
 
 // recreate __dirname for ES modules
@@ -20,8 +32,8 @@ let mainWindow;
 function createWindow() {
   const preloadPath = path.join(__dirname, "preload.cjs");
 
-  console.log("Preload path:", preloadPath);
-  console.log("Preload exists:", fs.existsSync(preloadPath));
+  console.log(" Creating window with preload:", preloadPath);
+  console.log(" Preload exists:", fs.existsSync(preloadPath));
 
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -30,7 +42,7 @@ function createWindow() {
       preload: preloadPath,
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false
+      webSecurity: false
     }
   });
 
@@ -46,26 +58,22 @@ function createWindow() {
 
 app.whenReady().then(() => {
   // Register IPC handlers BEFORE creating the window
+  // Register all IPC handlers
   ipcMain.handle("get-productive-stats", () => {
-    console.log("[IPC] get-productive-stats called");
+    console.log("📊 get-productive-stats handler called");
     const stats = getTodayProductivityStats();
-    console.log("[IPC] Returning stats:", stats);
+    console.log("📊 Returning stats data:", stats);
     return stats;
   });
 
-  ipcMain.handle("get-usage", () => {
-    console.log("[IPC] get-usage called");
+  ipcMain.handle("get-usage", ()=>{
+    console.log(" get-usage handler called");
     const usage = getTodayUsage();
-    console.log("[IPC] Returning usage:", usage);
+    console.log(" Returning usage data:", usage);
     return usage;
   });
 
-  ipcMain.handle("set-productive-apps", (_, apps) => {
-    console.log("[IPC] set-productive-apps called");
-    setProductiveApps(apps);
-    return { success: true };
-  });
-
+  // Analytics handlers
   ipcMain.handle("get-productive-apps", () => {
     console.log("[IPC] get-productive-apps called");
     return getProductiveApps();
@@ -96,6 +104,12 @@ app.whenReady().then(() => {
     return getFocusSessions();
   });
 
+  // Settings handlers
+  ipcMain.handle("set-productive-apps", (event, apps) => {
+    console.log(" set-productive-apps handler called with apps:", apps);
+    return setProductiveApps(apps);
+  });
+
   // Reports
   ipcMain.handle("get-report-summary", (_, period) => {
     console.log("[IPC] get-report-summary called, period:", period);
@@ -118,7 +132,15 @@ app.whenReady().then(() => {
     return getActivitySessions(dateStr || null);
   });
 
-  console.log("[Main] IPC handlers registered");
+  // AI Insights handler
+ipcMain.handle("get-ai-insights", () => {
+  console.log("🤖 get-ai-insights handler called");
+  const insights = generateProductivityInsights();
+  console.log("🤖 AI insights generated:", insights);
+  return insights;
+});
+
+console.log("✅ All IPC handlers registered");
 
   createWindow();
 

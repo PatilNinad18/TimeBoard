@@ -1,32 +1,79 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
+console.log("🚀 Preload script started");
+
 try {
   contextBridge.exposeInMainWorld("api", {
     // Dashboard & Analytics
-    getTodayProductivityStats: () => ipcRenderer.invoke("get-productive-stats"),
-    getUsage: () => ipcRenderer.invoke("get-usage"),
-
-    // Productivity apps management
-    setProductiveApps: (apps) => ipcRenderer.invoke("set-productive-apps", apps),
-    getProductiveApps: () => ipcRenderer.invoke("get-productive-apps"),
+    getTodayProductivityStats: () => {
+      console.log("📊 getTodayProductivityStats called");
+      return ipcRenderer.invoke("get-productive-stats");
+    },
+    getUsage: () => {
+      console.log("📊 getUsage called");
+      return ipcRenderer.invoke("get-usage");
+    },
 
     // Analytics
-    getTimeDistribution: () => ipcRenderer.invoke("get-time-distribution"),
-    getAppBreakdown: () => ipcRenderer.invoke("get-app-breakdown"),
-    getTopDistractions: () => ipcRenderer.invoke("get-top-distractions"),
-    getDailyTrends: (days) => ipcRenderer.invoke("get-daily-trends", days),
-    getFocusSessions: () => ipcRenderer.invoke("get-focus-sessions"),
+    getTimeDistribution: () => {
+      console.log("📊 getTimeDistribution called");
+      return ipcRenderer.invoke("get-time-distribution");
+    },
+    getAppBreakdown: () => {
+      console.log("📊 getAppBreakdown called");
+      return ipcRenderer.invoke("get-app-breakdown");
+    },
+    getTopDistractions: () => {
+      console.log("📊 getTopDistractions called");
+      return ipcRenderer.invoke("get-top-distractions");
+    },
+    getDailyTrends: (days) => {
+      console.log("📊 getDailyTrends called");
+      return ipcRenderer.invoke("get-daily-trends", days);
+    },
+    getFocusSessions: () => {
+      console.log("📊 getFocusSessions called");
+      return ipcRenderer.invoke("get-focus-sessions");
+    },
 
     // Reports
-    getReportSummary: (period) => ipcRenderer.invoke("get-report-summary", period),
-    getReportTable: (period) => ipcRenderer.invoke("get-report-table", period),
-    getReportCSV: (period) => ipcRenderer.invoke("get-report-csv", period),
+    getReportSummary: (period) => {
+      console.log("📋 getReportSummary called");
+      return ipcRenderer.invoke("get-report-summary", period);
+    },
+    getReportTable: (period) => {
+      console.log("📋 getReportTable called");
+      return ipcRenderer.invoke("get-report-table", period);
+    },
+    getReportCSV: (period) => {
+      console.log("📋 getReportCSV called");
+      return ipcRenderer.invoke("get-report-csv", period);
+    },
 
     // Activity
-    getActivitySessions: (dateStr) => ipcRenderer.invoke("get-activity-sessions", dateStr),
+    getActivitySessions: (dateStr) => {
+      console.log("⏰ getActivitySessions called");
+      return ipcRenderer.invoke("get-activity-sessions", dateStr);
+    },
+
+    // Settings
+    setProductiveApps: (apps) => {
+      console.log("⚙️ setProductiveApps called");
+      return ipcRenderer.invoke("set-productive-apps", apps);
+    },
+    getProductiveApps: () => {
+      console.log("⚙️ getProductiveApps called");
+      return ipcRenderer.invoke("get-productive-apps");
+    },
+
+    // AI Insights
+    getAIInsights: () => {
+      console.log("🤖 getAIInsights called");
+      return ipcRenderer.invoke("get-ai-insights");
+    }
   });
 
-  console.log("[Preload] API exposed to window.api successfully");
+  console.log("✅ All APIs exposed to window.api");
 } catch (error) {
   console.error("[Preload] Failed to expose API:", error);
 }

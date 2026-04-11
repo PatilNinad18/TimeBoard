@@ -18,8 +18,10 @@ function Reports() {
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
+    console.log("🔄 Starting reports data load...");
+    
     if (!window.api) {
-      console.warn("[Reports] window.api not available - running outside Electron?");
+      console.warn("⚠️ window.api not available - running outside Electron?");
       setLoading(false);
       return;
     }
@@ -28,13 +30,14 @@ function Reports() {
       setLoading(true);
       const [summaryData, tableRows] = await Promise.all([
         window.api.getReportSummary(period),
-        window.api.getReportTable(period),
+        window.api.getReportTable(period)
       ]);
 
-      if (summaryData) setSummary(summaryData);
-      if (tableRows) setTableData(tableRows);
+      setSummary(summaryData);
+      setTableData(tableRows);
+      console.log("📋 Reports data loaded successfully");
     } catch (error) {
-      console.error("[Reports] Failed to load data:", error);
+      console.error("❌ Error loading reports data:", error);
     } finally {
       setLoading(false);
     }

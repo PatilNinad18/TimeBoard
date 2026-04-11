@@ -6,7 +6,11 @@ import db from "../db/database.js";
  */
 export function getActivitySessions(dateStr = null) {
   const targetDate = dateStr || new Date().toISOString().split("T")[0];
+  
+  console.log(`🔍 Looking for activity data for: ${targetDate}`);
+  console.log(`🕐 Current time: ${new Date().toLocaleString()}`);
 
+  // Get all sessions for the date, grouped by hour
   const rows = db.prepare(`
     SELECT 
       id,
@@ -17,15 +21,25 @@ export function getActivitySessions(dateStr = null) {
       is_idle,
       timestamp
     FROM app_usage
-    WHERE date(timestamp) = ?
+    WHERE date(timestamp) = ? AND is_idle = 0
     ORDER BY timestamp ASC
   `).all(targetDate);
 
+  console.log(`📋 Found ${rows.length} real activity sessions for ${targetDate}`);
+
+  if (rows.length === 0) {
+    console.log(`⚠️ No activity data found for ${targetDate}. TimeBoard may not have been running today.`);
+    return [];
+  }
+
+  // Log each session for debugging
+  rows.forEach((row, index) => {
+    console.log(`📝 Session ${index + 1}: ${row.app_name} at ${row.timestamp} for ${row.duration}s`);
+  });
+
   return rows.map(row => {
     let category;
-    if (row.is_idle) {
-      category = "Idle";
-    } else if (row.is_productive) {
+    if (row.is_productive) {
       category = "Productive";
     } else {
       category = "Distracting";
@@ -36,19 +50,29 @@ export function getActivitySessions(dateStr = null) {
     const mins = durationMinutes % 60;
     const durationStr = hours > 0 ? `${hours}h ${mins}m` : `${mins} min`;
 
-    // Extract time from timestamp
+    // Extract actual hour and time from timestamp
     const ts = new Date(row.timestamp);
-    const timeStr = `${String(ts.getHours()).padStart(2, "0")}:${String(ts.getMinutes()).padStart(2, "0")}`;
+    const hour = ts.getHours();
+    const exactTime = `${String(hour).padStart(2, "0")}:${String(ts.getMinutes()).padStart(2, "0")}`;
+    
+    // Create hour label (6 AM - 7 AM format)
+    const hourLabel = `${String(hour).padStart(2, "0")}:00 - ${String(hour + 1).padStart(2, "0")}:00`;
+
+    console.log(`⏰ Processing: ${row.app_name} at ${exactTime} (${hourLabel})`);
 
     return {
       id: row.id,
-      appName: row.is_idle ? null : row.app_name,
-      windowTitle: row.is_idle ? null : row.window_title,
+      appName: row.app_name,
+      windowTitle: row.window_title,
       duration: durationStr,
-      durationMinutes: durationMinutes || 1, // at least 1 min for display
+      durationMinutes: durationMinutes || 1,
       durationSeconds: Math.round(row.duration),
       category,
-      timestamp: timeStr,
+      exactTime: exactTime,
+      hourLabel: hourLabel,
+      hour: hour,
+      fullTimestamp: row.timestamp,
+      realTimestamp: ts.toISOString()
     };
   });
 }
