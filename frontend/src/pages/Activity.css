@@ -61,6 +61,82 @@
   gap: 12px;
 }
 
+/* ── Page Shell ──────────────────────────────── */
+.activity-page {
+  height: 100vh;           /* exact viewport, no overflow */
+  background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;        /* page itself never scrolls */
+}
+
+/* ── Header wrapper (never scrolls) ─────────── */
+.activity-header-wrap {
+  flex-shrink: 0;
+  padding: 28px 28px 0;
+}
+
+/* ── Toolbar override (already in CSS, just fix padding) ── */
+.activity-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 28px;
+}
+
+/* ── Scrollable area ─────────────────────────── */
+.activity-scroll-area {
+  flex: 1 1 0;             /* fills all remaining height */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 28px 40px;
+
+  /* invisible scrollbar — all browsers */
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / old Edge */
+}
+.activity-scroll-area::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari / new Edge */
+}
+
+/* ── State boxes (loading / empty / no-results) ── */
+.activity-state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.activity-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(0,0,0,0.08);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.state-icon  { font-size: 38px; opacity: 0.45; }
+.state-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+.state-sub   { font-size: 0.82rem; color: var(--text-secondary); margin: 0; max-width: 300px; line-height: 1.5; }
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 640px) {
+  .activity-header-wrap      { padding: 18px 16px 0; }
+  .activity-toolbar          { padding: 10px 16px; flex-direction: column; align-items: stretch; }
+  .activity-scroll-area      { padding: 0 16px 32px; }
+  .activity-page             { gap: 0; }
+}
+
 .ah-title-block { display: flex; flex-direction: column; gap: 2px; }
 
 .activity-title {
