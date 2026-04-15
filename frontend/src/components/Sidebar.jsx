@@ -1,129 +1,55 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import dashboardIcon from "../assets/dashboard.png"
-import analyticsIcon from "../assets/google-analytics.png"
-import settingsIcon from "../assets/setting.png"
-import reportsIcon from "../assets/documents.png"
-import timeIcon from "../assets/time-management.png"
+import { useTheme } from "../context/ThemeContext";
+import dashboardIcon from "../assets/dashboard.png";
+import analyticsIcon from "../assets/google-analytics.png";
+import settingsIcon   from "../assets/setting.png";
+import reportsIcon    from "../assets/documents.png";
+import timeIcon       from "../assets/time-management.png";
+
+const NAV_ITEMS = [
+  { to: "/",          label: "Dashboard", icon: dashboardIcon },
+  { to: "/activity",  label: "Activity",  icon: reportsIcon   },
+  { to: "/analytics", label: "Analytics", icon: analyticsIcon },
+  { to: "/reports",   label: "Reports",   icon: reportsIcon   },
+  { to: "/settings",  label: "Settings",  icon: settingsIcon  },
+];
 
 export default function Sidebar() {
+  const { darkMode } = useTheme();
+
   return (
-    <div className="w-70 h-screen bg-gray-50 text-black p-6 shadow-md">
-      <div className="flex items-center gap-3 mb-6">
-        <img src={timeIcon} alt="TimeBoard Icon" className="w-10 h-10" />
-        <h1 style={{ fontSize: '2.2rem' }}>TimeBoard</h1>
+    <div className="sidebar" data-theme={darkMode ? "dark" : "light"}>
+      {/* Logo */}
+      <div className="sidebar-logo">
+        <img src={timeIcon} alt="TimeBoard" className="sidebar-logo-icon" />
+        <span className="sidebar-logo-text">TimeBoard</span>
       </div>
-      <nav className="flex flex-col space-y-3">
-        <NavLink
-          to="/"
-          style={{ color: 'black', textDecoration: 'none' }}
-          className={({ isActive }) =>
-            ` flex items-center gap-3 p-2 rounded transition-all duration-200 text-xl ${
-              isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"
-            }`
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <img 
-                src={dashboardIcon} 
-                alt="Dashboard" 
-                className="w-8 h-8 transition-all duration-200" 
-                style={{ filter: isActive ? 'none' : 'grayscale(100%)' }}
-              />
-              Dashboard
-            </>
-          )}
-        </NavLink>
 
-        <NavLink
-          to="/activity"
-          style={{ color: 'black', textDecoration: 'none' }}
-          className={({isActive})=>
-            `flex items-center gap-3 p-2 rounded transition-all duration-200 text-xl ${
-              isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"
-            }`
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <img 
-                src={reportsIcon} 
-                alt="Activity" 
-                className="w-8 h-8 transition-all duration-200" 
-                style={{ filter: isActive ? 'none' : 'grayscale(100%)' }}
-              />
-              Activity
-            </>
-          )}
-        </NavLink>
-
-        <NavLink
-          to="/analytics"
-          style={{ color: 'black', textDecoration: 'none' }}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-2 rounded transition-all duration-200 text-xl ${
-              isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"
-            }`
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <img 
-                src={analyticsIcon} 
-                alt="Analytics" 
-                className="w-7 h-7 transition-all duration-200" 
-                style={{ filter: isActive ? 'none' : 'grayscale(100%)' }}
-              />
-              Analytics
-            </>
-          )}
-        </NavLink>
-
-        <NavLink
-          to="/reports"
-          style={{ color: 'black', textDecoration: 'none' }}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-2 rounded transition-all duration-200 text-xl ${
-              isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"
-            }`
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <img 
-                src={reportsIcon} 
-                alt="Reports" 
-                className="w-8 h-8 transition-all duration-200" 
-                style={{ filter: isActive ? 'none' : 'grayscale(100%)' }}
-              />
-              Reports
-            </>
-          )}
-        </NavLink>
-
-        <NavLink
-          to="/settings"
-          style={{ color: 'black', textDecoration: 'none' }}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-2 rounded transition-all duration-200 text-xl ${
-              isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"
-            }`
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <img 
-                src={settingsIcon} 
-                alt="Settings" 
-                className="w-8 h-8 transition-all duration-200" 
-                style={{ filter: isActive ? 'none' : 'grayscale(100%)' }}
-              />
-              Settings
-            </>
-          )}
-        </NavLink>
-
+      {/* Nav */}
+      <nav className="sidebar-nav">
+        {NAV_ITEMS.map(({ to, label, icon }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={to === "/"}
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active" : ""}`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <img
+                  src={icon}
+                  alt={label}
+                  className="sidebar-link-icon"
+                  style={{ filter: isActive ? "none" : "grayscale(100%) opacity(0.5)" }}
+                />
+                <span>{label}</span>
+              </>
+            )}
+          </NavLink>
+        ))}
       </nav>
     </div>
   );

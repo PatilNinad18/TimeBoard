@@ -14,8 +14,8 @@ function SearchBar({ selected = "weekly", onPeriodChange }) {
             style={{
               cursor: "pointer",
               fontWeight: selected === p.toLowerCase() ? "bold" : "normal",
-              color: selected === p.toLowerCase() ? "#3b82f6" : "inherit",
-              borderBottom: selected === p.toLowerCase() ? "2px solid #3b82f6" : "none",
+              color: selected === p.toLowerCase() ? "var(--accent-color)" : "inherit",
+              borderBottom: selected === p.toLowerCase() ? `2px solid var(--accent-color)` : "none",
               paddingBottom: "2px",
             }}
           >

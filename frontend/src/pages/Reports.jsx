@@ -4,8 +4,11 @@ import SummaryCards from '../components/Reports/SummaryCards';
 import SearchBar from '../components/Reports/SearchBar';
 import ExportButtons from '../components/Reports/ExportButtons';
 import ReportsTable from '../components/Reports/ReportsTable';
+import { useTheme } from '../context/ThemeContext';
+// import './Reports.css';
 
 function Reports() {
+  const { darkMode, accentColor } = useTheme();
   const [period, setPeriod] = useState("weekly");
   const [summary, setSummary] = useState({
     bestFocusDay: { day: "—", value: "0h 0m" },
@@ -64,7 +67,14 @@ function Reports() {
   };
 
   return (
-    <div className="p-7 space-y-6">
+    <div 
+      className="p-7 space-y-6"
+      style={{
+        '--accent-color': accentColor,
+        '--accent-hover': `${accentColor}dd`,
+        '--accent-muted': `${accentColor}20`,
+      }}
+    >
       <ReportsHeader period={period} trackedDays={summary.trackedDays} />
 
       {/* Summary Cards */}

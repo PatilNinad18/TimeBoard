@@ -8,7 +8,7 @@ function ReportsHeader({ period = "weekly", trackedDays = 0 }) {
       {/* Left Section */}
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-8 bg-gradient-to-b from-yellow-400 to-yellow-500 rounded-full"></div>
+          <div className="w-2 h-8 bg-gradient-to-b rounded-full" style={{ background: "var(--accent-color)" }}></div>
           <h3 className="text-3xl font-semibold text-gray-800 tracking-tight">
             Productivity Overview
           </h3>

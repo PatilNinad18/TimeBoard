@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import Header from "../components/Header";
 import SummaryCard from "../components/Dashboard/SummaryCard";
 import ProductivityChart from "../components/Dashboard/ProductivityChart";
-import { FaClock, FaChartLine } from "react-icons/fa";
 import FocusCard from "../components/Dashboard/FocusCard";
 import AppUsage from "../components/Dashboard/AppUsage";
 import ProductiveVsDistracting from "../components/Dashboard/ProductiveVsDistracting";
-import Header from "../components/Header";
+import { FaClock, FaChartLine } from "react-icons/fa";
+import { useTheme } from "../context/ThemeContext";
 import "./Dashboard.css";
 
 function formatTime(seconds) {
@@ -15,6 +16,7 @@ function formatTime(seconds) {
 }
 
 const Dashboard = ({ landingData }) => {
+  const { darkMode, accentColor } = useTheme();
   const [stats, setStats] = useState({
     productive: "0h 0m",
     distracting: "0h 0m",
@@ -63,7 +65,14 @@ const Dashboard = ({ landingData }) => {
   }, []);
 
   return (
-    <div className="dash-page">
+    <div 
+      className="dash-page"
+      style={{
+        '--accent-color': accentColor,
+        '--accent-hover': `${accentColor}dd`,
+        '--accent-muted': `${accentColor}20`,
+      }}
+    >
       {/* Top bar */}
       <div className="dash-topbar">
         <Header />

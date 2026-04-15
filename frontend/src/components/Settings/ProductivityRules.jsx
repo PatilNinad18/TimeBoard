@@ -1,51 +1,29 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, CheckCircle2, XCircle } from "lucide-react";
-import React from "react";
 
-const APP_ICONS = {
-  "VS Code": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
-  Chrome: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg",
-  YouTube: null,
-  Safari: null,
-  "Google C...": null,
-  Televahon: null,
-  Messenger: null,
-};
-
-const DEFAULT_APPS = [
-  { id: 1, name: "VS Code", type: "productive" },
-  { id: 2, name: "Chrome", type: "distracting" },
-  { id: 3, name: "YouTube", type: "productive" },
-  { id: 4, name: "Safari", type: "productive" },
-  { id: 5, name: "Google C...", type: "distracting" },
-  { id: 6, name: "Televahon", type: "distracting" },
-  { id: 7, name: "Messenger", type: "distracting" },
+const ICON_COLORS = [
+  "#007ACC","#4285F4","#FF0000","#006CFF","#EA4335",
+  "#2AABEE","#0084FF","#F5C518","#E07B39","#9B59B6",
 ];
 
 const AppIcon = ({ name }) => {
-  const colors = {
-    "VS Code": "#007ACC",
-    Chrome: "#4285F4",
-    YouTube: "#FF0000",
-    Safari: "#006CFF",
-    "Google C...": "#EA4335",
-    Televahon: "#2AABEE",
-    Messenger: "#0084FF",
-  };
-  const initials = name.slice(0, 2).toUpperCase();
+  const hash = [...name].reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const bg = ICON_COLORS[hash % ICON_COLORS.length];
   return (
-    <div
-      className="app-icon-fallback"
-      style={{ background: colors[name] || "#888" }}
-    >
-      {initials}
+    <div className="app-icon-fallback" style={{ background: bg }}>
+      {name.slice(0, 2).toUpperCase()}
     </div>
   );
 };
 
-export default function ProductivityRules({ apps = DEFAULT_APPS, onAppsChange }) {
+export default function ProductivityRules({ apps = [], onAppsChange }) {
   const [search, setSearch] = useState("");
   const [appList, setAppList] = useState(apps);
+
+  // Sync when parent passes updated apps (on first load from DB)
+  useEffect(() => {
+    setAppList(apps);
+  }, [apps]);
 
   const filtered = appList.filter((a) =>
     a.name.toLowerCase().includes(search.toLowerCase())
@@ -70,26 +48,34 @@ export default function ProductivityRules({ apps = DEFAULT_APPS, onAppsChange })
         <Search size={14} className="search-icon" />
         <input
           type="text"
-          placeholder="Search Detected Apps..."
+          placeholder="Search detected apps…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
       <div className="app-list">
-        {filtered.map((app) => (
-          <div key={app.id} className="app-row" onClick={() => toggleType(app.id)}>
-            <AppIcon name={app.name} />
-            <span className="app-name">{app.name}</span>
-            <span className={`app-badge ${app.type}`}>
-              {app.type === "productive" ? (
-                <><CheckCircle2 size={11} /> Productive</>
-              ) : (
-                <><XCircle size={11} /> Distracting</>
-              )}
-            </span>
+        {appList.length === 0 ? (
+          <div className="app-list-empty">
+            No apps tracked yet — use apps while TimeBoard is running
           </div>
-        ))}
+        ) : filtered.length === 0 ? (
+          <div className="app-list-empty">No apps match "{search}"</div>
+        ) : (
+          filtered.map((app) => (
+            <div key={app.id} className="app-row" onClick={() => toggleType(app.id)}>
+              <AppIcon name={app.name} />
+              <span className="app-name">{app.name}</span>
+              <span className={`app-badge ${app.type}`}>
+                {app.type === "productive" ? (
+                  <><CheckCircle2 size={11} /> Productive</>
+                ) : (
+                  <><XCircle size={11} /> Distracting</>
+                )}
+              </span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

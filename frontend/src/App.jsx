@@ -1,43 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import Dashboard from "./pages/DashboardPage";
-import Analytics from "./pages/Analytics";
-import Settings from "./pages/Settings";
-import Activity from "./pages/Activity";
-import Reports from "./pages/Reports";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import Activity from "./pages/Activity";
+import Analytics from "./pages/Analytics";
+import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
 
-function App() {
-  const [landingData] = useState({
-    distractingApps: [],
-  });
-
+export default function App() {
   return (
-    <Router>
-      <div className="flex w-screen h-screen overflow-hidden bg-gray-50">
-        {/* Sidebar */}
-        <div className="w-[260px] flex-shrink-0">
-          <Sidebar />
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 p-3 bg-gray-50 w-full h-full">
+    <BrowserRouter>
+      <div className="app-root">
+        <Sidebar />
+        <div className="app-content">
           <Routes>
-            <Route
-              path="/"
-              element={<Dashboard landingData={landingData} />}
-            />
-            <Route path="/dashboard" element={<Dashboard landingData={landingData} />} />
+            <Route path="/"          element={<Dashboard />} />
+            <Route path="/activity"  element={<Activity />}  />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/activity" element={<Activity />} />
+            <Route path="/reports"   element={<Reports />}   />
+            <Route path="/settings"  element={<Settings />}  />
           </Routes>
         </div>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
-
-export default App;
-

@@ -10,114 +10,175 @@ import "./Analytics.css";
 
 export default function Analytics() {
   const [filter, setFilter] = useState("Last 7 days");
+
   const [stats, setStats] = useState({
-    productiveTime: { label: "Total Productive Time", value: "0h 0m", trend: "neutral", delta: "0%" },
-    distractingTime: { label: "Total Distracting Time", value: "0h 0m", trend: "neutral", delta: "0%" },
-    idleTime: { label: "Total Idle Time", value: "0h 0m", trend: "neutral", delta: "0%" },
-    focusScore: { label: "Focus Score %", value: "0%", trend: "neutral", scoreRaw: 0 },
+    productiveTime:  { label: "Total Productive Time",  value: "0h 0m", trend: "neutral", delta: "" },
+    distractingTime: { label: "Total Distracting Time", value: "0h 0m", trend: "neutral", delta: "" },
+    idleTime:        { label: "Total Idle Time",        value: "0h 0m", trend: "neutral", delta: "" },
+    focusScore:      { label: "Focus Score %",          value: "0%",    trend: "neutral", scoreRaw: 0 },
   });
 
-  const [timeDistribution, setTimeDistribution] = useState([]);
-  const [appBreakdown, setAppBreakdown] = useState([]);
+  const [timeDistribution, setTimeDistribution] = useState([
+    { label: "Productive",  value: 0, color: "#F5C518" },
+    { label: "Distracting", value: 0, color: "#4B4B5A" },
+    { label: "Idle",        value: 0, color: "#D1D1DC" },
+  ]);
+  const [appBreakdown,    setAppBreakdown]    = useState([]);
   const [topDistractions, setTopDistractions] = useState([]);
-  const [dailyTrends, setDailyTrends] = useState({ labels: [], focusScore: [], productiveTime: [] });
-  const [focusSessions, setFocusSessions] = useState({ longestStreak: 0, sessionCount: 0, thresholdMinutes: 25 });
+  const [dailyTrends,     setDailyTrends]     = useState({ labels: [], focusScore: [], productiveTime: [] });
+  const [focusSessions,   setFocusSessions]   = useState({ longestStreak: 0, sessionCount: 0, thresholdMinutes: 25 });
+  const [loading,         setLoading]         = useState(true);
+
+  const fmt = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return `${h}h ${m}m`;
+  };
+
+  const filterToDays = (f) => {
+    if (f === "Today" || f === "Yesterday") return 1;
+    if (f === "Last 7 days") return 7;
+    if (f === "Last 30 days" || f === "Month") return 30;
+    return 7;
+  };
 
   useEffect(() => {
-    console.log("Analytics component mounted");
-    console.log("window.api available:", !!window.api);
-    
     if (!window.api) {
-      console.warn("window.api not available - running outside Electron?");
+      console.warn("window.api not available");
+      setLoading(false);
       return;
     }
 
-    async function loadAnalyticsData() {
+    async function loadAll() {
+      setLoading(true);
       try {
-        console.log("Starting analytics data load...");
-        
-        const data = await window.api.getTodayProductivityStats();
-        console.log("Analytics data received:", data);
-        
-        // Convert seconds to hours/minutes format
-        const formatSeconds = (seconds) => {
-          const hours = Math.floor(seconds / 3600);
-          const minutes = Math.floor((seconds % 3600) / 60);
-          return { hours, minutes };
-        };
-        
-        const productiveTime = formatSeconds(data.productive || 0);
-        const distractingTime = formatSeconds(data.distracting || 0);
-        const idleTime = formatSeconds(data.idle || 0);
-        
+        const days = filterToDays(filter);
+
+        // Fire all 6 IPC calls in parallel
+        const [
+          productivity,
+          distribution,
+          breakdown,
+          distractions,
+          trends,
+          sessions,
+        ] = await Promise.all([
+          window.api.getTodayProductivityStats(),
+          window.api.getTimeDistribution(),
+          window.api.getAppBreakdown(),
+          window.api.getTopDistractions(),
+          window.api.getDailyTrends(days),
+          window.api.getFocusSessions(),
+        ]);
+
+        // Summary cards
         setStats({
           productiveTime: {
             label: "Total Productive Time",
-            value: `${productiveTime.hours}h ${productiveTime.minutes}m`,
+            value: fmt(productivity.productive || 0),
             trend: "neutral",
-            delta: "+12%"
+            delta: "",
           },
           distractingTime: {
             label: "Total Distracting Time",
-            value: `${distractingTime.hours}h ${distractingTime.minutes}m`,
-            trend: "down",
-            delta: "-8%"
+            value: fmt(productivity.distracting || 0),
+            trend: "neutral",
+            delta: "",
           },
           idleTime: {
             label: "Total Idle Time",
-            value: `${idleTime.hours}h ${idleTime.minutes}m`,
+            value: fmt(productivity.idle || 0),
             trend: "neutral",
-            delta: "0%"
+            delta: "",
           },
           focusScore: {
             label: "Focus Score %",
-            value: `${Math.round(data.score || 0)}%`,
-            trend: "up",
-            scoreRaw: Math.round(data.score || 0)
+            value: `${Math.round(productivity.score || 0)}%`,
+            trend: "neutral",
+            scoreRaw: Math.round(productivity.score || 0),
           },
         });
-        
-        console.log(" Analytics state updated with real data");
-      } catch (error) {
-        console.error(" Failed to load analytics data:", error);
+
+        // Time distribution donut
+        if (distribution && distribution.length > 0) {
+          setTimeDistribution(distribution);
+        }
+
+        // App breakdown table
+        if (breakdown && breakdown.length > 0) {
+          setAppBreakdown(breakdown);
+        }
+
+        // Top distractions
+        if (distractions && distractions.length > 0) {
+          setTopDistractions(distractions);
+        }
+
+        // Daily trends chart
+        if (trends && trends.labels && trends.labels.length > 0) {
+          setDailyTrends(trends);
+        }
+
+        // Focus sessions
+        if (sessions) {
+          setFocusSessions(sessions);
+        }
+
+      } catch (err) {
+        console.error("Analytics load error:", err);
+      } finally {
+        setLoading(false);
       }
     }
-    
-    loadAnalyticsData();
+
+    loadAll();
   }, [filter]);
 
   return (
     <div className="analytics-page">
-      {/* Header */}
-      <div className="analytics-header">
-        <div className="header-title-block">
-          <h1 className="analytics-title">Analytics</h1>
-          <span className="analytics-subtitle">Timeboard &bull; {filter}</span>
+
+      {/* Fixed top section — never scrolls */}
+      <div className="analytics-top">
+        <div className="analytics-header">
+          <div className="header-title-block">
+            <h1 className="analytics-title">Analytics</h1>
+            <span className="analytics-subtitle">Timeboard &bull; {filter}</span>
+          </div>
         </div>
+        <DateFilter selected={filter} onFilterChange={setFilter} />
       </div>
 
-      {/* Date Filter */}
-      <DateFilter selected={filter} onFilterChange={setFilter} />
+      {/* Scrollable body */}
+      <div className="analytics-body">
+        {loading && (
+          <div className="analytics-loading">
+            <div className="analytics-spinner" />
+            <p>Loading analytics…</p>
+          </div>
+        )}
 
-      {/* Summary Cards */}
-      <SummaryCards stats={stats} />
+        {!loading && (
+          <>
+            <SummaryCards stats={stats} />
 
-      {/* Row 2: Distribution + Breakdown */}
-      <div className="analytics-row two-col">
-        <TimeDistribution data={timeDistribution.length > 0 ? timeDistribution : undefined} />
-        <AppBreakdownTable apps={appBreakdown.length > 0 ? appBreakdown : undefined} />
+            <div className="analytics-row two-col">
+              <TimeDistribution data={timeDistribution} />
+              <AppBreakdownTable apps={appBreakdown} />
+            </div>
+
+            <div className="analytics-row three-col">
+              <TopDistractions apps={topDistractions} />
+              <FocusTrendChart data={dailyTrends} />
+              <FocusSessions
+                longestStreak={focusSessions.longestStreak}
+                sessionCount={focusSessions.sessionCount}
+                sessionThreshold={focusSessions.thresholdMinutes}
+              />
+            </div>
+          </>
+        )}
       </div>
 
-      {/* Row 3: Distractions + Trend + Sessions */}
-      <div className="analytics-row three-col">
-        <TopDistractions apps={topDistractions.length > 0 ? topDistractions : undefined} />
-        <FocusTrendChart data={dailyTrends.labels.length > 0 ? dailyTrends : undefined} />
-        <FocusSessions
-          longestStreak={focusSessions.longestStreak}
-          sessionCount={focusSessions.sessionCount}
-          sessionThreshold={focusSessions.thresholdMinutes}
-        />
-      </div>
     </div>
   );
 }

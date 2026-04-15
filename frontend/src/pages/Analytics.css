@@ -6,40 +6,65 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500;600&display=swap');
 
-/* ── Root Tokens ───────────────────────────────── */
-:root {
-  --bg: #f0f0f5;
-  --surface: #ffffff;
-  --surface-2: #f5f5fa;
-  --border: #e2e2ec;
-  --text-primary: #18181f;
-  --text-secondary: #70708a;
-  --accent: #F5C518;
-  --accent-dark: #C9960B;
-  --accent-muted: rgba(245, 197, 24, 0.13);
-  --productive: #16a34a;
-  --productive-bg: rgba(22, 163, 74, 0.12);
-  --distracting: #dc2626;
-  --distracting-bg: rgba(220, 38, 38, 0.12);
-  --neutral-color: #6b6b80;
-  --neutral-bg: rgba(107, 107, 128, 0.12);
-  --shadow-sm: 0 1px 6px rgba(0,0,0,0.07);
-  --shadow-md: 0 4px 18px rgba(0,0,0,0.08);
-  --radius: 16px;
-  --radius-sm: 10px;
-}
-
 /* ── Page Shell ────────────────────────────────── */
 .analytics-page {
-  min-height: 100vh;
+  height: 100vh;
   background: var(--bg);
   font-family: 'DM Sans', sans-serif;
   color: var(--text-primary);
-  padding: 28px 28px 56px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  overflow: hidden;        /* page itself never scrolls */
 }
+
+/* ── Fixed top (header + date filter) ──────────── */
+.analytics-top {
+  flex-shrink: 0;
+  padding: 24px 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--bg);
+}
+
+/* ── Scrollable body ────────────────────────────── */
+.analytics-body {
+  flex: 1 1 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 28px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  /* invisible scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.analytics-body::-webkit-scrollbar { display: none; }
+
+/* ── Loading state ──────────────────────────────── */
+.analytics-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.analytics-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(0,0,0,0.08);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Header ────────────────────────────────────── */
 .analytics-header {

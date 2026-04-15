@@ -2,74 +2,199 @@
 
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* These get overridden by ThemeContext at runtime */
+  --bg:             #f0f0f5;
+  --surface:        #ffffff;
+  --surface-2:      #f5f5fa;
+  --surface-3:      #ededf4;
+  --border:         #e2e2ec;
+  --text-primary:   #18181f;
+  --text-secondary: #70708a;
+  --text-tertiary:  #a0a0b8;
+  --accent:         #F5C518;
+  --accent-muted:   rgba(245,197,24,0.13);
+  --accent-dark:    #C9960B;
+  --productive:     #16a34a;
+  --productive-bg:  rgba(22,163,74,0.11);
+  --distracting:    #dc2626;
+  --distracting-bg: rgba(220,38,38,0.11);
+  --neutral-color:  #6b6b80;
+  --neutral-bg:     rgba(107,107,128,0.11);
+  --idle-color:     #a0a0b8;
+  --idle-bg:        rgba(160,160,184,0.13);
+  --shadow-sm:      0 1px 6px rgba(0,0,0,0.06);
+  --shadow-md:      0 4px 18px rgba(0,0,0,0.08);
+  --radius:         16px;
+  --radius-sm:      10px;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Dark mode extras */
+  --btn-dark:       #1a1a22;
+  --shadow:         0 2px 12px rgba(0,0,0,0.08);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Smooth theme transition on every element */
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
   margin: 0;
+}
+
+/* In index.css */
+.app-sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.app-sidebar .nav-item {
+  color: var(--text-secondary);
+}
+
+.app-sidebar .nav-item.active {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+/* ═══════════════════════════════════════════════
+   Sidebar
+   ═══════════════════════════════════════════════ */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1.5px solid var(--border);
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background 0.25s, border-color 0.2s;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Logo row */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 0 6px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.sidebar-logo-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.sidebar-logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Nav list */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Each nav link */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 1rem;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.sidebar-link:hover {
+  background: var(--surface-2);
+  color: var(--text-primary);
 }
 
-#time{
-  font-size : 2.2rem;
+/* Active link uses accent color */
+.sidebar-link.active {
+  background: var(--accent-muted);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.sidebar-link-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  transition: filter 0.15s;
+}
+
+/* ═══════════════════════════════════════════════
+   Header
+   ═══════════════════════════════════════════════ */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 8px;
+  transition: border-color 0.2s;
+}
+
+.app-header-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: -0.02em;
+  transition: color 0.2s;
+}
+
+.app-header-date {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
+}
+
+.app-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+/* ═══════════════════════════════════════════════
+   App root layout — sidebar + page side by side
+   ═══════════════════════════════════════════════ */
+.app-root {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  transition: background 0.25s;
+}
+
+.app-content {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

@@ -40,7 +40,7 @@ export default function TrackingSettings({
           <button className="ctrl-btn primary" onClick={onStartTracking}>
             <Play size={14} fill="currentColor" /> Start Tracking
           </button>
-          <button className="ctrl-btn dark" onClick={onStopTracking}>
+          <button className="ctrl-btn primary" onClick={onStopTracking}>
             <Square size={14} fill="currentColor" /> Stop Tracking
           </button>
           <button className="ctrl-btn primary" onClick={onPauseTracking}>

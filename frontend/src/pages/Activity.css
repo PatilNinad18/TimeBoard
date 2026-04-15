@@ -6,31 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap');
 
-/* ── Tokens (mirrors Analytics.css root) ─────── */
-:root {
-  --bg:               #f0f0f5;
-  --surface:          #ffffff;
-  --surface-2:        #f5f5fa;
-  --surface-3:        #ededf4;
-  --border:           #e2e2ec;
-  --text-primary:     #18181f;
-  --text-secondary:   #70708a;
-  --text-tertiary:    #a0a0b8;
-  --accent:           #F5C518;
-  --accent-muted:     rgba(245,197,24,0.13);
-  --productive:       #16a34a;
-  --productive-bg:    rgba(22,163,74,0.11);
-  --distracting:      #dc2626;
-  --distracting-bg:   rgba(220,38,38,0.11);
-  --neutral-color:    #6b6b80;
-  --neutral-bg:       rgba(107,107,128,0.11);
-  --idle-color:       #a0a0b8;
-  --idle-bg:          rgba(160,160,184,0.13);
-  --shadow-sm:        0 1px 6px rgba(0,0,0,0.06);
-  --shadow-md:        0 4px 18px rgba(0,0,0,0.08);
-  --radius:           16px;
-  --radius-sm:        10px;
-}
+
 
 /* ── Page Shell ──────────────────────────────── */
 .activity-page {

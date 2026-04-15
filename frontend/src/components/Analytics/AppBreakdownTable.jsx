@@ -22,7 +22,7 @@ export default function AppBreakdownTable({ apps = DEFAULT_APPS }) {
           <h3 className="section-num">3.</h3>
           <h3 className="section-title">App Usage Breakdown</h3>
         </div>
-        <span className="card-filename">AppBreakdownTable.jsx</span>
+        
       </div>
 
       <table className="breakdown-table">

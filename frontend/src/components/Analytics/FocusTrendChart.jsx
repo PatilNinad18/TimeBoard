@@ -56,7 +56,7 @@ export default function FocusTrendChart({ data = DEFAULT_TREND }) {
           <h3 className="section-num">5.</h3>
           <h3 className="section-title">Daily Trends</h3>
         </div>
-        <span className="card-filename">FocusTrendChart.jsx</span>
+       
       </div>
 
       <div className="trend-legend">
