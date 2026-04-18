@@ -23,58 +23,61 @@ function runGet(sql, param) {
   return param ? db.prepare(sql).get(param) : db.prepare(sql).get();
 }
 
+// Get productive apps for dynamic classification
+function getProductiveApps() {
+  return db.prepare(`
+    SELECT app_name FROM user_productive_apps
+  `).all().map(row => row.app_name);
+}
+
 // ── Services ──────────────────────────────────────────────────────────────
 
 export function getAppBreakdown(dateFilter = null, mode = "single") {
   const { cond, param } = buildCond(dateFilter, mode);
-
-  const rows = runAll(`
-    SELECT app_name, COALESCE(SUM(duration),0) as total_time, is_productive
-    FROM app_usage
-    WHERE ${cond} AND is_idle=0
-    GROUP BY app_name, is_productive
-    ORDER BY total_time DESC
-  `, param);
-
-  const appMap = {};
-  for (const row of rows) {
-    if (!appMap[row.app_name]) {
-      appMap[row.app_name] = { name: row.app_name, totalTime: 0, productiveTime: 0, distractingTime: 0 };
-    }
-    appMap[row.app_name].totalTime += row.total_time;
-    if (row.is_productive) appMap[row.app_name].productiveTime += row.total_time;
-    else                   appMap[row.app_name].distractingTime += row.total_time;
-  }
-
-  return Object.values(appMap)
-    .sort((a, b) => b.totalTime - a.totalTime)
-    .map((app, i) => {
-      const category = app.productiveTime >= app.distractingTime ? "Productive" : "Distracting";
-      const h = Math.floor(app.totalTime / 3600);
-      const m = Math.floor((app.totalTime % 3600) / 60);
-      return {
-        id: i + 1,
-        name: app.name,
-        icon: app.name.charAt(0).toUpperCase(),
-        iconBg: getCategoryColor(category),
-        time: h > 0 ? `${h}h ${m}m` : `${m}m`,
-        totalSeconds: app.totalTime,
-        category,
-      };
-    });
-}
-
-export function getTopDistractions(dateFilter = null, mode = "single") {
-  const { cond, param } = buildCond(dateFilter, mode);
+  const productiveApps = getProductiveApps();
 
   const rows = runAll(`
     SELECT app_name, COALESCE(SUM(duration),0) as total_time
     FROM app_usage
-    WHERE ${cond} AND is_productive=0 AND is_idle=0
+    WHERE ${cond} AND is_idle=0
+    GROUP BY app_name
+    ORDER BY total_time DESC
+  `, param);
+
+  return rows.map((row, i) => {
+    const isProductive = productiveApps.includes(row.app_name);
+    const category = isProductive ? "Productive" : "Distracting";
+    const h = Math.floor(row.total_time / 3600);
+    const m = Math.floor((row.total_time % 3600) / 60);
+    return {
+      id: i + 1,
+      name: row.app_name,
+      icon: row.app_name.charAt(0).toUpperCase(),
+      iconBg: getCategoryColor(category),
+      time: h > 0 ? `${h}h ${m}m` : `${m}m`,
+      totalSeconds: row.total_time,
+      category,
+    };
+  });
+}
+
+export function getTopDistractions(dateFilter = null, mode = "single") {
+  const { cond, param } = buildCond(dateFilter, mode);
+  const productiveApps = getProductiveApps();
+
+  const query = `
+    SELECT app_name, COALESCE(SUM(duration),0) as total_time
+    FROM app_usage
+    WHERE ${cond} AND is_idle=0 AND app_name NOT IN (${productiveApps.map(() => '?').join(',')})
     GROUP BY app_name
     ORDER BY total_time DESC
     LIMIT 6
-  `, param);
+  `;
+
+  const queryParams = param ? [param, ...productiveApps] : productiveApps;
+  const rows = queryParams.length > 0 
+    ? db.prepare(query).all(...queryParams) 
+    : db.prepare(query).all();
 
   if (rows.length === 0) return [];
   const maxMinutes = Math.max(...rows.map(r => r.total_time / 60));
@@ -96,16 +99,26 @@ export function getTopDistractions(dateFilter = null, mode = "single") {
 }
 
 export function getDailyTrends(days = 7) {
-  const rows = db.prepare(`
+  const productiveApps = getProductiveApps();
+  
+  const query = `
     SELECT
       date(timestamp) as day,
-      COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-      COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting
+      COALESCE(SUM(CASE 
+        WHEN is_idle=0 AND app_name IN (${productiveApps.map(() => '?').join(',')}) THEN duration
+        ELSE 0 
+      END),0) as productive,
+      COALESCE(SUM(CASE 
+        WHEN is_idle=0 AND app_name NOT IN (${productiveApps.map(() => '?').join(',')}) THEN duration
+        ELSE 0 
+      END),0) as distracting
     FROM app_usage
-    WHERE date(timestamp) >= date('now','localtime',? )
+    WHERE date(timestamp) >= date('now','localtime',?)
     GROUP BY date(timestamp)
     ORDER BY day ASC
-  `).all(`-${days} days`);
+  `;
+  
+  const rows = db.prepare(query).all(...productiveApps, ...productiveApps, `-${days} days`);
 
   const dayLabels = ["Su","Mo","Tu","We","Th","Fr","Sa"];
   const result    = { labels: [], focusScore: [], productiveTime: [] };
@@ -130,18 +143,22 @@ export function getDailyTrends(days = 7) {
 
 export function getFocusSessions(thresholdMinutes = 25, dateFilter = null, mode = "single") {
   const { cond, param } = buildCond(dateFilter, mode);
+  const productiveApps = getProductiveApps();
 
-  const rows = runAll(`
-    SELECT duration, is_productive, is_idle
+  const query = `
+    SELECT duration, app_name, is_idle
     FROM app_usage
     WHERE ${cond}
     ORDER BY timestamp ASC
-  `, param);
+  `;
+
+  const rows = param ? db.prepare(query).all(param) : db.prepare(query).all();
 
   let longestStreak = 0, currentStreak = 0, sessionCount = 0;
 
   for (const row of rows) {
-    if (row.is_productive === 1 && row.is_idle === 0) {
+    const isProductive = !row.is_idle && productiveApps.includes(row.app_name);
+    if (isProductive) {
       currentStreak += row.duration;
     } else {
       if (currentStreak > longestStreak) longestStreak = currentStreak;
@@ -157,15 +174,27 @@ export function getFocusSessions(thresholdMinutes = 25, dateFilter = null, mode 
 
 export function getTimeDistribution(dateFilter = null, mode = "single") {
   const { cond, param } = buildCond(dateFilter, mode);
+  const productiveApps = getProductiveApps();
 
-  const result = runGet(`
+  const query = `
     SELECT
-      COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-      COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
+      COALESCE(SUM(CASE 
+        WHEN is_idle=0 AND app_name IN (${productiveApps.map(() => '?').join(',')}) THEN duration
+        ELSE 0 
+      END),0) as productive,
+      COALESCE(SUM(CASE 
+        WHEN is_idle=0 AND app_name NOT IN (${productiveApps.map(() => '?').join(',')}) THEN duration
+        ELSE 0 
+      END),0) as distracting,
       COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle
     FROM app_usage
     WHERE ${cond}
-  `, param);
+  `;
+
+  const queryParams = param ? [param, ...productiveApps, ...productiveApps] : [...productiveApps, ...productiveApps];
+  const result = queryParams.length > 0 
+    ? db.prepare(query).get(...queryParams) 
+    : db.prepare(query).get();
 
   const total = (result?.productive||0) + (result?.distracting||0) + (result?.idle||0);
 

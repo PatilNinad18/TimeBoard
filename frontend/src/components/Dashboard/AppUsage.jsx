@@ -1,13 +1,23 @@
 import React from "react";
+import { useUser } from "../../context/UserContext";
 
 function AppUsage({ apps }) {
-  const getLabel = (minutes) => {
+  const { distractingApps } = useUser();
+
+  const getLabel = (appName, minutes) => {
+    if (distractingApps.includes(appName)) return "Distracting";
     if (minutes >= 180) return "Highly Focused";
     if (minutes >= 60) return "Needs Improvement";
-    return "Distracting";
+    return "Productive";
   };
 
-  const getLabelStyle = (minutes) => {
+  const getLabelStyle = (appName, minutes) => {
+    if (distractingApps.includes(appName)) {
+      return {
+        background: "var(--distracting-bg)",
+        color: "var(--distracting)",
+      };
+    }
     if (minutes >= 180)
       return {
         background: "var(--productive-bg)",
@@ -19,8 +29,8 @@ function AppUsage({ apps }) {
         color: "#facc15",
       };
     return {
-      background: "var(--distracting-bg)",
-      color: "var(--distracting)",
+      background: "var(--productive-bg)",
+      color: "var(--productive)",
     };
   };
 
@@ -71,9 +81,9 @@ function AppUsage({ apps }) {
 
                   <span
                     className="text-xs px-2 py-1 rounded-full"
-                    style={getLabelStyle(app.minutes)}
+                    style={getLabelStyle(app.app, app.minutes)}
                   >
-                    {getLabel(app.minutes)}
+                    {getLabel(app.app, app.minutes)}
                   </span>
                 </div>
               </li>

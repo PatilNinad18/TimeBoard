@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
+import { useUser } from "../context/UserContext";
 import DateFilter from "../components/Analytics/DateFilter";
 import SummaryCards from "../components/Analytics/SummaryCards";
 import TimeDistribution from "../components/Analytics/TimeDistribution";
@@ -63,6 +64,7 @@ const EMPTY_STATS = {
 
 export default function Analytics() {
   const { accentColor } = useTheme();
+  const { refreshTrigger } = useUser();
   const [filter, setFilter] = useState("Today");
 
   const [stats,            setStats]            = useState(EMPTY_STATS);
@@ -140,7 +142,7 @@ export default function Analytics() {
     }
 
     loadAll();
-  }, [filter, accentColor]);
+  }, [filter, accentColor, refreshTrigger]);
 
   return (
     <div className="analytics-page" style={{ "--accent-color": accentColor }}>

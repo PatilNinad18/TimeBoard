@@ -1,120 +1,246 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import ReportsHeader from '../components/Reports/ReportsHeader';
-import SummaryCards from '../components/Reports/SummaryCards';
-import SearchBar from '../components/Reports/SearchBar';
-import ExportButtons from '../components/Reports/ExportButtons';
-import ReportsTable from '../components/Reports/ReportsTable';
-import { useTheme } from '../context/ThemeContext';
-// import './Reports.css';
+import React, { useState, useEffect } from "react";
+import "./Reports.css";
 
-function Reports() {
-  const { darkMode, accentColor } = useTheme();
-  const [period, setPeriod] = useState("weekly");
-  const [summary, setSummary] = useState({
-    bestFocusDay: { day: "—", value: "0h 0m" },
-    avgFocusHours: "0h 0m",
-    totalFocusTime: "0h 0m",
-    consistency: 0,
-    trackedDays: 0,
-  });
-  const [tableData, setTableData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const PERIOD_OPTIONS = ["daily", "weekly", "monthly"];
+const PAGE_SIZE = 10;
 
-  const loadData = useCallback(async () => {
-    console.log("🔄 Starting reports data load...");
-    
-    if (!window.api) {
-      console.warn("⚠️ window.api not available - running outside Electron?");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const [summaryData, tableRows] = await Promise.all([
-        window.api.getReportSummary(period),
-        window.api.getReportTable(period)
-      ]);
-
-      setSummary(summaryData);
-      setTableData(tableRows);
-      console.log("📋 Reports data loaded successfully");
-    } catch (error) {
-      console.error("❌ Error loading reports data:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [period]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const handleExportCSV = async () => {
-    if (!window.api) return;
-    try {
-      const csv = await window.api.getReportCSV(period);
-      const blob = new Blob([csv], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `timeboard-report-${period}-${new Date().toISOString().split("T")[0]}.csv`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("[Reports] CSV export failed:", error);
-    }
-  };
-
+function FocusScoreBadge({ score }) {
+  const color = score >= 70 ? "var(--productive)" : score >= 40 ? "#facc15" : "var(--distracting)";
   return (
-    <div 
-      className={`reports-page ${darkMode ? "dark" : "light"} p-7 space-y-6`}
-      style={{
-        '--accent-color': accentColor,
-        '--accent-hover': `${accentColor}dd`,
-        '--accent-muted': `${accentColor}20`,
-      }}
-    >
-      <ReportsHeader period={period} trackedDays={summary.trackedDays} />
-
-      {/* Summary Cards */}
-      <div className="">
-        <div className="flex space-x-10 justify-between h-40 w-300">
-          <SummaryCards
-            title="Best Focus Day:"
-            value={summary.bestFocusDay.value}
-            subtitle={summary.bestFocusDay.day}
-            className="w-full"
-          />
-          <SummaryCards
-            title="Average Focus Hours:"
-            value={summary.avgFocusHours}
-            className="w-full"
-          />
-          <SummaryCards
-            title="Total Focus Time:"
-            value={summary.totalFocusTime}
-            className="w-full"
-          />
-          <SummaryCards
-            title="Consistency:"
-            value={`${summary.consistency}%`}
-            className="w-full"
-          />
-        </div>
-
-        <div className="pt-6">
-          <div className="flex items-end justify-between">
-            <SearchBar selected={period} onPeriodChange={setPeriod} />
-            <ExportButtons onExportCSV={handleExportCSV} />
-          </div>
-        </div>
-      </div>
-
-      {/* Reports Table */}
-      <ReportsTable data={tableData} loading={loading} />
-    </div>
+    <span className="focus-badge" style={{ color, borderColor: color }}>
+      {score}%
+    </span>
   );
 }
 
-export default Reports;
+export default function Reports() {
+  const [period,     setPeriod]     = useState("weekly");
+  const [summary,    setSummary]    = useState(null);
+  const [tableData,  setTableData]  = useState([]);
+  const [pagination, setPagination] = useState({ page: 1, totalPages: 1, total: 0, hasNext: false, hasPrev: false });
+  const [loading,    setLoading]    = useState(true);
+  const [tableLoad,  setTableLoad]  = useState(false);
+  const [error,      setError]      = useState(null);
+  const [search,     setSearch]     = useState("");
+
+  // Load summary when period changes
+  useEffect(() => {
+    if (!window.api) { setLoading(false); return; }
+    loadSummary();
+  }, [period]);
+
+  // Load table when period or page changes
+  useEffect(() => {
+    if (!window.api) return;
+    loadTable(pagination.page);
+  }, [period]);
+
+  async function loadSummary() {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await window.api.getReportSummary(period);
+      setSummary(data);
+    } catch (err) {
+      setError("Failed to load report summary.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function loadTable(page) {
+    setTableLoad(true);
+    try {
+      const result = await window.api.getReportTable(period, page, PAGE_SIZE);
+      if (result) {
+        setTableData(result.data || []);
+        setPagination({ ...result.pagination, page });
+      }
+    } catch (err) {
+      setTableData([]);
+    } finally {
+      setTableLoad(false);
+    }
+  }
+
+  async function handleExport() {
+    try {
+      const csv  = await window.api.getReportCSV(period);
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement("a");
+      a.href     = url;
+      a.download = `timeboard-${period}-${new Date().toISOString().split("T")[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Export failed. Please try again.");
+    }
+  }
+
+  const filteredRows = tableData.filter(row =>
+    !search ||
+    row.date.includes(search) ||
+    row.dayName.toLowerCase().includes(search.toLowerCase()) ||
+    row.topApp.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="reports-page">
+
+      {/* ── Header ── */}
+      <div className="reports-header">
+        <div className="reports-title-block">
+          <div className="reports-title-bar" />
+          <div>
+            <h1 className="reports-title">Productivity Overview</h1>
+            <p className="reports-subtitle">
+              {period.charAt(0).toUpperCase() + period.slice(1)} report
+              {summary ? ` • ${summary.trackedDays} days tracked` : ""}
+            </p>
+          </div>
+        </div>
+        <button className="reports-export-btn" onClick={handleExport}>
+          <span>⬇</span> Export CSV
+        </button>
+      </div>
+
+      {/* ── Summary cards ── */}
+      {loading ? (
+        <div className="reports-loading">
+          <div className="reports-spinner" />
+          <p>Loading report…</p>
+        </div>
+      ) : error ? (
+        <div className="reports-error">
+          <span>⚠</span> {error}
+          <button onClick={loadSummary}>Retry</button>
+        </div>
+      ) : (
+        <div className="reports-summary-grid">
+          {[
+            { label: "Best Focus Day",     value: summary?.bestFocusDay?.value  || "0m", sub: summary?.bestFocusDay?.day },
+            { label: "Average Focus Hours", value: summary?.avgFocusHours        || "0m" },
+            { label: "Total Focus Time",    value: summary?.totalFocusTime       || "0m" },
+            { label: "Consistency",         value: `${summary?.consistency || 0}%` },
+          ].map(({ label, value, sub }) => (
+            <div key={label} className="reports-summary-card">
+              <p className="summary-card-label">{label}:</p>
+              <p className="summary-card-value">{value}</p>
+              {sub && <p className="summary-card-sub">{sub}</p>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ── Period tabs + search ── */}
+      <div className="reports-toolbar">
+        <div className="reports-tabs">
+          {PERIOD_OPTIONS.map(p => (
+            <button
+              key={p}
+              className={`reports-tab ${period === p ? "active" : ""}`}
+              onClick={() => { setPeriod(p); loadTable(1); }}
+            >
+              {p.charAt(0).toUpperCase() + p.slice(1)}
+            </button>
+          ))}
+        </div>
+        <div className="reports-search-wrap">
+          <span className="reports-search-icon">🔍</span>
+          <input
+            className="reports-search"
+            placeholder="Search by date, day or app…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* ── Table ── */}
+      <div className="reports-table-wrap">
+        {tableLoad ? (
+          <div className="reports-table-loading">
+            <div className="reports-spinner small" />
+          </div>
+        ) : (
+          <table className="reports-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Total Time</th>
+                <th>Productive</th>
+                <th>Distracting</th>
+                <th>Idle</th>
+                <th>Focus Score</th>
+                <th>Top App</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredRows.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="reports-empty-row">
+                    {search ? "No results match your search." : "No data for this period."}
+                  </td>
+                </tr>
+              ) : (
+                filteredRows.map(row => (
+                  <tr key={row.id}>
+                    <td className="td-date">{row.date}</td>
+                    <td className="td-day">{row.dayName}</td>
+                    <td className="td-mono">{row.totalTime}</td>
+                    <td className="td-productive">{row.productiveTime}</td>
+                    <td className="td-distracting">{row.distractingTime}</td>
+                    <td className="td-mono">{row.idleTime}</td>
+                    <td><FocusScoreBadge score={row.focusScore} /></td>
+                    <td className="td-app">{row.topApp}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {/* ── Pagination ── */}
+      {!tableLoad && pagination.total > PAGE_SIZE && (
+        <div className="reports-pagination">
+          <span className="pagination-info">
+            Page {pagination.page} of {pagination.totalPages}
+            <span className="pagination-total"> ({pagination.total} days)</span>
+          </span>
+          <div className="pagination-controls">
+            <button
+              className="page-btn"
+              disabled={!pagination.hasPrev}
+              onClick={() => loadTable(pagination.page - 1)}
+            >
+              ‹ Prev
+            </button>
+            {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
+              .filter(p => Math.abs(p - pagination.page) <= 2)
+              .map(p => (
+                <button
+                  key={p}
+                  className={`page-btn ${p === pagination.page ? "active" : ""}`}
+                  onClick={() => loadTable(p)}
+                >
+                  {p}
+                </button>
+              ))
+            }
+            <button
+              className="page-btn"
+              disabled={!pagination.hasNext}
+              onClick={() => loadTable(pagination.page + 1)}
+            >
+              Next ›
+            </button>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}

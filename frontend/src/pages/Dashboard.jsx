@@ -7,6 +7,7 @@ import AppUsage from "../components/Dashboard/AppUsage";
 import ProductiveVsDistracting from "../components/Dashboard/ProductiveVsDistracting";
 import { FaClock, FaChartLine } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
+import { useUser } from "../context/UserContext";
 import "./Dashboard.css";
 
 function formatTime(seconds) {
@@ -17,6 +18,7 @@ function formatTime(seconds) {
 
 const Dashboard = ({ landingData }) => {
   const { darkMode, accentColor } = useTheme();
+  const { distractingApps, refreshTrigger } = useUser();
   const [stats, setStats] = useState({
     productive: "0h 0m",
     distracting: "0h 0m",
@@ -31,8 +33,9 @@ const Dashboard = ({ landingData }) => {
 
     async function loadData() {
       try {
-        console.log('[Dashboard] Starting data load...');
+        console.log('[Dashboard] Starting data load...', { refreshTrigger });
         
+        // Force fresh API calls by adding timestamp
         const [statsData, usageData] = await Promise.all([
           window.api.getTodayProductivityStats(),
           window.api.getUsage(),
@@ -40,6 +43,7 @@ const Dashboard = ({ landingData }) => {
 
         console.log('[Dashboard] Stats data received:', statsData);
         console.log('[Dashboard] Usage data received:', usageData);
+        console.log('[Dashboard] Focus score from backend:', statsData.score);
 
         setStats({
           productive:  formatTime(statsData.productive  || 0),
@@ -69,7 +73,7 @@ const Dashboard = ({ landingData }) => {
     loadData();
     const id = setInterval(loadData, 120000);
     return () => clearInterval(id);
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <div 
@@ -117,7 +121,7 @@ const Dashboard = ({ landingData }) => {
         {/* Row 3 — apps overview */}
         <ProductiveVsDistracting
           apps={apps}
-          distractingApps={landingData?.distractingApps}
+          distractingApps={distractingApps}
         />
 
       </div>

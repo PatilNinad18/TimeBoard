@@ -7,6 +7,7 @@ export function UserProvider({ children }) {
   const [distractingApps, setDistractingApps] = useState([]);
   const [onboarded, setOnboarded]         = useState(false);
   const [loading, setLoading]             = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -45,6 +46,7 @@ export function UserProvider({ children }) {
   };
 
   const updateDistractingApps = async (apps) => {
+    console.log("[UserContext] updateDistractingApps called with:", apps);
     const current = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
     const updated = { ...current, distractingApps: apps };
     localStorage.setItem("timeboard_user", JSON.stringify(updated));
@@ -57,17 +59,28 @@ export function UserProvider({ children }) {
           const prodApps = usage
             .filter((u) => !apps.includes(u.app))
             .map((u) => u.app);
+          console.log("[UserContext] Setting productive apps to:", prodApps);
           await window.api.setProductiveApps(prodApps);
         }
       } catch (err) {
         console.error("updateDistractingApps error:", err);
       }
     }
+
+    // Trigger refresh for all components after a small delay to ensure backend updates
+    console.log("[UserContext] Triggering refresh after delay...");
+    setTimeout(() => {
+      setRefreshTrigger(prev => {
+        const newTrigger = prev + 1;
+        console.log("[UserContext] Refresh trigger updated to:", newTrigger);
+        return newTrigger;
+      });
+    }, 500); // 500ms delay
   };
 
   return (
     <UserContext.Provider value={{
-      userName, distractingApps, onboarded, loading,
+      userName, distractingApps, onboarded, loading, refreshTrigger,
       saveUser, updateDistractingApps,
       setUserName, setDistractingApps,
     }}>

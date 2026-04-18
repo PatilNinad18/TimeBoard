@@ -1,0 +1,11 @@
+[2026-04-18T07:32:18.767Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T07:32:18.768Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T07:32:18.925Z] [INFO] [Main] Startup sync — 13 productive, 11 distracting
+[2026-04-18T07:32:22.243Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T07:32:33.629Z] [INFO] [IPC] set-productive-apps | {"count":21}
+[2026-04-18T07:32:37.081Z] [INFO] [IPC] set-productive-apps | {"count":20}
+[2026-04-18T07:32:38.501Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T07:32:43.180Z] [INFO] [IPC] set-productive-apps | {"count":19}
+[2026-04-18T07:32:46.487Z] [INFO] [IPC] set-productive-apps | {"count":18}
+[2026-04-18T07:32:47.913Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T07:33:18.943Z] [INFO] [Health] 24 apps today | 2160 total records

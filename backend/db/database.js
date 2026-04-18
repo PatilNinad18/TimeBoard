@@ -4,7 +4,7 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname  = path.dirname(__filename);
 
 const dbPath = path.join(__dirname, "../data/timeboard.db");
 
@@ -14,18 +14,23 @@ if (!fs.existsSync(path.dirname(dbPath))) {
 
 const db = new Database(dbPath);
 
-// FIX: timestamp has NO default — appTracker must always pass it explicitly
-// This prevents SQLite from silently using UTC CURRENT_TIMESTAMP
+// ── WAL mode — much faster writes, safer on crash ─────────────────────────
+db.pragma("journal_mode = WAL");
+db.pragma("synchronous = NORMAL");
+db.pragma("cache_size = -8000");   // 8MB cache
+db.pragma("foreign_keys = ON");
+
+// ── Schema ────────────────────────────────────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS app_usage (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    app_name    TEXT,
-    window_title TEXT,
-    domain      TEXT,
-    timestamp   DATETIME,
-    duration    REAL,
-    is_productive INTEGER DEFAULT 0,
-    is_idle     INTEGER DEFAULT 0
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    app_name      TEXT    NOT NULL,
+    window_title  TEXT,
+    domain        TEXT,
+    timestamp     DATETIME NOT NULL,
+    duration      REAL    NOT NULL DEFAULT 0,
+    is_productive INTEGER NOT NULL DEFAULT 1,
+    is_idle       INTEGER NOT NULL DEFAULT 0
   );
 
   CREATE TABLE IF NOT EXISTS daily_stats (
@@ -33,12 +38,12 @@ db.exec(`
     date                   TEXT UNIQUE,
     total_focus_time       INTEGER DEFAULT 0,
     total_distracting_time INTEGER DEFAULT 0,
-    productivity_score     REAL DEFAULT 0
+    productivity_score     REAL    DEFAULT 0
   );
 
   CREATE TABLE IF NOT EXISTS blocked_apps (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
-    app_name       TEXT UNIQUE,
+    app_name       TEXT UNIQUE NOT NULL,
     category       TEXT,
     user_created_at DATETIME
   );
@@ -51,37 +56,82 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS user_productive_apps (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    app_name TEXT UNIQUE
+    app_name TEXT UNIQUE NOT NULL
   );
 `);
 
-// Migrate existing DB: add missing columns if upgrading from old schema
-const columns = db.prepare(`PRAGMA table_info(app_usage)`).all();
+// ── Migrations — safely add columns if upgrading from older schema ─────────
+const columns = db.prepare("PRAGMA table_info(app_usage)").all();
 const colNames = columns.map(c => c.name);
 
 if (!colNames.includes("domain")) {
-  db.exec(`ALTER TABLE app_usage ADD COLUMN domain TEXT`);
-  console.log("Migrated: added domain column");
+  db.exec("ALTER TABLE app_usage ADD COLUMN domain TEXT");
+  console.log("[DB] Migrated: added domain column");
 }
 if (!colNames.includes("is_idle")) {
-  db.exec(`ALTER TABLE app_usage ADD COLUMN is_idle INTEGER DEFAULT 0`);
-  console.log("Migrated: added is_idle column");
+  db.exec("ALTER TABLE app_usage ADD COLUMN is_idle INTEGER DEFAULT 0");
+  console.log("[DB] Migrated: added is_idle column");
 }
 
-// FIX: if old rows have NULL timestamp (from migration), backfill with a placeholder
-// so date() queries don't silently skip them
+// ── Indexes — critical for performance with large datasets ─────────────────
 db.exec(`
-  UPDATE app_usage 
-  SET timestamp = datetime('now', 'localtime')
-  WHERE timestamp IS NULL;
+  CREATE INDEX IF NOT EXISTS idx_usage_timestamp
+    ON app_usage(timestamp);
+
+  CREATE INDEX IF NOT EXISTS idx_usage_date
+    ON app_usage(date(timestamp));
+
+  CREATE INDEX IF NOT EXISTS idx_usage_app_name
+    ON app_usage(app_name);
+
+  CREATE INDEX IF NOT EXISTS idx_usage_productive
+    ON app_usage(is_productive);
+
+  CREATE INDEX IF NOT EXISTS idx_usage_idle
+    ON app_usage(is_idle);
+
+  -- Composite index for the most common query pattern
+  CREATE INDEX IF NOT EXISTS idx_usage_date_productive
+    ON app_usage(date(timestamp), is_productive, is_idle);
 `);
 
-db.exec(`
-  CREATE INDEX IF NOT EXISTS idx_app_usage_timestamp  ON app_usage(timestamp);
-  CREATE INDEX IF NOT EXISTS idx_app_usage_app_name   ON app_usage(app_name);
-  CREATE INDEX IF NOT EXISTS idx_app_usage_productive ON app_usage(is_productive);
-`);
+// ── Auto-cleanup — keep only last 90 days to prevent unbounded growth ──────
+try {
+  const deleted = db.prepare(`
+    DELETE FROM app_usage
+    WHERE timestamp < datetime('now', 'localtime', '-90 days')
+  `).run();
 
-console.log("Database initialized");
+  if (deleted.changes > 0) {
+    console.log(`[DB] Cleaned up ${deleted.changes} old records (>90 days)`);
+    // Reclaim space after large deletions
+    db.exec("VACUUM");
+  }
+} catch (err) {
+  console.error("[DB] Cleanup error:", err.message);
+}
+
+// ── Fix NULL timestamps from old schema ────────────────────────────────────
+try {
+  const fixed = db.prepare(`
+    UPDATE app_usage
+    SET timestamp = datetime('now', 'localtime')
+    WHERE timestamp IS NULL
+  `).run();
+  if (fixed.changes > 0) {
+    console.log(`[DB] Fixed ${fixed.changes} NULL timestamps`);
+  }
+} catch (err) {
+  console.error("[DB] Timestamp fix error:", err.message);
+}
+
+// ── DB stats on startup ───────────────────────────────────────────────────
+try {
+  const count = db.prepare("SELECT COUNT(*) as c FROM app_usage").get();
+  const size  = fs.statSync(dbPath).size;
+  console.log(`[DB] Initialized — ${count.c} records | ${(size/1024).toFixed(1)} KB | ${dbPath}`);
+} catch (err) {
+  console.error("[DB] Stats error:", err.message);
+}
 
 export default db;
