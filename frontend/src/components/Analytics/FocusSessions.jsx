@@ -9,7 +9,6 @@ export default function FocusSessions({
   return (
     <div className="analytics-card focus-sessions">
       <div className="card-header">
-        <h3 className="section-num">6.</h3>
         <h3 className="section-title">Focus Sessions</h3>
       </div>
 

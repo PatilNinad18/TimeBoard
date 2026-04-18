@@ -69,7 +69,6 @@ export default function TimeDistribution({ data = DEFAULT_DATA, showDates = fals
   return (
     <div className="analytics-card time-distribution">
       <div className="card-header">
-        <h3 className="section-num">2.</h3>
         <h3 className="section-title">Time Distribution</h3>
         <button className="dates-toggle" onClick={onToggleDates}>
           <span className="dates-icon">📅</span> Dates

@@ -19,7 +19,6 @@ export default function AppBreakdownTable({ apps = DEFAULT_APPS }) {
     <div className="analytics-card app-breakdown">
       <div className="card-header">
         <div className="header-left">
-          <h3 className="section-num">3.</h3>
           <h3 className="section-title">App Usage Breakdown</h3>
         </div>
         

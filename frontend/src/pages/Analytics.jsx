@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { useUser } from "../context/UserContext";
 import DateFilter from "../components/Analytics/DateFilter";
 import SummaryCards from "../components/Analytics/SummaryCards";
 import TimeDistribution from "../components/Analytics/TimeDistribution";
@@ -12,17 +11,15 @@ import "./Analytics.css";
 
 function localDateStr(d) {
   return d.getFullYear() + "-" +
-    String(d.getMonth()+1).padStart(2,"0") + "-" +
-    String(d.getDate()).padStart(2,"0");
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
 }
 
-// Returns { dateFilter: "YYYY-MM-DD", mode: "single"|"range", days: N }
 function resolveFilter(f) {
   const now = new Date();
 
-  if (f === "Today") {
+  if (f === "Today")
     return { dateFilter: localDateStr(now), mode: "single", days: 1 };
-  }
 
   if (f === "Yesterday") {
     const y = new Date(now);
@@ -36,24 +33,22 @@ function resolveFilter(f) {
     return { dateFilter: localDateStr(s), mode: "range", days: 7 };
   }
 
-  if (f === "Last 30 days") {
+  if (f === "Last 30 days" || f === "Month") {
     const s = new Date(now);
     s.setDate(s.getDate() - 29);
     return { dateFilter: localDateStr(s), mode: "range", days: 30 };
   }
 
-  // Custom date range object from DateFilter component
-  if (typeof f === "object" && f.from) {
+  if (typeof f === "object" && f?.from)
     return { dateFilter: f.from, mode: "range", days: 30 };
-  }
 
-  // Fallback — last 7 days
+  // Fallback
   const s = new Date(now);
   s.setDate(s.getDate() - 6);
   return { dateFilter: localDateStr(s), mode: "range", days: 7 };
 }
 
-const fmt = (s) => `${Math.floor(s/3600)}h ${Math.floor((s%3600)/60)}m`;
+const fmt = (s) => `${Math.floor(s / 3600)}h ${Math.floor((s % 3600) / 60)}m`;
 
 const EMPTY_STATS = {
   productiveTime:  { label: "Total Productive Time",  value: "0h 0m", trend: "neutral", delta: "" },
@@ -64,7 +59,6 @@ const EMPTY_STATS = {
 
 export default function Analytics() {
   const { accentColor } = useTheme();
-  const { refreshTrigger } = useUser();
   const [filter, setFilter] = useState("Today");
 
   const [stats,            setStats]            = useState(EMPTY_STATS);
@@ -73,11 +67,11 @@ export default function Analytics() {
     { label: "Distracting", value: 0, color: "#4B4B5A"   },
     { label: "Idle",        value: 0, color: "#D1D1DC"   },
   ]);
-  const [appBreakdown,    setAppBreakdown]    = useState([]);
-  const [topDistractions, setTopDistractions] = useState([]);
-  const [dailyTrends,     setDailyTrends]     = useState({ labels: [], focusScore: [], productiveTime: [] });
-  const [focusSessions,   setFocusSessions]   = useState({ longestStreak: 0, sessionCount: 0, thresholdMinutes: 25 });
-  const [loading,         setLoading]         = useState(true);
+  const [appBreakdown,     setAppBreakdown]    = useState([]);
+  const [topDistractions,  setTopDistractions] = useState([]);
+  const [dailyTrends,      setDailyTrends]     = useState({ labels: [], focusScore: [], productiveTime: [] });
+  const [focusSessions,    setFocusSessions]   = useState({ longestStreak: 0, sessionCount: 0, thresholdMinutes: 25 });
+  const [loading,          setLoading]         = useState(true);
 
   useEffect(() => {
     if (!window.api) { setLoading(false); return; }
@@ -93,46 +87,48 @@ export default function Analytics() {
         const { dateFilter, mode, days } = resolveFilter(filter);
         console.log(`[Analytics] filter="${filter}" dateFilter="${dateFilter}" mode="${mode}" days=${days}`);
 
+        // FIX: pass each argument correctly — no mixed object/primitive
         const [productivity, distribution, breakdown, distractions, trends, sessions] =
           await Promise.all([
-            window.api.getTodayProductivityStats(dateFilter, mode),
-            window.api.getTimeDistribution(dateFilter, mode),
-            window.api.getAppBreakdown(dateFilter, mode),
-            window.api.getTopDistractions(dateFilter, mode),
-            window.api.getDailyTrends(days),
-            window.api.getFocusSessions(dateFilter, mode),
+            window.api.getTodayProductivityStats({ dateFilter, mode }),
+            window.api.getTimeDistribution({ dateFilter, mode }),
+            window.api.getAppBreakdown({ dateFilter, mode }),
+            window.api.getTopDistractions({ dateFilter, mode }),
+            window.api.getDailyTrends(days),           // plain number
+            window.api.getFocusSessions({ dateFilter, mode }),
           ]);
 
-        console.log("[Analytics] Backend responses received:");
-        console.log("  productivity:", productivity);
-        console.log("  distribution:", distribution);
-        console.log("  breakdown:", breakdown);
-        console.log("  distractions:", distractions);
-        console.log("  trends:", trends);
-        console.log("  sessions:", sessions);
+        console.log("[Analytics] productivity:", productivity);
+        console.log("[Analytics] distribution:", distribution);
+        console.log("[Analytics] trends:", trends);
+        console.log("[Analytics] sessions:", sessions);
 
-        setStats({
-          productiveTime:  { label: "Total Productive Time",  value: fmt(productivity.productive  || 0), trend: "neutral", delta: "" },
-          distractingTime: { label: "Total Distracting Time", value: fmt(productivity.distracting || 0), trend: "neutral", delta: "" },
-          idleTime:        { label: "Total Idle Time",        value: fmt(productivity.idle        || 0), trend: "neutral", delta: "" },
-          focusScore:      {
-            label: "Focus Score %",
-            value: `${Math.round(productivity.score || 0)}%`,
-            trend: "neutral",
-            scoreRaw: Math.round(productivity.score || 0),
-          },
-        });
+        if (productivity) {
+          setStats({
+            productiveTime:  { label: "Total Productive Time",  value: fmt(productivity.productive  || 0), trend: "neutral", delta: "" },
+            distractingTime: { label: "Total Distracting Time", value: fmt(productivity.distracting || 0), trend: "neutral", delta: "" },
+            idleTime:        { label: "Total Idle Time",        value: fmt(productivity.idle        || 0), trend: "neutral", delta: "" },
+            focusScore: {
+              label: "Focus Score %",
+              value: `${Math.round(productivity.score || 0)}%`,
+              trend: "neutral",
+              scoreRaw: Math.round(productivity.score || 0),
+            },
+          });
+        }
 
         if (distribution?.length > 0) {
           setTimeDistribution(
-            distribution.map(d => d.label === "Productive" ? { ...d, color: accentColor } : d)
+            distribution.map(d =>
+              d.label === "Productive" ? { ...d, color: accentColor } : d
+            )
           );
         }
 
-        setAppBreakdown(breakdown     || []);
-        setTopDistractions(distractions || []);
+        if (breakdown?.length > 0)     setAppBreakdown(breakdown);
+        if (distractions?.length > 0)  setTopDistractions(distractions);
         if (trends?.labels?.length > 0) setDailyTrends(trends);
-        if (sessions) setFocusSessions(sessions);
+        if (sessions)                  setFocusSessions(sessions);
 
       } catch (err) {
         console.error("[Analytics] load error:", err);
@@ -142,7 +138,7 @@ export default function Analytics() {
     }
 
     loadAll();
-  }, [filter, accentColor, refreshTrigger]);
+  }, [filter, accentColor]);
 
   return (
     <div className="analytics-page" style={{ "--accent-color": accentColor }}>

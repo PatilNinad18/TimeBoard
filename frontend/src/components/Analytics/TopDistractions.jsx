@@ -8,7 +8,6 @@ export default function TopDistractions({ apps = DEFAULT_DISTRACTIONS }) {
   return (
     <div className="analytics-card top-distractions">
       <div className="card-header">
-        <h3 className="section-num">4.</h3>
         <h3 className="section-title">Top Distractions</h3>
       </div>
       <p className="section-sub">Top Distracting Apps</p>

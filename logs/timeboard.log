@@ -9,3 +9,190 @@
 [2026-04-18T07:32:46.487Z] [INFO] [IPC] set-productive-apps | {"count":18}
 [2026-04-18T07:32:47.913Z] [INFO] [IPC] get-productive-stats | {}
 [2026-04-18T07:33:18.943Z] [INFO] [Health] 24 apps today | 2160 total records
+[2026-04-18T13:21:50.601Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:21:50.602Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:21:50.731Z] [INFO] [Main] Startup sync — 13 productive, 11 distracting
+[2026-04-18T13:21:53.639Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T13:22:07.919Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T13:22:17.469Z] [INFO] [IPC] set-productive-apps | {"count":22}
+[2026-04-18T13:22:20.460Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T13:22:24.570Z] [INFO] [IPC] set-productive-apps | {"count":21}
+[2026-04-18T13:22:27.974Z] [INFO] [IPC] set-productive-apps | {"count":20}
+[2026-04-18T13:22:29.479Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T13:22:38.137Z] [INFO] [IPC] set-productive-apps | {"count":19}
+[2026-04-18T13:22:41.532Z] [INFO] [IPC] set-productive-apps | {"count":18}
+[2026-04-18T13:22:42.669Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T13:22:44.958Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:22:50.750Z] [INFO] [Health] 24 apps today | 2158 total records
+[2026-04-18T13:23:50.771Z] [INFO] [Health] 24 apps today | 2165 total records
+[2026-04-18T13:24:50.787Z] [INFO] [Health] 24 apps today | 2165 total records
+[2026-04-18T13:25:21.993Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:25:43.383Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:25:44.094Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-12","mode":"range"}
+[2026-04-18T13:25:50.800Z] [INFO] [Health] 24 apps today | 2167 total records
+[2026-04-18T13:26:50.810Z] [INFO] [Health] 24 apps today | 2167 total records
+[2026-04-18T13:27:37.947Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-12","mode":"range"}
+[2026-04-18T13:27:50.825Z] [INFO] [Health] 24 apps today | 2167 total records
+[2026-04-18T13:28:02.931Z] [INFO] [IPC] get-productive-stats | {"dateFilter":{"dateFilter":"2026-04-12","mode":"range"}}
+[2026-04-18T13:28:02.933Z] [ERROR] [IPC] get-productive-stats failed: Too few parameter values were provided
+[2026-04-18T13:28:02.936Z] [ERROR] [IPC] get-time-distribution failed: Too few parameter values were provided
+[2026-04-18T13:28:02.938Z] [ERROR] [IPC] get-app-breakdown failed: Too few parameter values were provided
+[2026-04-18T13:28:02.940Z] [ERROR] [IPC] get-top-distractions failed: Too few parameter values were provided
+[2026-04-18T13:28:02.945Z] [ERROR] [IPC] get-focus-sessions failed: Too few parameter values were provided
+[2026-04-18T13:28:38.437Z] [INFO] [IPC] get-productive-stats | {"dateFilter":{"dateFilter":"2026-04-18","mode":"single"}}
+[2026-04-18T13:28:38.439Z] [ERROR] [IPC] get-productive-stats failed: Too few parameter values were provided
+[2026-04-18T13:28:38.440Z] [ERROR] [IPC] get-time-distribution failed: Too few parameter values were provided
+[2026-04-18T13:28:38.442Z] [ERROR] [IPC] get-app-breakdown failed: Too few parameter values were provided
+[2026-04-18T13:28:38.443Z] [ERROR] [IPC] get-top-distractions failed: Too few parameter values were provided
+[2026-04-18T13:28:38.445Z] [ERROR] [IPC] get-focus-sessions failed: Too few parameter values were provided
+[2026-04-18T13:28:40.133Z] [INFO] [Main] All windows closed
+[2026-04-18T13:28:57.078Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:28:57.080Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:28:57.256Z] [INFO] [Main] Startup sync — 11 productive, 13 distracting
+[2026-04-18T13:29:00.465Z] [INFO] [IPC] get-productive-stats | {}
+[2026-04-18T13:29:01.781Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:29:57.265Z] [INFO] [Health] 24 apps today | 2174 total records
+[2026-04-18T13:30:57.272Z] [INFO] [Health] 24 apps today | 2175 total records
+[2026-04-18T13:31:57.273Z] [INFO] [Health] 24 apps today | 2175 total records
+[2026-04-18T13:33:53.473Z] [INFO] [Health] 24 apps today | 2175 total records
+[2026-04-18T13:33:58.196Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:34:15.109Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:34:15.111Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:34:15.253Z] [INFO] [Main] Startup sync — 11 productive, 13 distracting
+[2026-04-18T13:34:18.620Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":null}
+[2026-04-18T13:34:59.383Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:34:59.385Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:34:59.556Z] [INFO] [Main] Startup sync — 11 productive, 13 distracting
+[2026-04-18T13:35:02.544Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":null}
+[2026-04-18T13:36:52.856Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:36:52.858Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:36:53.017Z] [INFO] [Main] Startup sync — 11 productive, 13 distracting
+[2026-04-18T13:36:56.308Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":null}
+[2026-04-18T13:36:58.648Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:37:01.308Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":null}
+[2026-04-18T13:37:05.524Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":null}
+[2026-04-18T13:37:07.556Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:37:53.033Z] [INFO] [Health] 25 apps today | 2198 total records
+[2026-04-18T13:38:53.042Z] [INFO] [Health] 25 apps today | 2227 total records
+[2026-04-18T13:39:07.636Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:39:38.078Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:39:53.051Z] [INFO] [Health] 25 apps today | 2246 total records
+[2026-04-18T13:40:53.066Z] [INFO] [Health] 25 apps today | 2253 total records
+[2026-04-18T13:41:53.076Z] [INFO] [Health] 25 apps today | 2263 total records
+[2026-04-18T13:42:53.080Z] [INFO] [Health] 25 apps today | 2270 total records
+[2026-04-18T13:43:42.914Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:43:52.565Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:43:53.095Z] [INFO] [Health] 25 apps today | 2278 total records
+[2026-04-18T13:43:53.290Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:44:15.219Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:44:53.099Z] [INFO] [Health] 25 apps today | 2293 total records
+[2026-04-18T13:45:53.107Z] [INFO] [Health] 25 apps today | 2302 total records
+[2026-04-18T13:46:53.112Z] [INFO] [Health] 25 apps today | 2314 total records
+[2026-04-18T13:46:58.393Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:47:09.061Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:47:09.063Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:47:09.236Z] [INFO] [Main] Startup sync — 11 productive, 13 distracting
+[2026-04-18T13:47:12.225Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:47:12.227Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:47:12.228Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:12.230Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:47:12.231Z] [INFO] [StatsService] result — productive:3723.4299999999994s distracting:10096.520000000002s idle:1673.35s score:26.9%
+[2026-04-18T13:47:14.001Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:47:14.002Z] [INFO] [StatsService] called — dateFilter: 2026-04-18, mode: single
+[2026-04-18T13:47:14.003Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:14.005Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:47:14.006Z] [INFO] [StatsService] result — productive:3723.4299999999994s distracting:10096.520000000002s idle:1673.35s score:26.9%
+[2026-04-18T13:47:16.032Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:47:16.033Z] [INFO] [StatsService] called — dateFilter: 2026-04-17, mode: single
+[2026-04-18T13:47:16.034Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:16.035Z] [INFO] [StatsService] raw rows count: 8
+[2026-04-18T13:47:16.036Z] [INFO] [StatsService] result — productive:767.69s distracting:526.28s idle:86s score:59.3%
+[2026-04-18T13:47:17.243Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-12","mode":"range"}
+[2026-04-18T13:47:17.244Z] [INFO] [StatsService] called — dateFilter: 2026-04-12, mode: range
+[2026-04-18T13:47:17.245Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:17.248Z] [INFO] [StatsService] raw rows count: 32
+[2026-04-18T13:47:17.249Z] [INFO] [StatsService] result — productive:7622.68s distracting:17309.519999999997s idle:8538.03s score:30.6%
+[2026-04-18T13:47:18.453Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-03-20","mode":"range"}
+[2026-04-18T13:47:18.454Z] [INFO] [StatsService] called — dateFilter: 2026-03-20, mode: range
+[2026-04-18T13:47:18.455Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:18.458Z] [INFO] [StatsService] raw rows count: 34
+[2026-04-18T13:47:18.459Z] [INFO] [StatsService] result — productive:8301.239999999998s distracting:18081.73s idle:9160.230000000001s score:31.5%
+[2026-04-18T13:47:20.373Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-12","mode":"range"}
+[2026-04-18T13:47:20.374Z] [INFO] [StatsService] called — dateFilter: 2026-04-12, mode: range
+[2026-04-18T13:47:20.375Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:20.378Z] [INFO] [StatsService] raw rows count: 32
+[2026-04-18T13:47:20.379Z] [INFO] [StatsService] result — productive:7622.68s distracting:17309.519999999997s idle:8538.03s score:30.6%
+[2026-04-18T13:47:20.982Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:47:20.983Z] [INFO] [StatsService] called — dateFilter: 2026-04-17, mode: single
+[2026-04-18T13:47:20.984Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:20.985Z] [INFO] [StatsService] raw rows count: 8
+[2026-04-18T13:47:20.986Z] [INFO] [StatsService] result — productive:767.69s distracting:526.28s idle:86s score:59.3%
+[2026-04-18T13:47:21.476Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:47:21.477Z] [INFO] [StatsService] called — dateFilter: 2026-04-18, mode: single
+[2026-04-18T13:47:21.478Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:21.479Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:47:21.480Z] [INFO] [StatsService] result — productive:3723.4299999999994s distracting:10096.520000000002s idle:1673.35s score:26.9%
+[2026-04-18T13:47:23.084Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:47:23.085Z] [INFO] [StatsService] called — dateFilter: 2026-04-17, mode: single
+[2026-04-18T13:47:23.086Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:23.087Z] [INFO] [StatsService] raw rows count: 8
+[2026-04-18T13:47:23.087Z] [INFO] [StatsService] result — productive:767.69s distracting:526.28s idle:86s score:59.3%
+[2026-04-18T13:47:24.325Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-12","mode":"range"}
+[2026-04-18T13:47:24.326Z] [INFO] [StatsService] called — dateFilter: 2026-04-12, mode: range
+[2026-04-18T13:47:24.326Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:24.330Z] [INFO] [StatsService] raw rows count: 32
+[2026-04-18T13:47:24.330Z] [INFO] [StatsService] result — productive:7622.68s distracting:17309.519999999997s idle:8538.03s score:30.6%
+[2026-04-18T13:47:26.354Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-03-20","mode":"range"}
+[2026-04-18T13:47:26.355Z] [INFO] [StatsService] called — dateFilter: 2026-03-20, mode: range
+[2026-04-18T13:47:26.356Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:26.359Z] [INFO] [StatsService] raw rows count: 34
+[2026-04-18T13:47:26.360Z] [INFO] [StatsService] result — productive:8301.239999999998s distracting:18081.73s idle:9160.230000000001s score:31.5%
+[2026-04-18T13:47:27.589Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:47:27.590Z] [INFO] [StatsService] called — dateFilter: 2026-04-17, mode: single
+[2026-04-18T13:47:27.591Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:27.592Z] [INFO] [StatsService] raw rows count: 8
+[2026-04-18T13:47:27.593Z] [INFO] [StatsService] result — productive:767.69s distracting:526.28s idle:86s score:59.3%
+[2026-04-18T13:47:29.063Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-12","mode":"range"}
+[2026-04-18T13:47:29.064Z] [INFO] [StatsService] called — dateFilter: 2026-04-12, mode: range
+[2026-04-18T13:47:29.065Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:29.068Z] [INFO] [StatsService] raw rows count: 32
+[2026-04-18T13:47:29.068Z] [INFO] [StatsService] result — productive:7622.68s distracting:17309.519999999997s idle:8538.03s score:30.6%
+[2026-04-18T13:47:31.387Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-03-20","mode":"range"}
+[2026-04-18T13:47:31.388Z] [INFO] [StatsService] called — dateFilter: 2026-03-20, mode: range
+[2026-04-18T13:47:31.389Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:31.392Z] [INFO] [StatsService] raw rows count: 34
+[2026-04-18T13:47:31.393Z] [INFO] [StatsService] result — productive:8301.239999999998s distracting:18081.73s idle:9160.230000000001s score:31.5%
+[2026-04-18T13:47:33.650Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:47:33.651Z] [INFO] [StatsService] called — dateFilter: 2026-04-18, mode: single
+[2026-04-18T13:47:33.652Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:33.654Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:47:33.654Z] [INFO] [StatsService] result — productive:3723.4299999999994s distracting:10096.520000000002s idle:1673.35s score:26.9%
+[2026-04-18T13:47:34.515Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-17","mode":"single"}
+[2026-04-18T13:47:34.516Z] [INFO] [StatsService] called — dateFilter: 2026-04-17, mode: single
+[2026-04-18T13:47:34.517Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:47:34.518Z] [INFO] [StatsService] raw rows count: 8
+[2026-04-18T13:47:34.519Z] [INFO] [StatsService] result — productive:767.69s distracting:526.28s idle:86s score:59.3%
+[2026-04-18T13:48:09.255Z] [INFO] [Health] 25 apps today | 2328 total records
+[2026-04-18T13:48:44.287Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:48:44.287Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:48:44.288Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:48:44.290Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:48:44.291Z] [INFO] [StatsService] result — productive:3806.12s distracting:10099.560000000001s idle:1673.35s score:27.4%
+[2026-04-18T13:48:52.627Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:48:52.628Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:48:52.628Z] [INFO] [StatsService] productive apps: ["Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:48:52.630Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:48:52.631Z] [INFO] [StatsService] result — productive:3806.12s distracting:10099.560000000001s idle:1673.35s score:27.4%
+[2026-04-18T13:49:03.968Z] [INFO] [IPC] set-productive-apps | {"count":19}
+[2026-04-18T13:49:06.924Z] [INFO] [IPC] set-productive-apps | {"count":21}
+[2026-04-18T13:49:09.265Z] [INFO] [Health] 25 apps today | 2338 total records
+[2026-04-18T13:49:12.620Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:49:12.620Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:49:12.621Z] [INFO] [StatsService] productive apps: ["Google Chrome","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:49:12.623Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:49:12.624Z] [INFO] [StatsService] result — productive:10913.11s distracting:2992.57s idle:1673.35s score:78.5%
+[2026-04-18T13:49:15.338Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:49:15.339Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:49:15.340Z] [INFO] [StatsService] productive apps: ["Google Chrome","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:49:15.341Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:49:15.342Z] [INFO] [StatsService] result — productive:10913.11s distracting:2992.57s idle:1673.35s score:78.5%

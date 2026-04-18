@@ -53,7 +53,6 @@ export default function FocusTrendChart({ data = DEFAULT_TREND }) {
     <div className="analytics-card focus-trend">
       <div className="card-header">
         <div className="header-left">
-          <h3 className="section-num">5.</h3>
           <h3 className="section-title">Daily Trends</h3>
         </div>
        

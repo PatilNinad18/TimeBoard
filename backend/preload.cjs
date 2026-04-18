@@ -2,56 +2,73 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 console.log("🚀 Preload script started");
 
+async function safeInvoke(channel, ...args) {
+  try {
+    return await ipcRenderer.invoke(channel, ...args);
+  } catch (err) {
+    console.error(`[Preload] IPC error on ${channel}:`, err.message);
+    return null;
+  }
+}
+
 try {
   contextBridge.exposeInMainWorld("api", {
 
-    // Stats — sends { dateFilter, mode } so backend knows single vs range
-    getTodayProductivityStats: (dateFilter, mode) => {
-      console.log("📊 getTodayProductivityStats | dateFilter:", dateFilter, "| mode:", mode);
-      return ipcRenderer.invoke("get-productive-stats", { dateFilter, mode });
+    // Stats
+    getTodayProductivityStats: (payload) => {
+      if (typeof payload === "object" && payload !== null) {
+        const { dateFilter, mode } = payload;
+        return safeInvoke("get-productive-stats", { dateFilter, mode });
+      }
+      // Dashboard calls with no args
+      return safeInvoke("get-productive-stats", { dateFilter: null, mode: "single" });
     },
 
-    getUsage: () => ipcRenderer.invoke("get-usage"),
+    getUsage: () => safeInvoke("get-usage"),
 
-    // Analytics — all send { dateFilter, mode }
-    getTimeDistribution: (dateFilter, mode) => {
-      console.log("📊 getTimeDistribution | dateFilter:", dateFilter, "| mode:", mode);
-      return ipcRenderer.invoke("get-time-distribution", { dateFilter, mode });
+    // Analytics
+    getTimeDistribution: (payload) => {
+      const { dateFilter, mode } = payload || {};
+      return safeInvoke("get-time-distribution", { dateFilter, mode });
     },
-    getAppBreakdown: (dateFilter, mode) => {
-      console.log("📊 getAppBreakdown | dateFilter:", dateFilter, "| mode:", mode);
-      return ipcRenderer.invoke("get-app-breakdown", { dateFilter, mode });
+
+    getAppBreakdown: (payload) => {
+      const { dateFilter, mode } = payload || {};
+      return safeInvoke("get-app-breakdown", { dateFilter, mode });
     },
-    getTopDistractions: (dateFilter, mode) => {
-      console.log("📊 getTopDistractions | dateFilter:", dateFilter, "| mode:", mode);
-      return ipcRenderer.invoke("get-top-distractions", { dateFilter, mode });
+
+    getTopDistractions: (payload) => {
+      const { dateFilter, mode } = payload || {};
+      return safeInvoke("get-top-distractions", { dateFilter, mode });
     },
-    getDailyTrends: (days) => {
+
+    // FIX: getDailyTrends receives { days } object from Analytics.jsx
+    // but main.js handler expects a plain number — unwrap here
+    getDailyTrends: (payload) => {
+      const days = typeof payload === "object" ? (payload?.days || 7) : (payload || 7);
       console.log("📊 getDailyTrends | days:", days);
-      return ipcRenderer.invoke("get-daily-trends", days);
+      return safeInvoke("get-daily-trends", days);
     },
-    getFocusSessions: (dateFilter, mode) => {
-      console.log("📊 getFocusSessions | dateFilter:", dateFilter, "| mode:", mode);
-      return ipcRenderer.invoke("get-focus-sessions", { dateFilter, mode });
+
+    getFocusSessions: (payload) => {
+      const { dateFilter, mode } = payload || {};
+      return safeInvoke("get-focus-sessions", { dateFilter, mode });
     },
 
     // Reports
-    getReportSummary: (period) => ipcRenderer.invoke("get-report-summary", period),
-    getReportTable:   (period) => ipcRenderer.invoke("get-report-table",   period),
-    getReportCSV:     (period) => ipcRenderer.invoke("get-report-csv",     period),
+    getReportSummary: (period) => safeInvoke("get-report-summary", period),
+    getReportTable:   (period, page, pageSize) => safeInvoke("get-report-table", { period, page, pageSize }),
+    getReportCSV:     (period) => safeInvoke("get-report-csv", period),
 
     // Activity
-    getActivitySessions: (dateStr) => {
-      console.log("⏰ getActivitySessions | date:", dateStr);
-      return ipcRenderer.invoke("get-activity-sessions", dateStr);
-    },
+    getActivitySessions: (dateStr) => safeInvoke("get-activity-sessions", dateStr),
 
     // Settings
-    setProductiveApps: (apps) => ipcRenderer.invoke("set-productive-apps", apps),
-    getProductiveApps: ()     => ipcRenderer.invoke("get-productive-apps"),
+    setProductiveApps: (apps) => safeInvoke("set-productive-apps", apps),
+    getProductiveApps: ()     => safeInvoke("get-productive-apps"),
 
     // AI
-    getAIInsights: () => ipcRenderer.invoke("get-ai-insights"),
+    getAIInsights: () => safeInvoke("get-ai-insights"),
   });
 
   console.log("✅ All APIs exposed to window.api");
