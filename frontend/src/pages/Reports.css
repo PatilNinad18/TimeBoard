@@ -1,0 +1,288 @@
+/* ═══════════════════════════════════════════════
+   Reports.css — Unified with Settings Theme
+   ═══════════════════════════════════════════════ */
+
+.reports-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ── Container ───────────────────────────── */
+.reports-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Header ─────────────────────────────── */
+.reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.reports-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.reports-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.reports-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.tracked-days-badge {
+  background: var(--accent-muted);
+  color: var(--accent-color);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+/* ── Summary Cards ───────────────────────── */
+.summary-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-color);
+}
+
+.summary-card-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.summary-card-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.summary-card-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ── Controls (Search + Export) ─────────── */
+.reports-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Search / Period Buttons */
+.search-bar-container {
+  display: flex;
+  gap: 8px;
+}
+
+.period-button {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.period-button:hover {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border-color: var(--accent-color);
+}
+
+.period-button.active {
+  background: var(--accent-color);
+  color: #111;
+  border-color: var(--accent-color);
+}
+
+/* Export Button */
+.export-button {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-color);
+  color: #111;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.export-button:hover {
+  opacity: 0.85;
+}
+
+.export-button:active {
+  transform: scale(0.97);
+}
+
+/* ── Table ─────────────────────────────── */
+.reports-table-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reports-table th {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.reports-table td {
+  padding: 12px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.reports-table tr:hover {
+  background: var(--surface-2);
+}
+
+.table-date,
+.table-app-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.table-time {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── Score Badges ─────────────────────── */
+.score-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.score-excellent {
+  background: var(--productive-bg);
+  color: var(--productive);
+}
+
+.score-good {
+  background: rgba(250, 204, 21, 0.12);
+  color: #facc15;
+}
+
+.score-poor {
+  background: var(--distracting-bg);
+  color: var(--distracting);
+}
+
+/* ── Loading ─────────────────────────── */
+.loading-container {
+  padding: 3rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--accent-color);
+  border-radius: 50%;
+  margin: auto;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Empty State ─────────────────────── */
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty-state-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+/* ── Responsive ─────────────────────── */
+@media (max-width: 768px) {
+  .reports-container {
+    padding: 1rem;
+  }
+
+  .reports-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .summary-cards-container {
+    grid-template-columns: 1fr;
+  }
+}

@@ -27,47 +27,172 @@ const ScoreBadge = ({ score }) => {
 function ReportsTable({ data = [], loading = false }) {
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-md p-8 text-center text-gray-400">
-        Loading report data...
+      <div 
+        className="rounded-2xl shadow-md p-8 text-center"
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+        }}
+      >
+        <p style={{ color: "var(--text-secondary)" }}>
+          Loading report data...
+        </p>
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-md p-8 text-center text-gray-400">
-        <p className="text-lg">No data available yet</p>
-        <p className="text-sm mt-2">Start using apps and TimeBoard will track your productivity</p>
+      <div 
+        className="rounded-2xl shadow-md p-8 text-center"
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+        }}
+      >
+        <p 
+          className="text-lg"
+          style={{ color: "var(--text-primary)" }}
+        >
+          No data available yet
+        </p>
+        <p 
+          className="text-sm mt-2"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          Start using apps and TimeBoard will track your productivity
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+    <div 
+      className="rounded-2xl shadow-md overflow-hidden"
+      style={{
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+      }}
+    >
       <table className="w-full text-left">
         <thead>
-          <tr className="bg-gray-50 border-b border-gray-200">
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Date</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Day</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Total Time</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Productive</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Distracting</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Idle</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Focus Score</th>
-            <th className="px-5 py-4 text-sm font-semibold text-gray-600">Top App</th>
+          <tr 
+            className="border-b"
+            style={{
+              background: "var(--surface-variant)",
+              borderColor: "var(--border)",
+            }}
+          >
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Date
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Day
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Total Time
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Productive
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Distracting
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Idle
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Focus Score
+            </th>
+            <th 
+              className="px-5 py-4 text-sm font-semibold"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Top App
+            </th>
           </tr>
         </thead>
         <tbody>
           {data.map((row) => (
-            <tr key={row.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-              <td className="px-5 py-4 text-sm font-medium text-gray-800">{row.date}</td>
-              <td className="px-5 py-4 text-sm text-gray-600">{row.dayName}</td>
-              <td className="px-5 py-4 text-sm text-gray-700">{row.totalTime}</td>
-              <td className="px-5 py-4 text-sm text-green-600 font-medium">{row.productiveTime}</td>
-              <td className="px-5 py-4 text-sm text-red-500 font-medium">{row.distractingTime}</td>
-              <td className="px-5 py-4 text-sm text-gray-400">{row.idleTime}</td>
-              <td className="px-5 py-4"><ScoreBadge score={row.focusScore} /></td>
-              <td className="px-5 py-4 text-sm text-gray-600">{row.topApp}</td>
+            <tr 
+              key={row.id} 
+              className="border-b transition-colors"
+              style={{
+                borderColor: "var(--border)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--surface-variant)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              <td 
+                className="px-5 py-4 text-sm font-medium"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {row.date}
+              </td>
+              <td 
+                className="px-5 py-4 text-sm"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {row.dayName}
+              </td>
+              <td 
+                className="px-5 py-4 text-sm"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {row.totalTime}
+              </td>
+              <td 
+                className="px-5 py-4 text-sm font-medium"
+                style={{ color: "var(--productive)" }}
+              >
+                {row.productiveTime}
+              </td>
+              <td 
+                className="px-5 py-4 text-sm font-medium"
+                style={{ color: "var(--distracting)" }}
+              >
+                {row.distractingTime}
+              </td>
+              <td 
+                className="px-5 py-4 text-sm"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {row.idleTime}
+              </td>
+              <td className="px-5 py-4">
+                <ScoreBadge score={row.focusScore} />
+              </td>
+              <td 
+                className="px-5 py-4 text-sm"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {row.topApp}
+              </td>
             </tr>
           ))}
         </tbody>

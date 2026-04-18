@@ -7,7 +7,9 @@ import DataManagement from "../components/Settings/DataManagement";
 import Accessibility from "../components/Settings/Accessibility";
 import Preferences from "../components/Settings/Preferences";
 import DarkModeToggle from "../components/Settings/DarkModeToggle";
+import DistractingAppsSettings from "../components/Settings/DistractingAppsSettings";
 import { useTheme } from "../context/ThemeContext";
+import { useUser } from "../context/UserContext";
 import "./Settings.css";
 
 export default function Settings() {
@@ -23,6 +25,7 @@ export default function Settings() {
   const [accessEnabled, setAccessEnabled]     = useState(false);
   const [dataMgmtEnabled, setDataMgmtEnabled] = useState(false);
   const [toast, setToast]                     = useState(null);
+  const { userName, distractingApps, updateDistractingApps } = useUser();
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -66,6 +69,11 @@ export default function Settings() {
     } catch {
       showToast("Failed to save rules", "error");
     }
+  };
+
+  const handleDistractingAppsChange = async (apps) => {
+    await updateDistractingApps(apps);
+    showToast("Distracting apps updated");
   };
 
   const handleExport = async () => {
@@ -126,7 +134,8 @@ export default function Settings() {
 
           <div className="settings-col">
             <BlockingRules rules={blockingRules} onRulesChange={setBlockingRules} />
-            <Categories categories={categories} onCategoriesChange={setCategories} />
+            <DistractingAppsSettings onSave={() => showToast("Distracting apps updated")} />
+            {/* <Categories categories={categories} onCategoriesChange={setCategories} /> */}
             <DataManagement
               version="12.0"
               enabled={dataMgmtEnabled}

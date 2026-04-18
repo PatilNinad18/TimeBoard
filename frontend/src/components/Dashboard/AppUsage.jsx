@@ -3,21 +3,46 @@ import React from "react";
 function AppUsage({ apps }) {
   const getLabel = (minutes) => {
     if (minutes >= 180) return "Highly Focused";
-    if (minutes >= 60)  return "Needs Improvement";
+    if (minutes >= 60) return "Needs Improvement";
     return "Distracting";
   };
 
-  const getLabelColor = (minutes) => {
-    if (minutes >= 180) return "bg-green-100 text-green-700";
-    if (minutes >= 60)  return "bg-yellow-100 text-yellow-700";
-    return "bg-red-100 text-red-700";
+  const getLabelStyle = (minutes) => {
+    if (minutes >= 180)
+      return {
+        background: "var(--productive-bg)",
+        color: "var(--productive)",
+      };
+    if (minutes >= 60)
+      return {
+        background: "rgba(250,204,21,0.12)",
+        color: "#facc15",
+      };
+    return {
+      background: "var(--distracting-bg)",
+      color: "var(--distracting)",
+    };
   };
 
   return (
-    <div className="bg-white text-black rounded-2xl shadow-md p-5">
-      <h4 className="text-black text-lg font-medium mb-3">App Usage</h4>
+    <div
+      className="rounded-2xl shadow-md p-5"
+      style={{
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+      }}
+    >
+      <h4
+        className="text-lg font-medium mb-3"
+        style={{ color: "var(--text-primary)" }}
+      >
+        App Usage
+      </h4>
+
       {apps.length === 0 ? (
-        <p className="text-gray-400 text-sm">No app usage data yet.</p>
+        <p style={{ color: "var(--text-secondary)" }}>
+          No app usage data yet.
+        </p>
       ) : (
         <ul className="space-y-2">
           {[...apps]
@@ -26,12 +51,28 @@ function AppUsage({ apps }) {
             .map((app, index) => (
               <li
                 key={index}
-                className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0"
+                className="flex justify-between items-center pb-2"
+                style={{ borderBottom: "1px solid var(--border)" }}
               >
-                <span className="truncate max-w-[120px]">{app.app}</span>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-sm font-mono">{app.minutes}m</span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${getLabelColor(app.minutes)}`}>
+                <span
+                  className="truncate max-w-[120px]"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  {app.app}
+                </span>
+
+                <div className="flex items-center gap-2">
+                  <span
+                    className="text-sm font-mono"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    {app.minutes}m
+                  </span>
+
+                  <span
+                    className="text-xs px-2 py-1 rounded-full"
+                    style={getLabelStyle(app.minutes)}
+                  >
                     {getLabel(app.minutes)}
                   </span>
                 </div>

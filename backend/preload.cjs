@@ -4,73 +4,54 @@ console.log("🚀 Preload script started");
 
 try {
   contextBridge.exposeInMainWorld("api", {
-    // Dashboard & Analytics
-    getTodayProductivityStats: () => {
-      console.log("📊 getTodayProductivityStats called");
-      return ipcRenderer.invoke("get-productive-stats");
-    },
-    getUsage: () => {
-      console.log("📊 getUsage called");
-      return ipcRenderer.invoke("get-usage");
+
+    // Stats — sends { dateFilter, mode } so backend knows single vs range
+    getTodayProductivityStats: (dateFilter, mode) => {
+      console.log("📊 getTodayProductivityStats | dateFilter:", dateFilter, "| mode:", mode);
+      return ipcRenderer.invoke("get-productive-stats", { dateFilter, mode });
     },
 
-    // Analytics
-    getTimeDistribution: () => {
-      console.log("📊 getTimeDistribution called");
-      return ipcRenderer.invoke("get-time-distribution");
+    getUsage: () => ipcRenderer.invoke("get-usage"),
+
+    // Analytics — all send { dateFilter, mode }
+    getTimeDistribution: (dateFilter, mode) => {
+      console.log("📊 getTimeDistribution | dateFilter:", dateFilter, "| mode:", mode);
+      return ipcRenderer.invoke("get-time-distribution", { dateFilter, mode });
     },
-    getAppBreakdown: () => {
-      console.log("📊 getAppBreakdown called");
-      return ipcRenderer.invoke("get-app-breakdown");
+    getAppBreakdown: (dateFilter, mode) => {
+      console.log("📊 getAppBreakdown | dateFilter:", dateFilter, "| mode:", mode);
+      return ipcRenderer.invoke("get-app-breakdown", { dateFilter, mode });
     },
-    getTopDistractions: () => {
-      console.log("📊 getTopDistractions called");
-      return ipcRenderer.invoke("get-top-distractions");
+    getTopDistractions: (dateFilter, mode) => {
+      console.log("📊 getTopDistractions | dateFilter:", dateFilter, "| mode:", mode);
+      return ipcRenderer.invoke("get-top-distractions", { dateFilter, mode });
     },
     getDailyTrends: (days) => {
-      console.log("📊 getDailyTrends called");
+      console.log("📊 getDailyTrends | days:", days);
       return ipcRenderer.invoke("get-daily-trends", days);
     },
-    getFocusSessions: () => {
-      console.log("📊 getFocusSessions called");
-      return ipcRenderer.invoke("get-focus-sessions");
+    getFocusSessions: (dateFilter, mode) => {
+      console.log("📊 getFocusSessions | dateFilter:", dateFilter, "| mode:", mode);
+      return ipcRenderer.invoke("get-focus-sessions", { dateFilter, mode });
     },
 
     // Reports
-    getReportSummary: (period) => {
-      console.log("📋 getReportSummary called");
-      return ipcRenderer.invoke("get-report-summary", period);
-    },
-    getReportTable: (period) => {
-      console.log("📋 getReportTable called");
-      return ipcRenderer.invoke("get-report-table", period);
-    },
-    getReportCSV: (period) => {
-      console.log("📋 getReportCSV called");
-      return ipcRenderer.invoke("get-report-csv", period);
-    },
+    getReportSummary: (period) => ipcRenderer.invoke("get-report-summary", period),
+    getReportTable:   (period) => ipcRenderer.invoke("get-report-table",   period),
+    getReportCSV:     (period) => ipcRenderer.invoke("get-report-csv",     period),
 
     // Activity
     getActivitySessions: (dateStr) => {
-      console.log("⏰ getActivitySessions called");
+      console.log("⏰ getActivitySessions | date:", dateStr);
       return ipcRenderer.invoke("get-activity-sessions", dateStr);
     },
 
     // Settings
-    setProductiveApps: (apps) => {
-      console.log("⚙️ setProductiveApps called");
-      return ipcRenderer.invoke("set-productive-apps", apps);
-    },
-    getProductiveApps: () => {
-      console.log("⚙️ getProductiveApps called");
-      return ipcRenderer.invoke("get-productive-apps");
-    },
+    setProductiveApps: (apps) => ipcRenderer.invoke("set-productive-apps", apps),
+    getProductiveApps: ()     => ipcRenderer.invoke("get-productive-apps"),
 
-    // AI Insights
-    getAIInsights: () => {
-      console.log("🤖 getAIInsights called");
-      return ipcRenderer.invoke("get-ai-insights");
-    }
+    // AI
+    getAIInsights: () => ipcRenderer.invoke("get-ai-insights"),
   });
 
   console.log("✅ All APIs exposed to window.api");

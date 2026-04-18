@@ -5,13 +5,31 @@ import ActivitySearch from "../components/Activity/ActivitySearch";
 import ActivityTimeline from "../components/Activity/ActivityTimeline";
 import "./Activity.css";
 
+// Convert filter label → YYYY-MM-DD local date string
+function resolveDate(label) {
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  const localStr = (d) =>
+    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+  if (label === "Today")     return localStr(now);
+  if (label === "Yesterday") {
+    const y = new Date(now);
+    y.setDate(y.getDate() - 1);
+    return localStr(y);
+  }
+  // Already a YYYY-MM-DD string (custom date)
+  if (/^\d{4}-\d{2}-\d{2}$/.test(label)) return label;
+
+  // Fallback — today
+  return localStr(now);
+}
+
 function groupByHour(sessions) {
   const map = {};
-
   sessions.forEach((s) => {
-    const hour = s.hour || 0;
-    const label =
-      s.hourLabel ||
+    const hour  = s.hour || 0;
+    const label = s.hourLabel ||
       `${String(hour).padStart(2, "0")}:00 - ${String((hour + 1) % 24).padStart(2, "0")}:00`;
 
     if (!map[label]) {
@@ -21,12 +39,11 @@ function groupByHour(sessions) {
     map[label].totalMinutes += s.durationMinutes || 0;
   });
 
-  const sortedGroups = Object.values(map).sort((a, b) => a.sortKey - b.sortKey);
-  sortedGroups.forEach((group) => {
-    group.items.sort((a, b) => new Date(a.realTimestamp) - new Date(b.realTimestamp));
-  });
-
-  return sortedGroups;
+  const sorted = Object.values(map).sort((a, b) => a.sortKey - b.sortKey);
+  sorted.forEach((g) =>
+    g.items.sort((a, b) => new Date(a.realTimestamp) - new Date(b.realTimestamp))
+  );
+  return sorted;
 }
 
 function computeTotals(sessions) {
@@ -39,35 +56,24 @@ function computeTotals(sessions) {
 }
 
 export default function Activity() {
-  const [filter, setFilter]   = useState("All");
-  const [search, setSearch]   = useState("");
-  const [date, setDate]       = useState("Today");
+  const [filter,   setFilter]   = useState("All");
+  const [search,   setSearch]   = useState("");
+  const [date,     setDate]     = useState("Today");
   const [sessions, setSessions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading,  setLoading]  = useState(true);
 
   useEffect(() => {
-    if (!window.api) {
-      setLoading(false);
-      return;
-    }
+    if (!window.api) { setLoading(false); return; }
 
     async function load() {
       setLoading(true);
       try {
-        const now = new Date();
-        const localToday =
-          now.getFullYear() + "-" +
-          String(now.getMonth() + 1).padStart(2, "0") + "-" +
-          String(now.getDate()).padStart(2, "0");
-
-        const targetDate = date === "Today" ? localToday : date;
+        const targetDate = resolveDate(date);
+        console.log(`[Activity] Loading for: ${date} → ${targetDate}`);
         const data = await window.api.getActivitySessions(targetDate);
-
-        setSessions(
-          (data || []).filter((s) => s?.appName && s.durationMinutes > 0)
-        );
+        setSessions((data || []).filter((s) => s?.appName && s.durationMinutes > 0));
       } catch (err) {
-        console.error("❌ Activity load error:", err);
+        console.error("Activity load error:", err);
         setSessions([]);
       } finally {
         setLoading(false);
@@ -79,8 +85,7 @@ export default function Activity() {
 
   const filtered = useMemo(() => sessions.filter((s) => {
     const matchFilter =
-      filter === "All" ||
-      s.category === filter ||
+      filter === "All" || s.category === filter ||
       (filter === "Idle" && s.category === "Idle");
     const matchSearch =
       !search ||
@@ -94,8 +99,6 @@ export default function Activity() {
 
   return (
     <div className="activity-page">
-
-      {/* ── Header ── */}
       <div className="activity-header-wrap">
         <ActivityHeader
           totalSessions={totalSessions}
@@ -103,14 +106,10 @@ export default function Activity() {
           onDateChange={setDate}
         />
       </div>
-
-      {/* ── Filters + Search ── */}
       <div className="activity-toolbar">
         <ActivityFilters filter={filter} setFilter={setFilter} />
-        <ActivitySearch search={search} setSearch={setSearch} />
+        <ActivitySearch  search={search}  setSearch={setSearch} />
       </div>
-
-      {/* ── Scrollable timeline ── */}
       <div className="activity-scroll-area">
         {loading ? (
           <div className="activity-state-box">
@@ -120,8 +119,12 @@ export default function Activity() {
         ) : sessions.length === 0 ? (
           <div className="activity-state-box">
             <span className="state-icon">⏱</span>
-            <p className="state-title">No activity tracked yet</p>
-            <p className="state-sub">Use apps while TimeBoard is running and they'll appear here.</p>
+            <p className="state-title">No activity for {date}</p>
+            <p className="state-sub">
+              {date === "Today"
+                ? "Use apps while TimeBoard is running and they'll appear here."
+                : "No data was recorded for this date."}
+            </p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="activity-state-box">
@@ -133,7 +136,6 @@ export default function Activity() {
           <ActivityTimeline groups={groups} />
         )}
       </div>
-
     </div>
   );
 }

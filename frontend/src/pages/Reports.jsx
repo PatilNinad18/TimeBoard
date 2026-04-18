@@ -68,7 +68,7 @@ function Reports() {
 
   return (
     <div 
-      className="p-7 space-y-6"
+      className={`reports-page ${darkMode ? "dark" : "light"} p-7 space-y-6`}
       style={{
         '--accent-color': accentColor,
         '--accent-hover': `${accentColor}dd`,

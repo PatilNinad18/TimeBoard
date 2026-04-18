@@ -11,43 +11,91 @@ function ProductiveVsDistracting({ apps, distractingApps = [] }) {
   );
 
   return (
-    <div className="bg-white text-black rounded-2xl shadow-md p-5">
-      <h4 className="text-black text-lg font-medium mb-3">Apps Overview</h4>
+    <div
+      className="rounded-2xl shadow-md p-5"
+      style={{
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+      }}
+    >
+      <h4
+        className="text-lg font-medium mb-3"
+        style={{ color: "var(--text-primary)" }}
+      >
+        Apps Overview
+      </h4>
+
       <div className="grid grid-cols-2 gap-4">
-        {/* ✅ Productive Apps */}
+        {/* Productive */}
         <div>
-          <h5 className="font-semibold mb-2 text-green-700">Productive Apps</h5>
+          <h5
+            className="font-semibold mb-2"
+            style={{ color: "var(--productive)" }}
+          >
+            Productive Apps
+          </h5>
+
           <ul className="space-y-1">
             {productive.map((app, index) => (
               <li
                 key={index}
-                className="flex justify-between items-center border-b border-gray-100 py-1"
+                className="flex justify-between items-center py-1"
+                style={{ borderBottom: "1px solid var(--border)" }}
               >
-                <span>{app.app}</span>
-                <span className="text-green-700 font-medium">{app.minutes} min</span>
+                <span style={{ color: "var(--text-primary)" }}>
+                  {app.app}
+                </span>
+
+                <span
+                  className="font-medium"
+                  style={{ color: "var(--productive)" }}
+                >
+                  {app.minutes} min
+                </span>
               </li>
             ))}
+
             {productive.length === 0 && (
-              <li className="text-gray-400">No productive apps</li>
+              <li style={{ color: "var(--text-secondary)" }}>
+                No productive apps
+              </li>
             )}
           </ul>
         </div>
 
-        {/* 🚫 Distracting Apps */}
+        {/* Distracting */}
         <div>
-          <h5 className="font-semibold mb-2 text-red-700">Distracting Apps</h5>
+          <h5
+            className="font-semibold mb-2"
+            style={{ color: "var(--distracting)" }}
+          >
+            Distracting Apps
+          </h5>
+
           <ul className="space-y-1">
             {distracting.map((app, index) => (
               <li
                 key={index}
-                className="flex justify-between items-center border-b border-gray-100 py-1"
+                className="flex justify-between items-center py-1"
+                style={{ borderBottom: "1px solid var(--border)" }}
               >
-                <span>{app.app}</span>
-                <span className="text-red-700 font-medium">{app.minutes} min</span>
+                <span style={{ color: "var(--text-primary)" }}>
+                  {app.app}
+                </span>
+
+                <span
+                  className="font-medium"
+                  style={{ color: "var(--distracting)" }}
+                >
+                  {app.minutes} min
+                </span>
               </li>
             ))}
+
             {distracting.length === 0 && (
-              <li className="text-gray-400">No distracting apps</li>
+              <li style={{ color: "var(--text-secondary)" }}>
+                No distracting apps
+              </li>
             )}
           </ul>
         </div>
