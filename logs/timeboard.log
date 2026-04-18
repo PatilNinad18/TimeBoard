@@ -196,3 +196,57 @@
 [2026-04-18T13:49:15.340Z] [INFO] [StatsService] productive apps: ["Google Chrome","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
 [2026-04-18T13:49:15.341Z] [INFO] [StatsService] raw rows count: 20
 [2026-04-18T13:49:15.342Z] [INFO] [StatsService] result — productive:10913.11s distracting:2992.57s idle:1673.35s score:78.5%
+[2026-04-18T13:50:09.280Z] [INFO] [Health] 25 apps today | 2344 total records
+[2026-04-18T13:51:08.453Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:51:08.454Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:51:08.582Z] [INFO] [Main] Startup sync — 13 productive, 11 distracting
+[2026-04-18T13:51:11.547Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:51:11.548Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:51:11.549Z] [INFO] [StatsService] productive apps: ["Google Chrome","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:51:11.552Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:51:11.552Z] [INFO] [StatsService] result — productive:11002.93s distracting:3044.0200000000004s idle:1673.35s score:78.3%
+[2026-04-18T13:51:14.563Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:51:14.564Z] [INFO] [StatsService] called — dateFilter: 2026-04-18, mode: single
+[2026-04-18T13:51:14.565Z] [INFO] [StatsService] productive apps: ["Google Chrome","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:51:14.567Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:51:14.567Z] [INFO] [StatsService] result — productive:11002.93s distracting:3044.0200000000004s idle:1673.35s score:78.3%
+[2026-04-18T13:51:19.646Z] [INFO] [IPC] set-productive-apps | {"count":23}
+[2026-04-18T13:51:22.926Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:51:22.927Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:51:22.927Z] [INFO] [StatsService] productive apps: ["Google Chrome","GenshinImpact.exe","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:51:22.929Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:51:22.929Z] [INFO] [StatsService] result — productive:13579.689999999999s distracting:467.26s idle:1673.35s score:96.7%
+[2026-04-18T13:51:31.817Z] [INFO] [IPC] set-productive-apps | {"count":22}
+[2026-04-18T13:51:35.439Z] [INFO] [IPC] set-productive-apps | {"count":21}
+[2026-04-18T13:51:36.621Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:51:36.621Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:51:36.622Z] [INFO] [StatsService] productive apps: ["GenshinImpact.exe","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:51:36.623Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:51:36.624Z] [INFO] [StatsService] result — productive:6475.7300000000005s distracting:7571.22s idle:1673.35s score:46.1%
+[2026-04-18T13:52:08.593Z] [INFO] [Health] 25 apps today | 2352 total records
+[2026-04-18T13:52:33.161Z] [INFO] [Main] All IPC handlers registered
+[2026-04-18T13:52:33.163Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-18T13:52:33.284Z] [INFO] [Main] Startup sync — 13 productive, 11 distracting
+[2026-04-18T13:52:36.249Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:52:36.251Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:52:36.252Z] [INFO] [StatsService] productive apps: ["GenshinImpact.exe","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:52:36.254Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:52:36.254Z] [INFO] [StatsService] result — productive:6505.850000000001s distracting:7616.78s idle:1673.35s score:46.1%
+[2026-04-18T13:52:38.234Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-18","mode":"single"}
+[2026-04-18T13:52:38.234Z] [INFO] [StatsService] called — dateFilter: 2026-04-18, mode: single
+[2026-04-18T13:52:38.235Z] [INFO] [StatsService] productive apps: ["GenshinImpact.exe","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:52:38.249Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:52:38.249Z] [INFO] [StatsService] result — productive:6505.850000000001s distracting:7616.78s idle:1673.35s score:46.1%
+[2026-04-18T13:52:45.576Z] [INFO] [IPC] set-productive-apps | {"count":23}
+[2026-04-18T13:52:46.790Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:52:46.791Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:52:46.791Z] [INFO] [StatsService] productive apps: ["Google Chrome","GenshinImpact.exe","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:52:46.793Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:52:46.794Z] [INFO] [StatsService] result — productive:13609.810000000001s distracting:512.82s idle:1673.35s score:96.4%
+[2026-04-18T13:52:53.305Z] [INFO] [IPC] set-productive-apps | {"count":22}
+[2026-04-18T13:52:56.217Z] [INFO] [IPC] set-productive-apps | {"count":21}
+[2026-04-18T13:52:57.358Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-04-18T13:52:57.359Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-04-18T13:52:57.359Z] [INFO] [StatsService] productive apps: ["Google Chrome","Windsurf","Electron","Calculator","SnippingTool.exe","Windows Shell Experience Host","ShellHost","WhatsApp.Root","SearchHost.exe","LockApp.exe","File Picker UI Host","Genshin Impact","Telegram Desktop"]
+[2026-04-18T13:52:57.361Z] [INFO] [StatsService] raw rows count: 20
+[2026-04-18T13:52:57.361Z] [INFO] [StatsService] result — productive:11033.05s distracting:3089.5800000000004s idle:1673.35s score:78.1%
