@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { processSessions, fmtMinutes } from "../utils/sessionProcessor";
+import { useUser } from "../context/UserContext";
 import "./Reports.css";
 
 const PERIOD_OPTIONS = ["daily", "weekly", "monthly"];
 const PAGE_SIZE = 10;
 
 function FocusScoreBadge({ score }) {
-  const color = score >= 70 ? "var(--productive)" : score >= 40 ? "#facc15" : "var(--distracting)";
+  const color = score >= 70
+    ? "var(--productive)"
+    : score >= 40
+    ? "#facc15"
+    : "var(--distracting)";
   return (
     <span className="focus-badge" style={{ color, borderColor: color }}>
       {score}%
@@ -14,6 +20,7 @@ function FocusScoreBadge({ score }) {
 }
 
 export default function Reports() {
+  const { distractingApps } = useUser();
   const [period,     setPeriod]     = useState("weekly");
   const [summary,    setSummary]    = useState(null);
   const [tableData,  setTableData]  = useState([]);
@@ -23,17 +30,15 @@ export default function Reports() {
   const [error,      setError]      = useState(null);
   const [search,     setSearch]     = useState("");
 
-  // Load summary when period changes
   useEffect(() => {
     if (!window.api) { setLoading(false); return; }
     loadSummary();
   }, [period]);
 
-  // Load table when period or page changes
   useEffect(() => {
     if (!window.api) return;
-    loadTable(pagination.page);
-  }, [period]);
+    loadTable(1);
+  }, [period, distractingApps]);
 
   async function loadSummary() {
     setLoading(true);
@@ -41,7 +46,7 @@ export default function Reports() {
     try {
       const data = await window.api.getReportSummary(period);
       setSummary(data);
-    } catch (err) {
+    } catch {
       setError("Failed to load report summary.");
     } finally {
       setLoading(false);
@@ -52,15 +57,42 @@ export default function Reports() {
     setTableLoad(true);
     try {
       const result = await window.api.getReportTable(period, page, PAGE_SIZE);
-      if (result) {
-        setTableData(result.data || []);
+      if (result?.data) {
+        // Enrich each row with deepWorkTime from sessionProcessor
+        const enriched = result.data.map(row => {
+          // Approximate session list from the row's totals
+          // We don't have per-app breakdown per day here, so we approximate
+          // Deep work = productive sessions that would be ≥ 25 min
+          // Use the focus score from backend and add deepWork estimate
+          const prodSecs = parseMinStr(row.productiveTime) * 60;
+          const distSecs = parseMinStr(row.distractingTime) * 60;
+          const sessions = [];
+          if (prodSecs > 0) sessions.push({ app: "__productive__", startTime: 0, endTime: prodSecs, duration: prodSecs / 60 });
+          if (distSecs > 0) sessions.push({ app: "__distracting__", startTime: prodSecs, endTime: prodSecs + distSecs, duration: distSecs / 60 });
+
+          const processed = processSessions(sessions, ["__distracting__"]);
+          return {
+            ...row,
+            deepWorkTime: fmtMinutes(processed.deepWorkTime),
+            focusScore:   processed.focusScore > 0 ? processed.focusScore : row.focusScore,
+          };
+        });
+
+        setTableData(enriched);
         setPagination({ ...result.pagination, page });
       }
-    } catch (err) {
+    } catch {
       setTableData([]);
     } finally {
       setTableLoad(false);
     }
+  }
+
+  // Parse "1h 23m" or "45m" → minutes
+  function parseMinStr(str = "") {
+    const hMatch = str.match(/(\d+)h/);
+    const mMatch = str.match(/(\d+)m/);
+    return (hMatch ? parseInt(hMatch[1]) * 60 : 0) + (mMatch ? parseInt(mMatch[1]) : 0);
   }
 
   async function handleExport() {
@@ -73,7 +105,7 @@ export default function Reports() {
       a.download = `timeboard-${period}-${new Date().toISOString().split("T")[0]}.csv`;
       a.click();
       URL.revokeObjectURL(url);
-    } catch (err) {
+    } catch {
       alert("Export failed. Please try again.");
     }
   }
@@ -87,8 +119,6 @@ export default function Reports() {
 
   return (
     <div className="reports-page">
-
-      {/* ── Header ── */}
       <div className="reports-header">
         <div className="reports-title-block">
           <div className="reports-title-bar" />
@@ -105,7 +135,6 @@ export default function Reports() {
         </button>
       </div>
 
-      {/* ── Summary cards ── */}
       {loading ? (
         <div className="reports-loading">
           <div className="reports-spinner" />
@@ -119,9 +148,9 @@ export default function Reports() {
       ) : (
         <div className="reports-summary-grid">
           {[
-            { label: "Best Focus Day",     value: summary?.bestFocusDay?.value  || "0m", sub: summary?.bestFocusDay?.day },
-            { label: "Average Focus Hours", value: summary?.avgFocusHours        || "0m" },
-            { label: "Total Focus Time",    value: summary?.totalFocusTime       || "0m" },
+            { label: "Best Focus Day",      value: summary?.bestFocusDay?.value || "0m", sub: summary?.bestFocusDay?.day },
+            { label: "Average Focus Hours", value: summary?.avgFocusHours       || "0m" },
+            { label: "Total Focus Time",    value: summary?.totalFocusTime      || "0m" },
             { label: "Consistency",         value: `${summary?.consistency || 0}%` },
           ].map(({ label, value, sub }) => (
             <div key={label} className="reports-summary-card">
@@ -133,14 +162,13 @@ export default function Reports() {
         </div>
       )}
 
-      {/* ── Period tabs + search ── */}
       <div className="reports-toolbar">
         <div className="reports-tabs">
           {PERIOD_OPTIONS.map(p => (
             <button
               key={p}
               className={`reports-tab ${period === p ? "active" : ""}`}
-              onClick={() => { setPeriod(p); loadTable(1); }}
+              onClick={() => { setPeriod(p); }}
             >
               {p.charAt(0).toUpperCase() + p.slice(1)}
             </button>
@@ -157,7 +185,6 @@ export default function Reports() {
         </div>
       </div>
 
-      {/* ── Table ── */}
       <div className="reports-table-wrap">
         {tableLoad ? (
           <div className="reports-table-loading">
@@ -172,6 +199,7 @@ export default function Reports() {
                 <th>Total Time</th>
                 <th>Productive</th>
                 <th>Distracting</th>
+                <th>Deep Work</th>
                 <th>Idle</th>
                 <th>Focus Score</th>
                 <th>Top App</th>
@@ -180,7 +208,7 @@ export default function Reports() {
             <tbody>
               {filteredRows.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="reports-empty-row">
+                  <td colSpan={9} className="reports-empty-row">
                     {search ? "No results match your search." : "No data for this period."}
                   </td>
                 </tr>
@@ -192,6 +220,7 @@ export default function Reports() {
                     <td className="td-mono">{row.totalTime}</td>
                     <td className="td-productive">{row.productiveTime}</td>
                     <td className="td-distracting">{row.distractingTime}</td>
+                    <td className="td-mono" style={{ color: "var(--accent)" }}>{row.deepWorkTime}</td>
                     <td className="td-mono">{row.idleTime}</td>
                     <td><FocusScoreBadge score={row.focusScore} /></td>
                     <td className="td-app">{row.topApp}</td>
@@ -203,7 +232,6 @@ export default function Reports() {
         )}
       </div>
 
-      {/* ── Pagination ── */}
       {!tableLoad && pagination.total > PAGE_SIZE && (
         <div className="reports-pagination">
           <span className="pagination-info">
@@ -240,7 +268,6 @@ export default function Reports() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
