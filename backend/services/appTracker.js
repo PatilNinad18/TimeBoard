@@ -3,6 +3,7 @@ import db from "../db/database.js";
 import { extractDomain } from "./domainExtractor.js";
 import { isBlocked } from "./blockChecker.js";
 import { isUserIdle } from "./idleService.js";
+import { loadProductivityRules, isProductiveApp } from "./productivityRules.js";
 
 let currentSession = null;
 let startTime      = null;
@@ -35,20 +36,19 @@ function localISOString() {
 // 3. Everything else → 1 (productive by default)
 //    This ensures focus score works from day one without manual config
 function classifyApp(appName) {
-  // Check in-memory user distracting list first (fastest)
-  if (distractingAppNames.includes(appName.toLowerCase())) {
-    return 0;
+  // Use the centralized productivity rules so classification is consistent
+  try {
+    const rules = loadProductivityRules();
+    return isProductiveApp(appName, rules) ? 1 : 0;
+  } catch (err) {
+    // Fallback: respect in-memory list and blocked_apps table
+    if (distractingAppNames.includes(String(appName || "").toLowerCase())) return 0;
+    const blocked = db.prepare(
+      "SELECT 1 FROM blocked_apps WHERE LOWER(app_name) = LOWER(?)"
+    ).get(appName);
+    if (blocked) return 0;
+    return 1;
   }
-
-  // Check blocked_apps table in DB
-  const blocked = db.prepare(
-    "SELECT 1 FROM blocked_apps WHERE LOWER(app_name) = LOWER(?)"
-  ).get(appName);
-
-  if (blocked) return 0;
-
-  // Default: productive
-  return 1;
 }
 
 function saveSession(appName, windowTitle, domain, durationSeconds, isProductive, isIdle) {
@@ -94,7 +94,8 @@ async function trackActiveApp() {
     const domain      = extractDomain(appName, windowTitle);
 
     // Skip blocked apps entirely — don't even record them
-    if (isBlocked(appName)) {
+    // Also skip TimeBoard itself to prevent self-tracking
+    if (isBlocked(appName) || appName === "TimeBoard") {
       console.log(`[Tracker] Blocked: ${appName}`);
       return;
     }
@@ -106,8 +107,11 @@ async function trackActiveApp() {
       return;
     }
 
-    // App or window changed — save the previous session and start new one
-    if (currentSession.name !== appName || currentSession.title !== windowTitle) {
+    // Only treat app *name* changes as a session boundary. Window title
+    // often changes (especially in browsers) and would create many tiny
+    // sessions that still sum to the same time — but they make the DB noisy
+    // and can lead to confusing UI. Update title in-place instead.
+    if (currentSession.name !== appName) {
       const duration    = Number(((Date.now() - startTime) / 1000).toFixed(2));
       const prevDomain  = extractDomain(currentSession.name, currentSession.title);
       const productivity = classifyApp(currentSession.name);
@@ -123,6 +127,9 @@ async function trackActiveApp() {
 
       currentSession = { name: appName, title: windowTitle };
       startTime      = Date.now();
+    } else if (currentSession.title !== windowTitle) {
+      // Same app — keep tracking, but refresh title for future domain extraction
+      currentSession.title = windowTitle;
     }
 
   } catch (error) {

@@ -35,3 +35,28 @@ export function isProductiveApp(appName){
 
         return !! result;
 }
+
+// Sync existing app_usage rows' is_productive flags to match current rules.
+// By default updates last 7 days to avoid long-running operations.
+export function syncIsProductiveFlags(days = 7) {
+    const { productiveApps, blockedApps, hasProductiveApps } = loadProductivityRules();
+
+    const rows = db.prepare(`
+        SELECT id, app_name FROM app_usage
+        WHERE timestamp >= date('now','localtime', ?)
+    `).all(`-${days} days`);
+
+    const update = db.prepare(`UPDATE app_usage SET is_productive = ? WHERE id = ?`);
+    const tx = db.transaction((items) => {
+        for (const r of items) {
+            const name = String(r.app_name || "").toLowerCase();
+            let expected = 1;
+            if (blockedApps.includes(name)) expected = 0;
+            else if (hasProductiveApps) expected = productiveApps.includes(name) ? 1 : 0;
+            update.run(expected, r.id);
+        }
+    });
+
+    tx(rows);
+    return rows.length;
+}

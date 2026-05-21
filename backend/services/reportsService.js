@@ -1,5 +1,6 @@
 import db from "../db/database.js";
 import logger from "../logger.js";
+import { loadProductivityRules, isProductiveApp } from "./productivityRules.js";
 
 function fmt(seconds) {
   const h = Math.floor(seconds / 3600);
@@ -13,23 +14,55 @@ function localDateStr(d) {
     String(d.getDate()).padStart(2, "0");
 }
 
+function buildReportDayMap(days) {
+  const rules = loadProductivityRules();
+  const range = days > 1 ? `-${days - 1} days` : "0 days";
+  const rows = db.prepare(`
+    SELECT date(timestamp) as day, app_name, is_idle, duration
+    FROM app_usage
+    WHERE date(timestamp) >= date('now','localtime',?)
+    ORDER BY day DESC
+  `).all(range);
+
+  const dayMap = {};
+  for (const row of rows) {
+    const day = row.day;
+    if (!dayMap[day]) {
+      dayMap[day] = {
+        productive: 0,
+        distracting: 0,
+        idle: 0,
+        total: 0,
+        appDurations: {},
+      };
+    }
+
+    const entry = dayMap[day];
+    const duration = Number(row.duration) || 0;
+    entry.total += duration;
+
+    if (row.is_idle === 1) {
+      entry.idle += duration;
+    } else if (isProductiveApp(row.app_name, rules)) {
+      entry.productive += duration;
+    } else {
+      entry.distracting += duration;
+    }
+
+    const appKey = row.app_name || "Unknown";
+    entry.appDurations[appKey] = (entry.appDurations[appKey] || 0) + duration;
+  }
+
+  const daysList = Object.keys(dayMap).sort((a, b) => a < b ? 1 : -1);
+  return { dayMap, daysList };
+}
+
 export function getReportSummary(period = "weekly") {
   try {
     const days = period === "daily" ? 1 : period === "monthly" ? 30 : 7;
+    const { dayMap, daysList } = buildReportDayMap(days);
 
-    const rows = db.prepare(`
-      SELECT
-        date(timestamp) as day,
-        COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-        COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
-        COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle
-      FROM app_usage
-      WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp)
-      ORDER BY day ASC
-    `).all(`-${days} days`);
-
-    if (rows.length === 0) {
+    if (daysList.length === 0) {
       return {
         bestFocusDay: { day: "—", value: "0h 0m" },
         avgFocusHours: "0h 0m",
@@ -39,21 +72,22 @@ export function getReportSummary(period = "weekly") {
       };
     }
 
-    const bestDay        = rows.reduce((b, r) => r.productive > b.productive ? r : b, rows[0]);
-    const bestDayDate    = new Date(bestDay.day + "T00:00:00");
-    const dayNames       = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const rows = daysList.map(day => ({ day, ...dayMap[day] }));
+    const bestDay = rows.reduce((b, r) => r.productive > b.productive ? r : b, rows[0]);
+    const bestDayDate = new Date(bestDay.day + "T00:00:00");
+    const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const totalProductive = rows.reduce((s, r) => s + r.productive, 0);
-    const productiveDays  = rows.filter(r => r.productive > r.distracting).length;
+    const productiveDays = rows.filter(r => r.productive > r.distracting).length;
 
     return {
       bestFocusDay: {
         day: `${dayNames[bestDayDate.getDay()]} (${bestDay.day})`,
         value: fmt(bestDay.productive),
       },
-      avgFocusHours:  fmt(Math.round(totalProductive / rows.length)),
+      avgFocusHours: fmt(Math.round(totalProductive / rows.length)),
       totalFocusTime: fmt(totalProductive),
-      consistency:    Math.round((productiveDays / rows.length) * 100),
-      trackedDays:    rows.length,
+      consistency: Math.round((productiveDays / rows.length) * 100),
+      trackedDays: rows.length,
     };
   } catch (err) {
     logger.error("ReportsService", "getReportSummary failed", err.message);
@@ -70,63 +104,32 @@ export function getReportSummary(period = "weekly") {
 // ── Paginated report table ─────────────────────────────────────────────────
 export function getReportTable(period = "weekly", page = 1, pageSize = 10) {
   try {
-    const days   = period === "daily" ? 1 : period === "monthly" ? 30 : 7;
+    const days = period === "daily" ? 1 : period === "monthly" ? 30 : 7;
     const offset = (page - 1) * pageSize;
+    const { dayMap, daysList } = buildReportDayMap(days);
 
-    // Total count for pagination metadata
-    const totalRows = db.prepare(`
-      SELECT COUNT(DISTINCT date(timestamp)) as c
-      FROM app_usage
-      WHERE date(timestamp) >= date('now','localtime',?)
-    `).get(`-${days} days`);
-
-    const rows = db.prepare(`
-      SELECT
-        date(timestamp) as day,
-        COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-        COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
-        COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle,
-        COALESCE(SUM(duration),0) as total
-      FROM app_usage
-      WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp)
-      ORDER BY day DESC
-      LIMIT ? OFFSET ?
-    `).all(`-${days} days`, pageSize, offset);
-
-    // Top app per day — only for the current page's days
-    const dayList = rows.map(r => r.day);
-    const topApps = dayList.length > 0
-      ? db.prepare(`
-          SELECT date(timestamp) as day, app_name, SUM(duration) as t
-          FROM app_usage
-          WHERE date(timestamp) IN (${dayList.map(() => "?").join(",")})
-            AND is_idle=0
-          GROUP BY date(timestamp), app_name
-          ORDER BY day, t DESC
-        `).all(...dayList)
-      : [];
-
-    const topAppMap = {};
-    for (const r of topApps) {
-      if (!topAppMap[r.day]) topAppMap[r.day] = r.app_name;
-    }
+    const totalRows = daysList.length;
+    const pageDays = daysList.slice(offset, offset + pageSize);
 
     const fullDayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-    const data = rows.map((row, i) => {
-      const d           = new Date(row.day + "T00:00:00");
+    const data = pageDays.map((day, i) => {
+      const row = dayMap[day];
+      const d = new Date(day + "T00:00:00");
       const activeTotal = row.productive + row.distracting;
+      const topApp = Object.entries(row.appDurations)
+        .sort((a, b) => b[1] - a[1])[0]?.[0] || "—";
+
       return {
         id:             offset + i + 1,
-        date:           row.day,
+        date:           day,
         dayName:        fullDayNames[d.getDay()],
         totalTime:      fmt(row.total),
         productiveTime: fmt(row.productive),
-        distractingTime:fmt(row.distracting),
+        distractingTime: fmt(row.distracting),
         idleTime:       fmt(row.idle),
         focusScore:     activeTotal === 0 ? 0 : Math.round((row.productive / activeTotal) * 100),
-        topApp:         topAppMap[row.day] || "—",
+        topApp,
       };
     });
 
@@ -135,10 +138,10 @@ export function getReportTable(period = "weekly", page = 1, pageSize = 10) {
       pagination: {
         page,
         pageSize,
-        total:      totalRows.c,
-        totalPages: Math.ceil(totalRows.c / pageSize),
-        hasNext:    page < Math.ceil(totalRows.c / pageSize),
-        hasPrev:    page > 1,
+        total: totalRows,
+        totalPages: Math.ceil(totalRows / pageSize),
+        hasNext: page < Math.ceil(totalRows / pageSize),
+        hasPrev: page > 1,
       },
     };
   } catch (err) {
@@ -152,52 +155,30 @@ export function getReportTable(period = "weekly", page = 1, pageSize = 10) {
 
 export function getReportCSV(period = "weekly") {
   try {
-    // Get all rows without pagination for CSV export
     const days = period === "daily" ? 1 : period === "monthly" ? 30 : 7;
-
-    const rows = db.prepare(`
-      SELECT
-        date(timestamp) as day,
-        COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-        COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
-        COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle,
-        COALESCE(SUM(duration),0) as total
-      FROM app_usage
-      WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp)
-      ORDER BY day DESC
-    `).all(`-${days} days`);
-
-    const topApps = db.prepare(`
-      SELECT date(timestamp) as day, app_name, SUM(duration) as t
-      FROM app_usage
-      WHERE date(timestamp) >= date('now','localtime',?) AND is_idle=0
-      GROUP BY date(timestamp), app_name
-      ORDER BY day, t DESC
-    `).all(`-${days} days`);
-
-    const topAppMap = {};
-    for (const r of topApps) {
-      if (!topAppMap[r.day]) topAppMap[r.day] = r.app_name;
-    }
+    const { dayMap, daysList } = buildReportDayMap(days);
 
     const fullDayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     const headers = ["Date","Day","Total Time","Productive","Distracting","Idle","Focus Score","Top App"];
     const csvRows = [headers.join(",")];
 
-    for (const row of rows) {
-      const d           = new Date(row.day + "T00:00:00");
+    for (const day of daysList) {
+      const row = dayMap[day];
+      const d = new Date(day + "T00:00:00");
       const activeTotal = row.productive + row.distracting;
-      const score       = activeTotal === 0 ? 0 : Math.round((row.productive / activeTotal) * 100);
+      const score = activeTotal === 0 ? 0 : Math.round((row.productive / activeTotal) * 100);
+      const topApp = Object.entries(row.appDurations)
+        .sort((a, b) => b[1] - a[1])[0]?.[0] || "—";
+
       csvRows.push([
-        row.day,
+        day,
         fullDayNames[d.getDay()],
         fmt(row.total),
         fmt(row.productive),
         fmt(row.distracting),
         fmt(row.idle),
         `${score}%`,
-        `"${topAppMap[row.day] || "—"}"`,
+        `"${topApp}"`,
       ].join(","));
     }
 

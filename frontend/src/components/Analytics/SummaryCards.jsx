@@ -14,19 +14,8 @@ const TrendIcon = ({ trend }) => {
   return <Minus size={14} className="trend neutral" />;
 };
 
-const ScoreBar = ({ value }) => (
-  <div className="score-bar-wrap">
-    <div className="score-bar-track">
-      <div className="score-bar-fill" style={{ width: `${value}%` }} />
-      <div className="score-bar-thumb" style={{ left: `${value}%` }} />
-    </div>
-    <div className="score-bar-labels">
-      <span>0</span>
-      <span>50</span>
-      <span>100</span>
-    </div>
-  </div>
-);
+// Note: the detailed score ring is shown in the Dashboard's `FocusCard`.
+// Keep summary cards compact — no small score bar here.
 
 export default function SummaryCards({ stats = DEFAULT_STATS }) {
   const cards = [
@@ -48,7 +37,6 @@ export default function SummaryCards({ stats = DEFAULT_STATS }) {
               {s.trend && <TrendIcon trend={s.trend} />}
             </div>
             {s.delta && <span className="card-delta">{s.delta}</span>}
-            {key === "focusScore" && <ScoreBar value={s.scoreRaw} />}
           </div>
         );
       })}

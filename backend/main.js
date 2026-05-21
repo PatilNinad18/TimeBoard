@@ -19,6 +19,11 @@ import db from "./db/database.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 const isDev      = !app.isPackaged;
+
+// Set application name and user agent
+app.setName("TimeBoard");
+app.userAgentFallback = "TimeBoard/1.0.0";
+
 let mainWindow;
 
 // ── Global crash handlers ─────────────────────────────────────────────────
@@ -52,6 +57,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    title: "TimeBoard",
+    icon: path.join(__dirname, "../frontend/src/assets/time-management.png"),
     webPreferences: {
       preload: preloadPath,
       contextIsolation: true,
@@ -112,12 +119,32 @@ app.whenReady().then(() => {
   });
 
   // ── Settings ──────────────────────────────────────────────────────────────
-  safeHandle("set-productive-apps", (_, apps) => {
+  safeHandle("set-productive-apps", async (_, apps) => {
     logger.info("IPC", "set-productive-apps", { count: apps?.length });
     const result = setProductiveApps(apps);
     try {
       const all = db.prepare("SELECT DISTINCT app_name FROM app_usage").all().map(r => r.app_name);
-      updateDistractingApps(all.filter(a => !(apps || []).includes(a)));
+      const distracting = all.filter(a => !(apps || []).includes(a));
+
+      // Persist blocking choices so other services (stats, rules) use same classification
+      const deleteAll = db.prepare("DELETE FROM blocked_apps");
+      const insert = db.prepare("INSERT OR IGNORE INTO blocked_apps (app_name, user_created_at) VALUES (?, datetime('now','localtime'))");
+      const tx = db.transaction((list) => {
+        deleteAll.run();
+        for (const a of list) insert.run(a);
+      });
+      tx(distracting);
+
+      updateDistractingApps(distracting);
+
+      // Ensure existing rows reflect the new classification
+      import('./services/productivityService.js').then((m) => {
+        try { m.syncIsProductiveFlags(7); } catch (err) {
+          logger.warn("Main", "Failed to sync is_productive flags", err.message);
+        }
+      }).catch((err) => {
+        logger.warn("Main", "Failed to import productivityService for sync", err.message);
+      });
     } catch (err) {
       logger.warn("Main", "Tracker sync failed", err.message);
     }
@@ -160,8 +187,27 @@ app.whenReady().then(() => {
     const saved = getProductiveApps();
     if (saved.length > 0) {
       const all = db.prepare("SELECT DISTINCT app_name FROM app_usage").all().map(r => r.app_name);
-      updateDistractingApps(all.filter(a => !saved.includes(a)));
-      logger.info("Main", `Startup sync — ${saved.length} productive, ${all.length - saved.length} distracting`);
+      const distracting = all.filter(a => !saved.includes(a));
+
+      const deleteAll = db.prepare("DELETE FROM blocked_apps");
+      const insert = db.prepare("INSERT OR IGNORE INTO blocked_apps (app_name, user_created_at) VALUES (?, datetime('now','localtime'))");
+      const tx = db.transaction((list) => {
+        deleteAll.run();
+        for (const a of list) insert.run(a);
+      });
+      tx(distracting);
+
+      updateDistractingApps(distracting);
+      logger.info("Main", `Startup sync — ${saved.length} productive, ${all.length - saved.length} distracting (persisted)`);
+
+      // Sync DB flags to match productive/blocked lists
+      import('./services/productivityService.js').then((m) => {
+        try { m.syncIsProductiveFlags(90); } catch (err) {
+          logger.warn("Main", "Startup sync: failed to sync is_productive flags", err.message);
+        }
+      }).catch((err) => {
+        logger.warn("Main", "Startup import failed for productivityService sync", err.message);
+      });
     }
   } catch (err) {
     logger.warn("Main", "Startup sync error", err.message);

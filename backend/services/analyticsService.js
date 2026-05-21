@@ -1,5 +1,6 @@
 import db from "../db/database.js";
 import logger from "../logger.js";
+import { loadProductivityRules, isProductiveApp } from "./productivityRules.js";
 
 function buildCond(dateFilter, mode) {
   if (!dateFilter) {
@@ -12,14 +13,6 @@ function buildCond(dateFilter, mode) {
     cond: `date(timestamp) >= ? AND date(timestamp) <= date('now','localtime')`,
     param: dateFilter,
   };
-}
-
-function getProductiveApps() {
-  try {
-    return db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
-  } catch {
-    return [];
-  }
 }
 
 function localDateStr(d) {
@@ -49,7 +42,7 @@ function fetchRows(cond, param, sql) {
 export function getAppBreakdown(dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
+    const rules = loadProductivityRules();
 
     const rows = fetchRows(cond, param, `
       SELECT app_name, COALESCE(SUM(duration),0) as total_time
@@ -60,7 +53,7 @@ export function getAppBreakdown(dateFilter = null, mode = "single") {
     `);
 
     return rows.map((row, i) => {
-      const category = productiveApps.includes(row.app_name) ? "Productive" : "Distracting";
+      const category = isProductiveApp(row.app_name, rules) ? "Productive" : "Distracting";
       const h = Math.floor(row.total_time / 3600);
       const m = Math.floor((row.total_time % 3600) / 60);
       return {
@@ -83,7 +76,7 @@ export function getAppBreakdown(dateFilter = null, mode = "single") {
 export function getTopDistractions(dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
+    const rules = loadProductivityRules();
 
     const rows = fetchRows(cond, param, `
       SELECT app_name, COALESCE(SUM(duration),0) as total_time
@@ -94,7 +87,7 @@ export function getTopDistractions(dateFilter = null, mode = "single") {
     `);
 
     const distracting = rows
-      .filter(r => !productiveApps.includes(r.app_name))
+      .filter(r => !isProductiveApp(r.app_name, rules))
       .slice(0, 6);
 
     if (distracting.length === 0) return [];
@@ -124,7 +117,7 @@ export function getTopDistractions(dateFilter = null, mode = "single") {
 export function getTimeDistribution(dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
+    const rules = loadProductivityRules();
 
     const rows = fetchRows(cond, param, `
       SELECT app_name, is_idle, COALESCE(SUM(duration),0) as total
@@ -138,9 +131,7 @@ export function getTimeDistribution(dateFilter = null, mode = "single") {
     for (const row of rows) {
       if (row.is_idle) {
         idle += row.total;
-      } else if (productiveApps.length === 0) {
-        distracting += row.total;
-      } else if (productiveApps.includes(row.app_name)) {
+      } else if (isProductiveApp(row.app_name, rules)) {
         productive += row.total;
       } else {
         distracting += row.total;
@@ -172,8 +163,9 @@ export function getTimeDistribution(dateFilter = null, mode = "single") {
 // ── Daily Trends ──────────────────────────────────────────────────────────
 export function getDailyTrends(days = 7) {
   try {
-    const productiveApps = getProductiveApps();
+    const rules = loadProductivityRules();
 
+    const range = days > 1 ? `-${days - 1} days` : "0 days";
     const rows = db.prepare(`
       SELECT
         date(timestamp) as day,
@@ -184,15 +176,13 @@ export function getDailyTrends(days = 7) {
       WHERE date(timestamp) >= date('now','localtime',?)
       GROUP BY date(timestamp), app_name, is_idle
       ORDER BY day ASC
-    `).all(`-${days} days`);
+    `).all(range);
 
     const dayMap = {};
     for (const row of rows) {
       if (!dayMap[row.day]) dayMap[row.day] = { productive: 0, distracting: 0 };
       if (row.is_idle) continue;
-      if (productiveApps.length === 0) {
-        dayMap[row.day].distracting += row.total_duration;
-      } else if (productiveApps.includes(row.app_name)) {
+      if (isProductiveApp(row.app_name, rules)) {
         dayMap[row.day].productive += row.total_duration;
       } else {
         dayMap[row.day].distracting += row.total_duration;
@@ -226,7 +216,7 @@ export function getDailyTrends(days = 7) {
 export function getFocusSessions(thresholdMinutes = 25, dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
+    const rules = loadProductivityRules();
 
     const rows = fetchRows(cond, param, `
       SELECT duration, app_name, is_idle
@@ -238,9 +228,7 @@ export function getFocusSessions(thresholdMinutes = 25, dateFilter = null, mode 
     let longestStreak = 0, currentStreak = 0, sessionCount = 0;
 
     for (const row of rows) {
-      const isProductive = !row.is_idle && (
-        productiveApps.length === 0 || productiveApps.includes(row.app_name)
-      );
+      const isProductive = !row.is_idle && isProductiveApp(row.app_name, rules);
 
       if (isProductive) {
         currentStreak += row.duration;

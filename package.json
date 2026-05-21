@@ -1,4 +1,12 @@
 {
+  "name": "TimeBoard",
+  "version": "1.0.0",
+  "description": "Privacy-Focused Productivity Tracking",
+  "main": "backend/main.js",
+  "author": "TimeBoard Team",
+  "license": "MIT",
+  "keywords": ["productivity", "time-tracking", "focus", "analytics"],
+  "homepage": "https://timeboard.app",
   "devDependencies": {
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
@@ -6,9 +14,6 @@
     "electron-rebuild": "^3.2.9",
     "wait-on": "^9.0.1"
   },
-  "name": "timeboard",
-  "version": "1.0.0",
-  "main": "index.js",
   "dependencies": {
     "active-win": "^8.2.1",
     "ansi-regex": "^5.0.1",

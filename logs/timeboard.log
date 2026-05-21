@@ -740,3 +740,721 @@
 [2026-04-21T13:55:36.257Z] [INFO] [Health] 5 apps today | 2725 total records
 [2026-04-21T14:11:52.629Z] [INFO] [Health] 5 apps today | 2725 total records
 [2026-04-21T14:26:32.834Z] [INFO] [Health] 5 apps today | 2725 total records
+[2026-04-21T14:27:32.841Z] [INFO] [Health] 7 apps today | 2729 total records
+[2026-04-21T14:28:32.844Z] [INFO] [Health] 7 apps today | 2742 total records
+[2026-04-21T14:29:32.848Z] [INFO] [Health] 7 apps today | 2747 total records
+[2026-04-21T14:30:03.510Z] [INFO] [Main] All IPC handlers registered
+[2026-04-21T14:30:03.512Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-21T14:30:03.662Z] [INFO] [Main] Startup sync — 3 productive, 21 distracting
+[2026-04-21T14:31:03.681Z] [INFO] [Health] 8 apps today | 2761 total records
+[2026-04-21T14:32:03.693Z] [INFO] [Health] 8 apps today | 2763 total records
+[2026-04-21T14:33:03.698Z] [INFO] [Health] 8 apps today | 2782 total records
+[2026-04-21T14:34:03.707Z] [INFO] [Health] 8 apps today | 2802 total records
+[2026-04-21T14:35:03.708Z] [INFO] [Health] 8 apps today | 2821 total records
+[2026-04-21T14:36:03.717Z] [INFO] [Health] 8 apps today | 2832 total records
+[2026-04-21T14:37:03.731Z] [INFO] [Health] 8 apps today | 2853 total records
+[2026-04-21T14:38:03.739Z] [INFO] [Health] 8 apps today | 2875 total records
+[2026-04-21T14:39:03.741Z] [INFO] [Health] 8 apps today | 2892 total records
+[2026-04-21T14:40:03.746Z] [INFO] [Health] 8 apps today | 2892 total records
+[2026-04-21T14:41:03.753Z] [INFO] [Health] 8 apps today | 2896 total records
+[2026-04-21T14:41:44.700Z] [INFO] [Main] All IPC handlers registered
+[2026-04-21T14:41:44.702Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-21T14:41:44.842Z] [INFO] [Main] Startup sync — 3 productive, 21 distracting
+[2026-04-21T14:42:44.861Z] [INFO] [Health] 3 apps today | 2908 total records
+[2026-04-21T14:43:44.876Z] [INFO] [Health] 3 apps today | 2909 total records
+[2026-04-21T14:44:44.882Z] [INFO] [Health] 3 apps today | 2913 total records
+[2026-04-21T14:45:44.894Z] [INFO] [Health] 3 apps today | 2931 total records
+[2026-04-21T14:46:44.907Z] [INFO] [Health] 3 apps today | 2935 total records
+[2026-04-21T14:47:44.913Z] [INFO] [Health] 3 apps today | 2937 total records
+[2026-04-21T14:48:44.921Z] [INFO] [Health] 3 apps today | 2937 total records
+[2026-04-21T14:49:38.499Z] [INFO] [Main] All windows closed
+[2026-04-21T14:49:46.996Z] [INFO] [Main] All IPC handlers registered
+[2026-04-21T14:49:46.998Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-21T14:49:47.147Z] [INFO] [Main] Startup sync — 3 productive, 22 distracting
+[2026-04-21T14:49:51.941Z] [INFO] [Main] All windows closed
+[2026-04-22T11:32:28.450Z] [INFO] [Main] All IPC handlers registered
+[2026-04-22T11:32:28.492Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-22T11:32:28.924Z] [INFO] [Main] Startup sync — 3 productive, 22 distracting
+[2026-04-22T11:33:28.937Z] [INFO] [Health] 0 apps today | 2945 total records
+[2026-04-22T11:34:28.948Z] [INFO] [Health] 0 apps today | 2946 total records
+[2026-04-22T11:35:28.957Z] [INFO] [Health] 0 apps today | 2946 total records
+[2026-04-22T11:36:28.962Z] [INFO] [Health] 0 apps today | 2946 total records
+[2026-04-22T11:37:28.965Z] [INFO] [Health] 0 apps today | 2947 total records
+[2026-04-22T11:38:28.976Z] [INFO] [Health] 0 apps today | 2947 total records
+[2026-04-22T11:39:28.982Z] [INFO] [Health] 0 apps today | 2947 total records
+[2026-04-22T11:40:28.992Z] [INFO] [Health] 0 apps today | 2948 total records
+[2026-04-22T11:41:29.000Z] [INFO] [Health] 0 apps today | 2948 total records
+[2026-04-22T11:42:29.001Z] [INFO] [Health] 0 apps today | 2948 total records
+[2026-04-22T11:43:29.013Z] [INFO] [Health] 0 apps today | 2948 total records
+[2026-04-22T11:44:29.028Z] [INFO] [Health] 0 apps today | 2949 total records
+[2026-04-22T11:45:29.035Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:46:29.039Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:47:29.044Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:48:29.056Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:49:29.064Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:50:29.079Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:51:29.096Z] [INFO] [Health] 0 apps today | 2952 total records
+[2026-04-22T11:52:29.104Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:53:29.115Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:54:29.117Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:55:29.127Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:56:29.138Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:57:29.150Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:58:29.162Z] [INFO] [Health] 1 apps today | 2954 total records
+[2026-04-22T11:59:29.164Z] [INFO] [Health] 1 apps today | 2959 total records
+[2026-04-22T12:00:29.172Z] [INFO] [Health] 1 apps today | 2968 total records
+[2026-04-22T12:01:29.349Z] [INFO] [Health] 2 apps today | 2972 total records
+[2026-04-22T12:02:29.701Z] [INFO] [Health] 2 apps today | 2973 total records
+[2026-04-22T12:03:29.722Z] [INFO] [Health] 3 apps today | 2974 total records
+[2026-04-22T12:04:29.739Z] [INFO] [Health] 3 apps today | 2975 total records
+[2026-04-22T12:05:29.874Z] [INFO] [Health] 3 apps today | 2976 total records
+[2026-04-22T12:06:29.891Z] [INFO] [Health] 3 apps today | 2976 total records
+[2026-04-22T12:07:29.938Z] [INFO] [Health] 3 apps today | 2976 total records
+[2026-04-22T12:12:18.826Z] [INFO] [Health] 3 apps today | 2976 total records
+[2026-04-22T12:13:18.840Z] [INFO] [Health] 3 apps today | 2988 total records
+[2026-04-22T12:14:18.839Z] [INFO] [Health] 3 apps today | 2992 total records
+[2026-04-22T12:15:18.845Z] [INFO] [Health] 3 apps today | 2997 total records
+[2026-04-22T12:16:18.856Z] [INFO] [Health] 3 apps today | 3002 total records
+[2026-04-22T12:17:18.857Z] [INFO] [Health] 3 apps today | 3003 total records
+[2026-04-22T12:18:18.860Z] [INFO] [Health] 3 apps today | 3005 total records
+[2026-04-22T12:19:18.959Z] [INFO] [Health] 4 apps today | 3017 total records
+[2026-04-22T12:20:18.975Z] [INFO] [Health] 4 apps today | 3024 total records
+[2026-04-22T12:20:56.699Z] [INFO] [Main] All IPC handlers registered
+[2026-04-22T12:20:56.701Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-22T12:20:56.855Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-04-22T12:21:56.860Z] [INFO] [Health] 4 apps today | 3032 total records
+[2026-04-22T12:22:56.863Z] [INFO] [Health] 4 apps today | 3032 total records
+[2026-04-22T12:23:56.869Z] [INFO] [Health] 4 apps today | 3034 total records
+[2026-04-22T12:24:56.875Z] [INFO] [Health] 5 apps today | 3038 total records
+[2026-04-22T12:25:20.602Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-16","mode":"range"}
+[2026-04-22T12:25:20.603Z] [INFO] [StatsService] called — dateFilter: 2026-04-16, mode: range
+[2026-04-22T12:25:20.604Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-04-22T12:25:20.606Z] [INFO] [StatsService] raw rows count: 11
+[2026-04-22T12:25:20.607Z] [INFO] [StatsService] result — productive:3748.13s distracting:21598.43s idle:0s score:14.8%
+[2026-04-22T12:25:56.881Z] [INFO] [Health] 5 apps today | 3040 total records
+[2026-04-22T12:26:56.884Z] [INFO] [Health] 5 apps today | 3040 total records
+[2026-04-22T12:27:56.895Z] [INFO] [Health] 5 apps today | 3044 total records
+[2026-04-22T12:28:56.906Z] [INFO] [Health] 5 apps today | 3045 total records
+[2026-04-22T12:29:56.910Z] [INFO] [Health] 5 apps today | 3045 total records
+[2026-04-22T12:30:56.918Z] [INFO] [Health] 5 apps today | 3045 total records
+[2026-04-22T12:31:56.932Z] [INFO] [Health] 5 apps today | 3045 total records
+[2026-04-22T12:32:56.935Z] [INFO] [Health] 5 apps today | 3045 total records
+[2026-04-22T12:33:56.937Z] [INFO] [Health] 5 apps today | 3047 total records
+[2026-04-22T12:34:56.951Z] [INFO] [Health] 5 apps today | 3048 total records
+[2026-04-22T12:35:56.957Z] [INFO] [Health] 5 apps today | 3048 total records
+[2026-04-22T12:36:56.972Z] [INFO] [Health] 5 apps today | 3048 total records
+[2026-04-22T12:37:56.987Z] [INFO] [Health] 5 apps today | 3050 total records
+[2026-04-22T12:38:56.998Z] [INFO] [Health] 5 apps today | 3051 total records
+[2026-04-22T12:39:57.003Z] [INFO] [Health] 5 apps today | 3053 total records
+[2026-04-22T12:40:57.014Z] [INFO] [Health] 5 apps today | 3053 total records
+[2026-04-22T12:41:57.017Z] [INFO] [Health] 5 apps today | 3054 total records
+[2026-04-22T12:42:17.040Z] [INFO] [Main] All IPC handlers registered
+[2026-04-22T12:42:17.042Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-22T12:42:17.237Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-04-22T12:43:17.246Z] [INFO] [Health] 5 apps today | 3062 total records
+[2026-04-22T12:44:17.260Z] [INFO] [Health] 5 apps today | 3069 total records
+[2026-04-22T12:45:17.275Z] [INFO] [Health] 5 apps today | 3071 total records
+[2026-04-22T12:46:17.286Z] [INFO] [Health] 5 apps today | 3072 total records
+[2026-04-22T12:47:17.292Z] [INFO] [Health] 5 apps today | 3072 total records
+[2026-04-22T12:48:17.305Z] [INFO] [Health] 5 apps today | 3072 total records
+[2026-04-22T12:49:17.316Z] [INFO] [Health] 5 apps today | 3073 total records
+[2026-04-22T12:50:17.331Z] [INFO] [Health] 5 apps today | 3073 total records
+[2026-04-22T12:51:17.343Z] [INFO] [Health] 5 apps today | 3073 total records
+[2026-04-22T12:52:17.346Z] [INFO] [Health] 5 apps today | 3074 total records
+[2026-04-22T12:53:17.365Z] [INFO] [Health] 5 apps today | 3076 total records
+[2026-04-22T12:54:17.373Z] [INFO] [Health] 5 apps today | 3076 total records
+[2026-04-22T12:55:17.386Z] [INFO] [Health] 5 apps today | 3076 total records
+[2026-04-22T12:56:17.405Z] [INFO] [Health] 5 apps today | 3078 total records
+[2026-04-22T12:57:17.412Z] [INFO] [Health] 5 apps today | 3078 total records
+[2026-04-22T12:58:17.415Z] [INFO] [Health] 5 apps today | 3078 total records
+[2026-04-22T12:59:17.426Z] [INFO] [Health] 5 apps today | 3079 total records
+[2026-04-22T13:00:17.435Z] [INFO] [Health] 5 apps today | 3079 total records
+[2026-04-22T13:01:17.436Z] [INFO] [Health] 5 apps today | 3079 total records
+[2026-04-22T13:02:17.449Z] [INFO] [Health] 5 apps today | 3079 total records
+[2026-04-22T13:03:17.460Z] [INFO] [Health] 5 apps today | 3080 total records
+[2026-04-22T13:04:17.482Z] [INFO] [Health] 5 apps today | 3081 total records
+[2026-04-22T13:05:17.499Z] [INFO] [Health] 5 apps today | 3085 total records
+[2026-04-22T13:06:17.515Z] [INFO] [Health] 5 apps today | 3086 total records
+[2026-04-22T13:07:17.520Z] [INFO] [Health] 5 apps today | 3086 total records
+[2026-04-22T13:08:17.528Z] [INFO] [Health] 5 apps today | 3086 total records
+[2026-04-22T13:09:17.539Z] [INFO] [Health] 5 apps today | 3088 total records
+[2026-04-22T13:10:17.543Z] [INFO] [Health] 5 apps today | 3092 total records
+[2026-04-22T13:11:17.544Z] [INFO] [Health] 5 apps today | 3103 total records
+[2026-04-22T13:12:17.560Z] [INFO] [Health] 5 apps today | 3104 total records
+[2026-04-22T13:13:17.563Z] [INFO] [Health] 5 apps today | 3104 total records
+[2026-04-22T13:14:17.567Z] [INFO] [Health] 5 apps today | 3104 total records
+[2026-04-22T13:15:17.577Z] [INFO] [Health] 5 apps today | 3104 total records
+[2026-04-22T13:15:42.619Z] [INFO] [Main] All IPC handlers registered
+[2026-04-22T13:15:42.621Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-22T13:15:42.813Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-04-22T13:16:42.876Z] [INFO] [Health] 5 apps today | 3115 total records
+[2026-04-22T13:17:42.882Z] [INFO] [Health] 5 apps today | 3120 total records
+[2026-04-22T13:18:42.891Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:19:42.900Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:20:42.905Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:21:42.914Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:22:42.932Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:23:42.933Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:24:42.939Z] [INFO] [Health] 5 apps today | 3121 total records
+[2026-04-22T13:25:42.956Z] [INFO] [Health] 5 apps today | 3124 total records
+[2026-04-22T13:26:42.960Z] [INFO] [Health] 5 apps today | 3128 total records
+[2026-04-22T13:27:42.971Z] [INFO] [Health] 5 apps today | 3129 total records
+[2026-04-22T13:28:03.317Z] [INFO] [Main] All IPC handlers registered
+[2026-04-22T13:28:03.319Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-22T13:28:03.504Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-04-22T13:29:03.523Z] [INFO] [Health] 5 apps today | 3134 total records
+[2026-04-22T13:30:03.539Z] [INFO] [Health] 5 apps today | 3134 total records
+[2026-04-22T13:31:03.541Z] [INFO] [Health] 5 apps today | 3134 total records
+[2026-04-22T13:32:03.543Z] [INFO] [Health] 5 apps today | 3136 total records
+[2026-04-22T13:33:03.548Z] [INFO] [Health] 5 apps today | 3136 total records
+[2026-04-22T13:34:03.551Z] [INFO] [Health] 5 apps today | 3146 total records
+[2026-04-22T13:35:03.572Z] [INFO] [Health] 5 apps today | 3147 total records
+[2026-04-22T13:36:03.570Z] [INFO] [Health] 5 apps today | 3147 total records
+[2026-04-22T13:37:03.571Z] [INFO] [Health] 5 apps today | 3147 total records
+[2026-04-22T13:38:03.597Z] [INFO] [Health] 5 apps today | 3148 total records
+[2026-04-22T13:39:03.588Z] [INFO] [Health] 5 apps today | 3149 total records
+[2026-04-22T13:40:03.588Z] [INFO] [Health] 5 apps today | 3150 total records
+[2026-04-22T13:41:03.597Z] [INFO] [Health] 5 apps today | 3150 total records
+[2026-04-22T13:42:03.601Z] [INFO] [Health] 5 apps today | 3150 total records
+[2026-04-22T13:43:03.614Z] [INFO] [Health] 5 apps today | 3151 total records
+[2026-04-22T13:44:03.622Z] [INFO] [Health] 5 apps today | 3151 total records
+[2026-04-22T13:55:09.085Z] [INFO] [Health] 5 apps today | 3151 total records
+[2026-04-22T13:56:09.097Z] [INFO] [Health] 5 apps today | 3153 total records
+[2026-04-22T13:57:09.117Z] [INFO] [Health] 5 apps today | 3153 total records
+[2026-04-22T13:58:09.111Z] [INFO] [Health] 5 apps today | 3153 total records
+[2026-04-22T13:59:09.112Z] [INFO] [Health] 5 apps today | 3154 total records
+[2026-04-22T14:00:09.119Z] [INFO] [Health] 5 apps today | 3161 total records
+[2026-04-22T14:01:09.136Z] [INFO] [Health] 5 apps today | 3161 total records
+[2026-04-22T14:02:09.137Z] [INFO] [Health] 5 apps today | 3162 total records
+[2026-04-22T14:03:09.153Z] [INFO] [Health] 5 apps today | 3163 total records
+[2026-04-22T14:04:09.167Z] [INFO] [Health] 5 apps today | 3163 total records
+[2026-04-22T14:05:09.171Z] [INFO] [Health] 5 apps today | 3163 total records
+[2026-04-22T14:06:09.176Z] [INFO] [Health] 5 apps today | 3163 total records
+[2026-04-22T14:07:09.181Z] [INFO] [Health] 5 apps today | 3164 total records
+[2026-04-22T14:08:09.192Z] [INFO] [Health] 5 apps today | 3165 total records
+[2026-04-22T14:09:09.205Z] [INFO] [Health] 5 apps today | 3165 total records
+[2026-04-22T14:10:09.219Z] [INFO] [Health] 5 apps today | 3168 total records
+[2026-04-22T14:11:09.230Z] [INFO] [Health] 5 apps today | 3174 total records
+[2026-04-22T14:12:09.245Z] [INFO] [Health] 5 apps today | 3179 total records
+[2026-04-22T14:13:09.247Z] [INFO] [Health] 5 apps today | 3183 total records
+[2026-04-22T14:14:09.261Z] [INFO] [Health] 5 apps today | 3183 total records
+[2026-04-22T14:15:09.263Z] [INFO] [Health] 5 apps today | 3184 total records
+[2026-04-22T14:16:09.266Z] [INFO] [Health] 5 apps today | 3184 total records
+[2026-04-22T14:17:09.280Z] [INFO] [Health] 5 apps today | 3189 total records
+[2026-04-22T14:18:09.288Z] [INFO] [Health] 5 apps today | 3189 total records
+[2026-04-22T14:19:09.303Z] [INFO] [Health] 5 apps today | 3189 total records
+[2026-04-22T14:20:09.319Z] [INFO] [Health] 5 apps today | 3190 total records
+[2026-04-22T14:21:09.321Z] [INFO] [Health] 5 apps today | 3192 total records
+[2026-04-22T14:22:09.331Z] [INFO] [Health] 5 apps today | 3197 total records
+[2026-04-22T14:23:09.346Z] [INFO] [Health] 5 apps today | 3203 total records
+[2026-04-22T14:24:09.351Z] [INFO] [Health] 5 apps today | 3206 total records
+[2026-04-22T14:25:09.365Z] [INFO] [Health] 5 apps today | 3216 total records
+[2026-04-22T14:26:09.369Z] [INFO] [Health] 5 apps today | 3216 total records
+[2026-04-22T14:27:09.381Z] [INFO] [Health] 5 apps today | 3217 total records
+[2026-04-22T15:39:56.546Z] [INFO] [Health] 5 apps today | 3218 total records
+[2026-04-22T15:40:56.555Z] [INFO] [Health] 5 apps today | 3221 total records
+[2026-04-22T15:41:52.255Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-16","mode":"range"}
+[2026-04-22T15:41:52.257Z] [INFO] [StatsService] called — dateFilter: 2026-04-16, mode: range
+[2026-04-22T15:41:52.257Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-04-22T15:41:52.260Z] [INFO] [StatsService] active rows count: 9, idle rows count: 1
+[2026-04-22T15:41:52.261Z] [INFO] [StatsService] result — productive:3303.2000000000003s distracting:22273.899999999998s idle:9216.02s score:9.5%
+[2026-04-22T15:41:56.229Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-03-24","mode":"range"}
+[2026-04-22T15:41:56.230Z] [INFO] [StatsService] called — dateFilter: 2026-03-24, mode: range
+[2026-04-22T15:41:56.231Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-04-22T15:41:56.237Z] [INFO] [StatsService] active rows count: 13, idle rows count: 1
+[2026-04-22T15:41:56.238Z] [INFO] [StatsService] result — productive:5383.18s distracting:31458.140000000003s idle:16616.9s score:10.1%
+[2026-04-22T15:41:56.566Z] [INFO] [Health] 5 apps today | 3222 total records
+[2026-04-22T15:42:56.569Z] [INFO] [Health] 5 apps today | 3226 total records
+[2026-04-22T15:43:56.579Z] [INFO] [Health] 5 apps today | 3239 total records
+[2026-04-22T15:44:56.585Z] [INFO] [Health] 5 apps today | 3241 total records
+[2026-04-22T15:45:56.589Z] [INFO] [Health] 5 apps today | 3242 total records
+[2026-04-22T15:46:56.596Z] [INFO] [Health] 5 apps today | 3242 total records
+[2026-04-22T15:47:56.612Z] [INFO] [Health] 5 apps today | 3245 total records
+[2026-04-22T15:48:56.625Z] [INFO] [Health] 5 apps today | 3246 total records
+[2026-04-22T15:49:56.629Z] [INFO] [Health] 5 apps today | 3247 total records
+[2026-04-22T15:50:56.632Z] [INFO] [Health] 5 apps today | 3250 total records
+[2026-04-22T15:51:56.660Z] [INFO] [Health] 5 apps today | 3253 total records
+[2026-04-22T15:52:56.666Z] [INFO] [Health] 5 apps today | 3253 total records
+[2026-04-22T15:53:56.675Z] [INFO] [Health] 5 apps today | 3253 total records
+[2026-04-22T15:54:56.779Z] [INFO] [Health] 5 apps today | 3254 total records
+[2026-04-22T15:55:56.888Z] [INFO] [Health] 5 apps today | 3254 total records
+[2026-04-22T15:56:56.894Z] [INFO] [Health] 5 apps today | 3254 total records
+[2026-04-22T15:57:56.910Z] [INFO] [Health] 5 apps today | 3255 total records
+[2026-04-22T15:58:56.914Z] [INFO] [Health] 5 apps today | 3255 total records
+[2026-04-22T15:59:56.913Z] [INFO] [Health] 5 apps today | 3255 total records
+[2026-04-22T16:00:56.925Z] [INFO] [Health] 5 apps today | 3256 total records
+[2026-04-22T16:01:56.930Z] [INFO] [Health] 5 apps today | 3256 total records
+[2026-04-22T16:02:56.933Z] [INFO] [Health] 5 apps today | 3257 total records
+[2026-04-22T16:03:56.942Z] [INFO] [Health] 5 apps today | 3257 total records
+[2026-04-22T16:04:56.943Z] [INFO] [Health] 5 apps today | 3258 total records
+[2026-04-22T16:05:56.949Z] [INFO] [Health] 5 apps today | 3258 total records
+[2026-04-22T16:06:56.964Z] [INFO] [Health] 5 apps today | 3263 total records
+[2026-04-22T16:07:56.971Z] [INFO] [Health] 5 apps today | 3265 total records
+[2026-04-22T16:08:56.978Z] [INFO] [Health] 5 apps today | 3268 total records
+[2026-04-22T16:09:01.918Z] [INFO] [Main] All windows closed
+[2026-04-22T18:00:32.289Z] [INFO] [Main] All IPC handlers registered
+[2026-04-22T18:00:32.298Z] [INFO] [Main] Creating window | preload exists: true
+[2026-04-22T18:00:33.137Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-04-22T18:01:20.114Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-16","mode":"range"}
+[2026-04-22T18:01:20.115Z] [INFO] [StatsService] called — dateFilter: 2026-04-16, mode: range
+[2026-04-22T18:01:20.117Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-04-22T18:01:20.121Z] [INFO] [StatsService] active rows count: 9, idle rows count: 1
+[2026-04-22T18:01:20.121Z] [INFO] [StatsService] result — productive:3393.08s distracting:22727.44s idle:9661.300000000001s score:9.5%
+[2026-04-22T18:01:29.956Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-16","mode":"range"}
+[2026-04-22T18:01:29.956Z] [INFO] [StatsService] called — dateFilter: 2026-04-16, mode: range
+[2026-04-22T18:01:29.957Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-04-22T18:01:29.959Z] [INFO] [StatsService] active rows count: 9, idle rows count: 1
+[2026-04-22T18:01:29.960Z] [INFO] [StatsService] result — productive:3393.08s distracting:22727.44s idle:9661.300000000001s score:9.5%
+[2026-04-22T18:01:33.156Z] [INFO] [Health] 5 apps today | 3270 total records
+[2026-04-22T18:02:33.197Z] [INFO] [Health] 5 apps today | 3281 total records
+[2026-04-22T18:04:59.038Z] [INFO] [Health] 5 apps today | 3283 total records
+[2026-04-22T18:05:33.037Z] [INFO] [Main] All windows closed
+[2026-05-01T19:55:25.167Z] [INFO] [Main] All IPC handlers registered
+[2026-05-01T19:55:25.171Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-01T19:55:25.621Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-05-01T19:55:44.384Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-26","mode":"range"}
+[2026-05-01T19:55:44.387Z] [INFO] [StatsService] called — dateFilter: 2026-04-26, mode: range
+[2026-05-01T19:55:44.390Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-05-01T19:55:44.396Z] [INFO] [StatsService] active rows count: 0, idle rows count: 1
+[2026-05-01T19:55:44.399Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-05-01T19:55:46.238Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-03","mode":"range"}
+[2026-05-01T19:55:46.241Z] [INFO] [StatsService] called — dateFilter: 2026-04-03, mode: range
+[2026-05-01T19:55:46.244Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-05-01T19:55:46.254Z] [INFO] [StatsService] active rows count: 13, idle rows count: 1
+[2026-05-01T19:55:46.255Z] [INFO] [StatsService] result — productive:5539.78s distracting:32050.13s idle:17062.18s score:10.1%
+[2026-05-01T19:55:58.793Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-26","mode":"range"}
+[2026-05-01T19:55:58.794Z] [INFO] [StatsService] called — dateFilter: 2026-04-26, mode: range
+[2026-05-01T19:55:58.796Z] [INFO] [StatsService] productive apps: ["Electron","SnippingTool.exe","SearchHost.exe"]
+[2026-05-01T19:55:58.802Z] [INFO] [StatsService] active rows count: 0, idle rows count: 1
+[2026-05-01T19:55:58.804Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-05-01T19:56:25.626Z] [INFO] [Health] 0 apps today | 3283 total records
+[2026-05-01T19:57:25.633Z] [INFO] [Health] 1 apps today | 3294 total records
+[2026-05-01T19:58:25.647Z] [INFO] [Health] 2 apps today | 3306 total records
+[2026-05-01T19:59:25.649Z] [INFO] [Health] 2 apps today | 3315 total records
+[2026-05-01T20:00:25.665Z] [INFO] [Health] 2 apps today | 3317 total records
+[2026-05-01T20:01:25.666Z] [INFO] [Health] 2 apps today | 3318 total records
+[2026-05-01T20:02:25.675Z] [INFO] [Health] 2 apps today | 3318 total records
+[2026-05-01T20:03:25.690Z] [INFO] [Health] 2 apps today | 3320 total records
+[2026-05-01T20:04:25.694Z] [INFO] [Health] 2 apps today | 3325 total records
+[2026-05-01T20:05:25.696Z] [INFO] [Health] 2 apps today | 3328 total records
+[2026-05-01T20:06:25.705Z] [INFO] [Health] 2 apps today | 3328 total records
+[2026-05-01T20:07:25.718Z] [INFO] [Health] 2 apps today | 3328 total records
+[2026-05-01T20:08:25.721Z] [INFO] [Health] 2 apps today | 3328 total records
+[2026-05-01T20:09:25.721Z] [INFO] [Health] 2 apps today | 3330 total records
+[2026-05-01T20:10:25.758Z] [INFO] [Health] 2 apps today | 3335 total records
+[2026-05-01T20:11:25.766Z] [INFO] [Health] 2 apps today | 3338 total records
+[2026-05-01T20:12:25.768Z] [INFO] [Health] 2 apps today | 3346 total records
+[2026-05-01T20:13:25.772Z] [INFO] [Health] 2 apps today | 3361 total records
+[2026-05-01T20:14:25.777Z] [INFO] [Health] 2 apps today | 3365 total records
+[2026-05-01T20:15:25.789Z] [INFO] [Health] 2 apps today | 3367 total records
+[2026-05-01T20:16:25.804Z] [INFO] [Health] 2 apps today | 3367 total records
+[2026-05-01T20:17:25.817Z] [INFO] [Health] 2 apps today | 3372 total records
+[2026-05-01T20:18:25.825Z] [INFO] [Health] 2 apps today | 3378 total records
+[2026-05-01T20:19:25.835Z] [INFO] [Health] 2 apps today | 3393 total records
+[2026-05-01T20:20:25.846Z] [INFO] [Health] 2 apps today | 3409 total records
+[2026-05-01T20:21:25.848Z] [INFO] [Health] 2 apps today | 3423 total records
+[2026-05-01T20:22:25.858Z] [INFO] [Health] 2 apps today | 3436 total records
+[2026-05-01T20:23:25.872Z] [INFO] [Health] 2 apps today | 3438 total records
+[2026-05-01T20:24:25.877Z] [INFO] [Health] 2 apps today | 3443 total records
+[2026-05-01T20:25:25.878Z] [INFO] [Health] 2 apps today | 3446 total records
+[2026-05-01T20:26:25.886Z] [INFO] [Health] 3 apps today | 3449 total records
+[2026-05-01T20:27:25.901Z] [INFO] [Health] 3 apps today | 3459 total records
+[2026-05-01T20:28:25.916Z] [INFO] [Health] 3 apps today | 3462 total records
+[2026-05-01T20:29:25.928Z] [INFO] [Health] 3 apps today | 3466 total records
+[2026-05-01T20:30:25.940Z] [INFO] [Health] 3 apps today | 3468 total records
+[2026-05-01T20:31:25.956Z] [INFO] [Health] 3 apps today | 3469 total records
+[2026-05-01T20:32:25.968Z] [INFO] [Health] 3 apps today | 3470 total records
+[2026-05-01T20:33:25.979Z] [INFO] [Health] 3 apps today | 3474 total records
+[2026-05-01T20:34:25.987Z] [INFO] [Health] 3 apps today | 3476 total records
+[2026-05-01T20:35:25.996Z] [INFO] [Health] 3 apps today | 3484 total records
+[2026-05-01T20:36:26.008Z] [INFO] [Health] 3 apps today | 3484 total records
+[2026-05-01T20:37:26.018Z] [INFO] [Health] 3 apps today | 3487 total records
+[2026-05-01T20:38:26.032Z] [INFO] [Health] 3 apps today | 3489 total records
+[2026-05-01T20:39:26.036Z] [INFO] [Health] 3 apps today | 3499 total records
+[2026-05-01T20:40:26.041Z] [INFO] [Health] 3 apps today | 3504 total records
+[2026-05-01T20:41:26.046Z] [INFO] [Health] 3 apps today | 3508 total records
+[2026-05-01T20:42:26.051Z] [INFO] [Health] 3 apps today | 3512 total records
+[2026-05-01T20:43:26.066Z] [INFO] [Health] 3 apps today | 3516 total records
+[2026-05-01T20:44:26.073Z] [INFO] [Health] 3 apps today | 3516 total records
+[2026-05-01T20:45:23.273Z] [INFO] [Main] All windows closed
+[2026-05-07T09:44:43.571Z] [INFO] [Main] All IPC handlers registered
+[2026-05-07T09:44:43.588Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-07T09:44:44.047Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-05-07T09:45:44.199Z] [INFO] [Health] 0 apps today | 3532 total records
+[2026-05-07T09:46:44.189Z] [INFO] [Health] 0 apps today | 3542 total records
+[2026-05-07T09:47:44.175Z] [INFO] [Health] 1 apps today | 3549 total records
+[2026-05-07T09:47:56.120Z] [INFO] [Main] All windows closed
+[2026-05-15T16:24:53.634Z] [INFO] [Main] All IPC handlers registered
+[2026-05-15T16:24:53.636Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-15T16:24:53.846Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-05-15T16:25:01.143Z] [INFO] [Main] All windows closed
+[2026-05-15T19:50:58.711Z] [INFO] [Main] All IPC handlers registered
+[2026-05-15T19:50:58.717Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-15T19:50:59.043Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-05-15T19:51:59.067Z] [INFO] [Health] 0 apps today | 3553 total records
+[2026-05-15T19:52:59.062Z] [INFO] [Health] 0 apps today | 3554 total records
+[2026-05-15T19:53:59.071Z] [INFO] [Health] 0 apps today | 3554 total records
+[2026-05-15T19:54:59.072Z] [INFO] [Health] 0 apps today | 3562 total records
+[2026-05-15T19:55:59.082Z] [INFO] [Health] 0 apps today | 3563 total records
+[2026-05-15T19:56:59.097Z] [INFO] [Health] 0 apps today | 3563 total records
+[2026-05-15T19:57:59.106Z] [INFO] [Health] 0 apps today | 3563 total records
+[2026-05-15T19:58:59.167Z] [INFO] [Health] 0 apps today | 3564 total records
+[2026-05-15T19:59:59.175Z] [INFO] [Health] 0 apps today | 3564 total records
+[2026-05-15T20:00:59.201Z] [INFO] [Health] 0 apps today | 3565 total records
+[2026-05-15T20:01:59.203Z] [INFO] [Health] 0 apps today | 3565 total records
+[2026-05-15T20:02:59.198Z] [INFO] [Health] 0 apps today | 3565 total records
+[2026-05-15T20:03:59.201Z] [INFO] [Health] 0 apps today | 3566 total records
+[2026-05-15T20:04:59.207Z] [INFO] [Health] 0 apps today | 3567 total records
+[2026-05-15T20:05:59.221Z] [INFO] [Health] 0 apps today | 3568 total records
+[2026-05-15T20:06:59.229Z] [INFO] [Health] 0 apps today | 3568 total records
+[2026-05-15T20:07:59.238Z] [INFO] [Health] 0 apps today | 3568 total records
+[2026-05-15T20:08:59.253Z] [INFO] [Health] 0 apps today | 3569 total records
+[2026-05-15T20:09:59.258Z] [INFO] [Health] 0 apps today | 3580 total records
+[2026-05-15T20:10:59.265Z] [INFO] [Health] 0 apps today | 3580 total records
+[2026-05-15T20:11:59.274Z] [INFO] [Health] 0 apps today | 3581 total records
+[2026-05-15T20:12:59.283Z] [INFO] [Health] 0 apps today | 3581 total records
+[2026-05-15T20:13:59.298Z] [INFO] [Health] 0 apps today | 3582 total records
+[2026-05-15T20:14:59.307Z] [INFO] [Health] 0 apps today | 3582 total records
+[2026-05-15T20:15:59.323Z] [INFO] [Health] 0 apps today | 3582 total records
+[2026-05-15T20:16:59.326Z] [INFO] [Health] 0 apps today | 3583 total records
+[2026-05-15T20:17:59.333Z] [INFO] [Health] 0 apps today | 3583 total records
+[2026-05-15T20:18:59.339Z] [INFO] [Health] 0 apps today | 3584 total records
+[2026-05-15T20:19:59.349Z] [INFO] [Health] 0 apps today | 3585 total records
+[2026-05-15T20:20:59.356Z] [INFO] [Health] 0 apps today | 3585 total records
+[2026-05-15T20:21:59.357Z] [INFO] [Health] 0 apps today | 3585 total records
+[2026-05-15T20:22:59.365Z] [INFO] [Health] 0 apps today | 3586 total records
+[2026-05-15T20:23:59.369Z] [INFO] [Health] 0 apps today | 3586 total records
+[2026-05-15T20:24:59.374Z] [INFO] [Health] 0 apps today | 3586 total records
+[2026-05-15T20:25:59.379Z] [INFO] [Health] 0 apps today | 3587 total records
+[2026-05-15T20:26:07.807Z] [INFO] [Main] All windows closed
+[2026-05-17T18:46:41.206Z] [INFO] [Main] All IPC handlers registered
+[2026-05-17T18:46:41.209Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-17T18:46:41.405Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-05-17T18:47:41.414Z] [INFO] [Health] 0 apps today | 3596 total records
+[2026-05-17T18:48:41.427Z] [INFO] [Health] 0 apps today | 3597 total records
+[2026-05-17T18:49:41.438Z] [INFO] [Health] 0 apps today | 3597 total records
+[2026-05-17T18:50:41.439Z] [INFO] [Health] 0 apps today | 3602 total records
+[2026-05-17T18:51:41.443Z] [INFO] [Health] 1 apps today | 3604 total records
+[2026-05-17T18:52:41.458Z] [INFO] [Health] 1 apps today | 3604 total records
+[2026-05-17T18:53:41.475Z] [INFO] [Health] 1 apps today | 3604 total records
+[2026-05-17T18:54:41.481Z] [INFO] [Health] 1 apps today | 3604 total records
+[2026-05-17T18:55:41.490Z] [INFO] [Health] 1 apps today | 3604 total records
+[2026-05-17T18:56:41.499Z] [INFO] [Health] 1 apps today | 3604 total records
+[2026-05-17T18:57:41.506Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T18:58:41.520Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T18:59:41.534Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:00:41.538Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:01:41.547Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:02:41.555Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:03:41.566Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:04:41.580Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:05:41.581Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:06:41.585Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:07:41.597Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:08:41.598Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:09:41.610Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:10:41.617Z] [INFO] [Health] 1 apps today | 3606 total records
+[2026-05-17T19:11:41.624Z] [INFO] [Health] 1 apps today | 3615 total records
+[2026-05-17T19:12:41.632Z] [INFO] [Health] 1 apps today | 3615 total records
+[2026-05-17T19:13:41.641Z] [INFO] [Health] 1 apps today | 3615 total records
+[2026-05-17T19:14:41.670Z] [INFO] [Health] 1 apps today | 3620 total records
+[2026-05-17T19:15:41.782Z] [INFO] [Health] 1 apps today | 3623 total records
+[2026-05-17T19:16:41.791Z] [INFO] [Health] 1 apps today | 3623 total records
+[2026-05-17T19:17:41.799Z] [INFO] [Health] 1 apps today | 3623 total records
+[2026-05-17T19:18:41.802Z] [INFO] [Health] 1 apps today | 3630 total records
+[2026-05-17T19:19:41.809Z] [INFO] [Health] 1 apps today | 3631 total records
+[2026-05-17T19:20:41.825Z] [INFO] [Health] 1 apps today | 3631 total records
+[2026-05-17T19:21:41.831Z] [INFO] [Health] 1 apps today | 3632 total records
+[2026-05-17T19:22:41.840Z] [INFO] [Health] 1 apps today | 3632 total records
+[2026-05-17T19:23:41.844Z] [INFO] [Health] 1 apps today | 3632 total records
+[2026-05-17T19:24:41.846Z] [INFO] [Health] 1 apps today | 3633 total records
+[2026-05-17T19:25:41.851Z] [INFO] [Health] 1 apps today | 3633 total records
+[2026-05-17T19:26:41.862Z] [INFO] [Health] 1 apps today | 3640 total records
+[2026-05-17T19:27:41.868Z] [INFO] [Health] 1 apps today | 3642 total records
+[2026-05-17T19:28:41.871Z] [INFO] [Health] 1 apps today | 3644 total records
+[2026-05-17T19:29:41.887Z] [INFO] [Health] 1 apps today | 3649 total records
+[2026-05-17T19:30:41.902Z] [INFO] [Health] 1 apps today | 3650 total records
+[2026-05-17T19:31:41.902Z] [INFO] [Health] 1 apps today | 3650 total records
+[2026-05-17T19:32:41.915Z] [INFO] [Health] 1 apps today | 3651 total records
+[2026-05-17T19:33:41.921Z] [INFO] [Health] 1 apps today | 3654 total records
+[2026-05-17T19:34:41.925Z] [INFO] [Health] 1 apps today | 3654 total records
+[2026-05-17T19:35:41.931Z] [INFO] [Health] 1 apps today | 3654 total records
+[2026-05-17T19:36:41.940Z] [INFO] [Health] 1 apps today | 3658 total records
+[2026-05-17T19:37:41.948Z] [INFO] [Health] 1 apps today | 3665 total records
+[2026-05-17T19:38:41.951Z] [INFO] [Health] 1 apps today | 3667 total records
+[2026-05-17T19:39:41.969Z] [INFO] [Health] 1 apps today | 3674 total records
+[2026-05-17T19:40:41.976Z] [INFO] [Health] 1 apps today | 3674 total records
+[2026-05-17T19:41:41.984Z] [INFO] [Health] 2 apps today | 3676 total records
+[2026-05-17T19:42:41.987Z] [INFO] [Health] 2 apps today | 3676 total records
+[2026-05-17T19:43:41.988Z] [INFO] [Health] 2 apps today | 3676 total records
+[2026-05-17T19:44:41.995Z] [INFO] [Health] 2 apps today | 3676 total records
+[2026-05-17T19:45:42.001Z] [INFO] [Health] 2 apps today | 3676 total records
+[2026-05-17T19:46:42.016Z] [INFO] [Health] 2 apps today | 3682 total records
+[2026-05-17T19:47:42.025Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:48:42.034Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:49:42.045Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:50:42.059Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:51:42.072Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:52:42.078Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:53:42.081Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:54:42.084Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:55:42.085Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:56:42.101Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:57:42.103Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:58:42.112Z] [INFO] [Health] 2 apps today | 3689 total records
+[2026-05-17T19:59:42.126Z] [INFO] [Health] 2 apps today | 3691 total records
+[2026-05-17T20:00:42.125Z] [INFO] [Health] 2 apps today | 3697 total records
+[2026-05-17T20:01:42.127Z] [INFO] [Health] 2 apps today | 3699 total records
+[2026-05-17T20:02:42.134Z] [INFO] [Health] 2 apps today | 3700 total records
+[2026-05-17T20:03:42.148Z] [INFO] [Health] 3 apps today | 3705 total records
+[2026-05-17T20:04:42.153Z] [INFO] [Health] 3 apps today | 3717 total records
+[2026-05-17T20:05:42.164Z] [INFO] [Health] 3 apps today | 3718 total records
+[2026-05-17T20:06:42.167Z] [INFO] [Health] 3 apps today | 3722 total records
+[2026-05-17T20:07:42.169Z] [INFO] [Health] 3 apps today | 3723 total records
+[2026-05-17T20:08:42.178Z] [INFO] [Health] 3 apps today | 3724 total records
+[2026-05-17T20:09:42.188Z] [INFO] [Health] 3 apps today | 3725 total records
+[2026-05-17T20:10:42.195Z] [INFO] [Health] 3 apps today | 3725 total records
+[2026-05-17T20:11:42.211Z] [INFO] [Health] 3 apps today | 3726 total records
+[2026-05-17T20:12:42.212Z] [INFO] [Health] 3 apps today | 3727 total records
+[2026-05-17T20:13:42.227Z] [INFO] [Health] 3 apps today | 3728 total records
+[2026-05-17T20:14:42.244Z] [INFO] [Health] 3 apps today | 3729 total records
+[2026-05-17T20:15:42.254Z] [INFO] [Health] 3 apps today | 3730 total records
+[2026-05-17T20:16:42.263Z] [INFO] [Health] 3 apps today | 3732 total records
+[2026-05-17T20:17:42.269Z] [INFO] [Health] 3 apps today | 3737 total records
+[2026-05-17T20:18:42.272Z] [INFO] [Health] 4 apps today | 3743 total records
+[2026-05-17T20:19:42.282Z] [INFO] [Health] 4 apps today | 3749 total records
+[2026-05-17T20:20:42.284Z] [INFO] [Health] 4 apps today | 3749 total records
+[2026-05-17T20:21:42.285Z] [INFO] [Health] 4 apps today | 3750 total records
+[2026-05-17T20:22:42.290Z] [INFO] [Health] 4 apps today | 3751 total records
+[2026-05-17T20:23:42.289Z] [INFO] [Health] 4 apps today | 3751 total records
+[2026-05-17T20:24:42.291Z] [INFO] [Health] 4 apps today | 3751 total records
+[2026-05-17T20:25:42.308Z] [INFO] [Health] 4 apps today | 3751 total records
+[2026-05-17T20:26:42.319Z] [INFO] [Health] 4 apps today | 3751 total records
+[2026-05-17T20:27:42.328Z] [INFO] [Health] 4 apps today | 3752 total records
+[2026-05-17T20:28:42.334Z] [INFO] [Health] 4 apps today | 3757 total records
+[2026-05-17T20:29:42.348Z] [INFO] [Health] 4 apps today | 3759 total records
+[2026-05-17T20:30:42.352Z] [INFO] [Health] 4 apps today | 3759 total records
+[2026-05-17T20:31:42.364Z] [INFO] [Health] 4 apps today | 3759 total records
+[2026-05-17T20:32:42.372Z] [INFO] [Health] 4 apps today | 3759 total records
+[2026-05-17T20:33:42.375Z] [INFO] [Health] 4 apps today | 3759 total records
+[2026-05-17T20:34:42.385Z] [INFO] [Health] 4 apps today | 3759 total records
+[2026-05-19T17:38:40.289Z] [INFO] [Main] All IPC handlers registered
+[2026-05-19T17:38:40.295Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-19T17:38:40.642Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting
+[2026-05-19T17:39:40.649Z] [INFO] [Health] 0 apps today | 3765 total records
+[2026-05-19T17:40:40.661Z] [INFO] [Health] 0 apps today | 3767 total records
+[2026-05-19T17:41:40.671Z] [INFO] [Health] 0 apps today | 3767 total records
+[2026-05-19T17:42:40.679Z] [INFO] [Health] 0 apps today | 3768 total records
+[2026-05-19T17:43:40.685Z] [INFO] [Health] 0 apps today | 3768 total records
+[2026-05-19T17:44:40.685Z] [INFO] [Health] 0 apps today | 3768 total records
+[2026-05-19T17:45:40.685Z] [INFO] [Health] 0 apps today | 3768 total records
+[2026-05-19T17:46:40.694Z] [INFO] [Health] 1 apps today | 3769 total records
+[2026-05-19T17:47:40.695Z] [INFO] [Health] 1 apps today | 3774 total records
+[2026-05-19T17:48:40.697Z] [INFO] [Health] 1 apps today | 3774 total records
+[2026-05-19T17:49:40.720Z] [INFO] [Health] 1 apps today | 3774 total records
+[2026-05-19T17:50:40.723Z] [INFO] [Health] 1 apps today | 3778 total records
+[2026-05-19T17:51:40.738Z] [INFO] [Health] 1 apps today | 3780 total records
+[2026-05-19T17:52:40.747Z] [INFO] [Health] 1 apps today | 3781 total records
+[2026-05-19T17:53:40.755Z] [INFO] [Health] 1 apps today | 3783 total records
+[2026-05-19T17:54:40.770Z] [INFO] [Health] 1 apps today | 3784 total records
+[2026-05-19T17:55:40.774Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T17:56:40.793Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T17:57:40.805Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T17:58:40.807Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T17:59:40.813Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T18:00:40.826Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T18:01:40.840Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T18:02:40.848Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T18:03:40.849Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T18:04:40.865Z] [INFO] [Health] 1 apps today | 3787 total records
+[2026-05-19T18:05:40.873Z] [INFO] [Health] 1 apps today | 3789 total records
+[2026-05-19T18:06:08.924Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-05-19T18:06:12.049Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-05-19T18:06:12.955Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-05-19T18:06:20.636Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-05-19T18:06:30.285Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-05-19T18:06:40.876Z] [INFO] [Health] 1 apps today | 3789 total records
+[2026-05-19T18:06:41.446Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-05-19T18:06:56.818Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-05-19T18:07:40.887Z] [INFO] [Health] 1 apps today | 3789 total records
+[2026-05-19T18:08:40.891Z] [INFO] [Health] 2 apps today | 3796 total records
+[2026-05-19T18:09:40.897Z] [INFO] [Health] 3 apps today | 3804 total records
+[2026-05-19T18:10:40.905Z] [INFO] [Health] 3 apps today | 3810 total records
+[2026-05-19T18:11:40.919Z] [INFO] [Health] 3 apps today | 3814 total records
+[2026-05-19T18:12:40.934Z] [INFO] [Health] 3 apps today | 3817 total records
+[2026-05-19T18:13:40.945Z] [INFO] [Health] 3 apps today | 3817 total records
+[2026-05-19T18:14:40.949Z] [INFO] [Health] 3 apps today | 3822 total records
+[2026-05-19T18:15:31.546Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-05-13","mode":"range"}
+[2026-05-19T18:15:31.547Z] [INFO] [StatsService] called — dateFilter: 2026-05-13, mode: range
+[2026-05-19T18:15:31.548Z] [INFO] [StatsService] productive apps: []
+[2026-05-19T18:15:31.552Z] [INFO] [StatsService] active rows count: 6, idle rows count: 1
+[2026-05-19T18:15:31.553Z] [INFO] [StatsService] result — productive:0s distracting:6911.089999999999s idle:1792.5900000000001s score:0.0%
+[2026-05-19T18:15:39.029Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-04-20","mode":"range"}
+[2026-05-19T18:15:39.030Z] [INFO] [StatsService] called — dateFilter: 2026-04-20, mode: range
+[2026-05-19T18:15:39.031Z] [INFO] [StatsService] productive apps: []
+[2026-05-19T18:15:39.035Z] [INFO] [StatsService] active rows count: 9, idle rows count: 1
+[2026-05-19T18:15:39.036Z] [INFO] [StatsService] result — productive:0s distracting:17216.16s idle:9302.67s score:0.0%
+[2026-05-19T18:15:40.956Z] [INFO] [Health] 3 apps today | 3824 total records
+[2026-05-19T18:15:45.192Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-05-13","mode":"range"}
+[2026-05-19T18:15:45.193Z] [INFO] [StatsService] called — dateFilter: 2026-05-13, mode: range
+[2026-05-19T18:15:45.193Z] [INFO] [StatsService] productive apps: []
+[2026-05-19T18:15:45.196Z] [INFO] [StatsService] active rows count: 6, idle rows count: 1
+[2026-05-19T18:15:45.196Z] [INFO] [StatsService] result — productive:0s distracting:6911.089999999999s idle:1792.5900000000001s score:0.0%
+[2026-05-19T18:16:40.971Z] [INFO] [Health] 3 apps today | 3825 total records
+[2026-05-19T18:17:40.984Z] [INFO] [Health] 3 apps today | 3831 total records
+[2026-05-19T18:18:40.993Z] [INFO] [Health] 3 apps today | 3832 total records
+[2026-05-19T18:19:40.997Z] [INFO] [Health] 3 apps today | 3834 total records
+[2026-05-19T18:20:41.014Z] [INFO] [Health] 3 apps today | 3834 total records
+[2026-05-19T18:21:41.017Z] [INFO] [Health] 3 apps today | 3835 total records
+[2026-05-19T18:22:41.026Z] [INFO] [Health] 3 apps today | 3835 total records
+[2026-05-19T18:23:41.029Z] [INFO] [Health] 3 apps today | 3835 total records
+[2026-05-19T18:24:41.035Z] [INFO] [Health] 3 apps today | 3836 total records
+[2026-05-19T18:25:41.046Z] [INFO] [Health] 3 apps today | 3836 total records
+[2026-05-19T18:26:41.062Z] [INFO] [Health] 3 apps today | 3836 total records
+[2026-05-19T18:27:41.071Z] [INFO] [Health] 3 apps today | 3836 total records
+[2026-05-19T18:28:41.076Z] [INFO] [Health] 3 apps today | 3841 total records
+[2026-05-19T18:29:41.078Z] [INFO] [Health] 3 apps today | 3858 total records
+[2026-05-19T18:30:41.082Z] [INFO] [Health] 0 apps today | 3868 total records
+[2026-05-19T18:31:41.091Z] [INFO] [Health] 0 apps today | 3872 total records
+[2026-05-19T18:32:41.100Z] [INFO] [Health] 1 apps today | 3876 total records
+[2026-05-19T18:33:41.111Z] [INFO] [Health] 1 apps today | 3876 total records
+[2026-05-19T18:34:41.114Z] [INFO] [Health] 1 apps today | 3877 total records
+[2026-05-19T18:35:41.125Z] [INFO] [Health] 1 apps today | 3881 total records
+[2026-05-19T18:36:41.141Z] [INFO] [Health] 1 apps today | 3885 total records
+[2026-05-19T18:37:41.151Z] [INFO] [Health] 2 apps today | 3887 total records
+[2026-05-19T18:38:41.159Z] [INFO] [Health] 2 apps today | 3889 total records
+[2026-05-19T18:39:41.171Z] [INFO] [Health] 2 apps today | 3890 total records
+[2026-05-19T18:40:41.178Z] [INFO] [Health] 3 apps today | 3894 total records
+[2026-05-19T18:41:41.196Z] [INFO] [Health] 3 apps today | 3902 total records
+[2026-05-19T18:42:41.200Z] [INFO] [Health] 3 apps today | 3908 total records
+[2026-05-19T18:43:41.210Z] [INFO] [Health] 3 apps today | 3913 total records
+[2026-05-19T18:44:41.220Z] [INFO] [Health] 3 apps today | 3914 total records
+[2026-05-19T18:45:41.233Z] [INFO] [Health] 3 apps today | 3914 total records
+[2026-05-19T18:46:41.234Z] [INFO] [Health] 3 apps today | 3914 total records
+[2026-05-19T18:47:41.235Z] [INFO] [Health] 3 apps today | 3914 total records
+[2026-05-19T18:48:41.248Z] [INFO] [Health] 3 apps today | 3914 total records
+[2026-05-19T18:49:41.259Z] [INFO] [Health] 3 apps today | 3920 total records
+[2026-05-19T18:50:41.271Z] [INFO] [Health] 3 apps today | 3923 total records
+[2026-05-19T18:51:41.274Z] [INFO] [Health] 3 apps today | 3923 total records
+[2026-05-19T18:52:41.287Z] [INFO] [Health] 3 apps today | 3925 total records
+[2026-05-19T18:53:41.290Z] [INFO] [Health] 3 apps today | 3925 total records
+[2026-05-19T18:54:41.302Z] [INFO] [Health] 3 apps today | 3927 total records
+[2026-05-19T18:55:41.303Z] [INFO] [Health] 3 apps today | 3930 total records
+[2026-05-20T20:01:02.681Z] [INFO] [Main] All IPC handlers registered
+[2026-05-20T20:01:02.688Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-20T20:02:03.297Z] [INFO] [Health] 0 apps today | 3941 total records
+[2026-05-20T20:03:03.284Z] [INFO] [Health] 0 apps today | 3955 total records
+[2026-05-20T20:04:03.295Z] [INFO] [Health] 2 apps today | 3972 total records
+[2026-05-20T20:05:03.312Z] [INFO] [Health] 2 apps today | 3997 total records
+[2026-05-20T20:06:03.314Z] [INFO] [Health] 2 apps today | 4015 total records
+[2026-05-20T20:07:03.320Z] [INFO] [Health] 2 apps today | 4024 total records
+[2026-05-20T20:08:03.322Z] [INFO] [Health] 2 apps today | 4031 total records
+[2026-05-20T20:09:03.328Z] [INFO] [Health] 2 apps today | 4034 total records
+[2026-05-20T20:10:03.332Z] [INFO] [Health] 2 apps today | 4043 total records
+[2026-05-20T20:11:03.348Z] [INFO] [Health] 2 apps today | 4055 total records
+[2026-05-20T20:12:03.355Z] [INFO] [Health] 2 apps today | 4073 total records
+[2026-05-20T20:13:03.361Z] [INFO] [Health] 2 apps today | 4094 total records
+[2026-05-20T20:14:03.395Z] [INFO] [Health] 3 apps today | 4095 total records
+[2026-05-20T20:15:03.404Z] [INFO] [Health] 3 apps today | 4101 total records
+[2026-05-20T20:15:37.260Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-05-20T20:15:38.581Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-05-20T20:15:48.583Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-05-20T20:16:03.408Z] [INFO] [Health] 4 apps today | 4104 total records
+[2026-05-20T20:17:03.411Z] [INFO] [Health] 4 apps today | 4117 total records
+[2026-05-20T20:18:03.423Z] [INFO] [Health] 4 apps today | 4120 total records
+[2026-05-20T20:19:03.435Z] [INFO] [Health] 4 apps today | 4136 total records
+[2026-05-20T20:20:03.449Z] [INFO] [Health] 4 apps today | 4152 total records
+[2026-05-20T20:21:03.455Z] [INFO] [Health] 4 apps today | 4167 total records
+[2026-05-20T20:22:03.466Z] [INFO] [Health] 4 apps today | 4181 total records
+[2026-05-20T20:23:01.286Z] [INFO] [Main] All IPC handlers registered
+[2026-05-20T20:23:01.289Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-20T20:23:01.484Z] [INFO] [Main] Startup sync — 3 productive, 24 distracting (persisted)
+[2026-05-20T20:23:28.263Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-05-20T20:23:40.981Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-05-20T20:24:00.621Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-05-20T20:24:01.486Z] [INFO] [Health] 4 apps today | 4195 total records
+[2026-05-20T20:25:01.497Z] [INFO] [Health] 4 apps today | 4201 total records
+[2026-05-20T20:26:01.510Z] [INFO] [Health] 4 apps today | 4201 total records
+[2026-05-20T20:27:01.511Z] [INFO] [Health] 4 apps today | 4201 total records
+[2026-05-20T20:28:01.511Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:29:01.518Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:30:01.534Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:31:01.541Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:32:01.548Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:33:01.563Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:34:01.571Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:35:01.591Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:36:01.593Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:37:01.599Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:38:01.613Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:39:01.625Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:40:01.631Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:41:01.639Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:42:01.653Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:43:01.667Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:44:01.675Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:45:01.684Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-20T20:45:55.874Z] [INFO] [Main] All windows closed
+[2026-05-21T05:48:32.711Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T05:48:32.715Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T05:48:33.246Z] [INFO] [Main] Startup sync — 2 productive, 25 distracting (persisted)
+[2026-05-21T05:48:33.250Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T05:49:33.261Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-21T05:50:33.260Z] [INFO] [Health] 4 apps today | 4202 total records
+[2026-05-21T05:51:33.275Z] [INFO] [Health] 4 apps today | 4203 total records
+[2026-05-21T05:52:33.286Z] [INFO] [Health] 4 apps today | 4205 total records
+[2026-05-21T05:53:33.301Z] [INFO] [Health] 4 apps today | 4205 total records
+[2026-05-21T05:54:33.317Z] [INFO] [Health] 4 apps today | 4206 total records
+[2026-05-21T05:55:17.218Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T05:55:17.220Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T05:55:17.464Z] [INFO] [Main] Startup sync — 2 productive, 25 distracting (persisted)
+[2026-05-21T05:55:17.466Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T05:56:17.488Z] [INFO] [Health] 4 apps today | 4212 total records
+[2026-05-21T05:57:17.497Z] [INFO] [Health] 4 apps today | 4212 total records
+[2026-05-21T05:58:17.508Z] [INFO] [Health] 4 apps today | 4216 total records
+[2026-05-21T05:58:47.345Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T05:58:47.348Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T05:58:47.529Z] [INFO] [Main] Startup sync — 2 productive, 26 distracting (persisted)
+[2026-05-21T05:58:47.530Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T05:59:47.547Z] [INFO] [Health] 4 apps today | 4221 total records
+[2026-05-21T06:00:47.558Z] [INFO] [Health] 4 apps today | 4221 total records
+[2026-05-21T06:01:47.560Z] [INFO] [Health] 4 apps today | 4222 total records
+[2026-05-21T06:02:47.576Z] [INFO] [Health] 4 apps today | 4222 total records
+[2026-05-21T06:03:47.586Z] [INFO] [Health] 4 apps today | 4223 total records
+[2026-05-21T06:04:47.586Z] [INFO] [Health] 4 apps today | 4224 total records
+[2026-05-21T06:05:47.602Z] [INFO] [Health] 4 apps today | 4226 total records
+[2026-05-21T06:06:47.606Z] [INFO] [Health] 4 apps today | 4227 total records
+[2026-05-21T06:06:58.134Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T06:06:58.135Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T06:06:58.308Z] [INFO] [Main] Startup sync — 2 productive, 26 distracting (persisted)
+[2026-05-21T06:06:58.309Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:07:15.410Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-05-21T06:07:15.413Z] [WARN] [Main] Failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:07:17.516Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-05-21T06:07:17.518Z] [WARN] [Main] Failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:07:58.314Z] [INFO] [Health] 4 apps today | 4227 total records
+[2026-05-21T06:08:05.071Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-05-21T06:08:05.073Z] [WARN] [Main] Failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:08:08.554Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-05-21T06:08:08.558Z] [WARN] [Main] Failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:08:58.321Z] [INFO] [Health] 4 apps today | 4230 total records
+[2026-05-21T06:09:58.337Z] [INFO] [Health] 4 apps today | 4233 total records
+[2026-05-21T06:10:58.351Z] [INFO] [Health] 4 apps today | 4233 total records
+[2026-05-21T06:11:58.364Z] [INFO] [Health] 4 apps today | 4234 total records
+[2026-05-21T06:12:58.378Z] [INFO] [Health] 4 apps today | 4234 total records
+[2026-05-21T06:13:40.684Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T06:13:40.685Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T06:13:40.853Z] [INFO] [Main] Startup sync — 2 productive, 26 distracting (persisted)
+[2026-05-21T06:13:40.855Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:14:40.865Z] [INFO] [Health] 4 apps today | 4236 total records
+[2026-05-21T06:15:31.576Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T06:15:31.578Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T06:15:31.760Z] [INFO] [Main] Startup sync — 2 productive, 26 distracting (persisted)
+[2026-05-21T06:15:31.761Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:16:31.779Z] [INFO] [Health] 4 apps today | 4238 total records
+[2026-05-21T06:21:05.752Z] [INFO] [Main] All IPC handlers registered
+[2026-05-21T06:21:05.753Z] [INFO] [Main] Creating window | preload exists: true
+[2026-05-21T06:21:05.934Z] [INFO] [Main] Startup sync — 2 productive, 26 distracting (persisted)
+[2026-05-21T06:21:05.936Z] [WARN] [Main] Startup sync: failed to sync is_productive flags | "loadProductivityRules is not defined"
+[2026-05-21T06:22:05.944Z] [INFO] [Health] 4 apps today | 4239 total records
+[2026-05-21T06:23:05.956Z] [INFO] [Health] 4 apps today | 4239 total records

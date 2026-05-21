@@ -10,14 +10,17 @@ const FILTER_DOTS = {
   Idle: "#d1d1dc",
 };
 
-export default function ActivityFilters({ active = "All", onFilterChange }) {
+export default function ActivityFilters({ filter = "All", setFilter, active, onFilterChange }) {
+  const current = filter ?? active;
+  const change = setFilter || onFilterChange;
+
   return (
     <div className="activity-filters">
       {FILTERS.map((f) => (
         <button
           key={f}
-          className={`af-pill ${active === f ? "active" : ""}`}
-          onClick={() => onFilterChange?.(f)}
+          className={`af-pill ${current === f ? "active" : ""}`}
+          onClick={() => change?.(f)}
         >
           {FILTER_DOTS[f] && (
             <span className="af-dot" style={{ background: FILTER_DOTS[f] }} />

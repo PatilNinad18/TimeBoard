@@ -1,5 +1,6 @@
 import db from "../db/database.js";
 import logger from "../logger.js";
+import { loadProductivityRules, isProductiveApp } from "./productivityRules.js";
 
 function buildCond(dateFilter, mode) {
   if (!dateFilter) {
@@ -14,59 +15,65 @@ function buildCond(dateFilter, mode) {
   };
 }
 
-function getProductiveApps() {
-  try {
-    return db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
-  } catch {
-    return [];
-  }
-}
-
 export function getTodayProductivityStats(dateFilter = null, mode = "single") {
   logger.info("StatsService", `called — dateFilter: ${dateFilter}, mode: ${mode}`);
 
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
+    const rules = loadProductivityRules();
 
-    logger.info("StatsService", `productive apps: ${JSON.stringify(productiveApps)}`);
+    logger.info("StatsService", `productive rules: ${JSON.stringify(rules)}`);
 
-    // Fetch ALL rows for the period — classify in JS, not SQL
-    // This completely avoids the IN () empty list bug AND the param binding bug
-    const rows = param
+    // Fetch active app usage (non-idle). Include all apps regardless of
+    // how small their summed durations are so frontend aggregates (like
+    // the App Breakdown) and the total productive/distracting values
+    // remain consistent.
+    const activeRows = param
       ? db.prepare(`
-          SELECT app_name, is_idle, COALESCE(SUM(duration), 0) as total
+          SELECT app_name, COALESCE(SUM(duration), 0) as total
           FROM app_usage
-          WHERE ${cond}
-          GROUP BY app_name, is_idle
-        `).all(param)          // ← single string param, NOT spread
+          WHERE ${cond} AND is_idle = 0
+          GROUP BY app_name
+          ORDER BY total DESC
+        `).all(param)
       : db.prepare(`
-          SELECT app_name, is_idle, COALESCE(SUM(duration), 0) as total
+          SELECT app_name, COALESCE(SUM(duration), 0) as total
           FROM app_usage
-          WHERE ${cond}
-          GROUP BY app_name, is_idle
-        `).all();              // ← no params needed
+          WHERE ${cond} AND is_idle = 0
+          GROUP BY app_name
+          ORDER BY total DESC
+        `).all();
 
-    logger.info("StatsService", `raw rows count: ${rows.length}`);
+    // Fetch idle time separately
+    const idleRows = param
+      ? db.prepare(`
+          SELECT COALESCE(SUM(duration), 0) as total
+          FROM app_usage
+          WHERE ${cond} AND is_idle = 1
+        `).all(param)
+      : db.prepare(`
+          SELECT COALESCE(SUM(duration), 0) as total
+          FROM app_usage
+          WHERE ${cond} AND is_idle = 1
+        `).all();
+
+    logger.info("StatsService", `active rows count: ${activeRows.length}, idle rows count: ${idleRows.length}`);
 
     let productive = 0, distracting = 0, idle = 0;
 
-    for (const row of rows) {
-      if (row.is_idle) {
-        idle += row.total;
-        continue;
-      }
-      if (productiveApps.length === 0) {
-        // No config yet — treat all as distracting
-        distracting += row.total;
-      } else if (productiveApps.includes(row.app_name)) {
+    // Process active app usage
+    for (const row of activeRows) {
+      if (isProductiveApp(row.app_name, rules)) {
         productive += row.total;
       } else {
         distracting += row.total;
       }
     }
 
-    const total = productive + distracting;
+    // Process idle time
+    idle = idleRows.length > 0 ? idleRows[0].total : 0;
+
+    const total = productive + distracting + idle;
     const score = total === 0 ? 0 : (productive / total) * 100;
 
     logger.info("StatsService", `result — productive:${productive}s distracting:${distracting}s idle:${idle}s score:${score.toFixed(1)}%`);

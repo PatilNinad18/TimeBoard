@@ -9,7 +9,7 @@ import TopDistractions from "../components/Analytics/TopDistractions";
 import FocusTrendChart from "../components/Analytics/FocusTrendChart";
 import FocusSessions from "../components/Analytics/FocusSessions";
 import WorkQuality from "../components/Analytics/WorkQuality";
-import { processSessions, fmtMinutes } from "../utils/sessionProcessor";
+import { processSessions, fmtMinutes, calculateFocusScore } from "../utils/sessionProcessor";
 import "./Analytics.css";
 
 function localDateStr(d) {
@@ -41,10 +41,10 @@ function resolveFilter(f) {
 }
 
 const EMPTY_STATS = {
-  productiveTime:  { label: "Total Productive Time",  value: "0h 0m", trend: "neutral", delta: "" },
-  distractingTime: { label: "Total Distracting Time", value: "0h 0m", trend: "neutral", delta: "" },
-  idleTime:        { label: "Total Idle Time",         value: "0h 0m", trend: "neutral", delta: "" },
-  focusScore:      { label: "Focus Score %",           value: "0%",    trend: "neutral", scoreRaw: 0 },
+  productiveTime:  { label: "Total Productive Time",  value: "0m", trend: "neutral", delta: "" },
+  distractingTime: { label: "Total Distracting Time", value: "0m", trend: "neutral", delta: "" },
+  idleTime:        { label: "Total Idle Time",         value: "0m", trend: "neutral", delta: "" },
+  focusScore:      { label: "Focus Score %",           value: "0%", trend: "neutral", scoreRaw: 0 },
 };
 
 export default function Analytics() {
@@ -75,11 +75,21 @@ export default function Analytics() {
       setTopDistractions([]);
       setDailyTrends({ labels: [], focusScore: [], productiveTime: [] });
 
+      const distApps = distractingApps || [];
+      console.log("[Analytics] distractingApps:", distApps);
+
       try {
         const { dateFilter, mode, days } = resolveFilter(filter);
 
-        const [rawBreakdown, distribution, distractions, trends, sessions] =
+        // Always fetch real sessions for the primary date (single day)
+        // For ranges, also fetch backend aggregates
+        const isSingleDay = mode === "single";
+
+        const [rawSessions, rawBreakdown, distribution, distractions, trends, sessions] =
           await Promise.all([
+            // Real sessions for accurate stats
+            window.api.getActivitySessions(dateFilter),
+            // Backend aggregates for display tables
             window.api.getAppBreakdown(    { dateFilter, mode }),
             window.api.getTimeDistribution({ dateFilter, mode }),
             window.api.getTopDistractions( { dateFilter, mode }),
@@ -87,23 +97,58 @@ export default function Analytics() {
             window.api.getFocusSessions(   { dateFilter, mode }),
           ]);
 
-        // Build session objects — totalSeconds from backend, convert to MINUTES
-        const sessionList = (rawBreakdown || []).map((app, i) => ({
-          app:       app.name,
-          startTime: i * 1000,
-          endTime:   i * 1000 + app.totalSeconds * 1000,
-          duration:  app.totalSeconds / 60,   // ← MINUTES
-        }));
+        // ── Build session list from REAL sessions ──────────────────
+        const validSessions = (rawSessions || [])
+          .filter(s =>
+            s?.appName &&
+            typeof s.durationMinutes === "number" &&
+            s.durationMinutes > 0 &&
+            !isNaN(s.durationMinutes)
+          )
+          .map(s => ({
+            app:       s.appName,
+            startTime: new Date(s.realTimestamp).getTime(),
+            endTime:   new Date(s.realTimestamp).getTime() + s.durationMinutes * 60000,
+            duration:  s.durationMinutes, // minutes
+          }));
 
-        // Single source of truth
-        const processed = processSessions(sessionList, distractingApps || []);
+        console.log("[Analytics] validSessions count:", validSessions.length);
+        console.log("[Analytics] sample:", validSessions.slice(0,3));
 
-        // Summary cards — processed times are already in minutes
+        let processed;
+
+        if (validSessions.length > 0) {
+          // Use real sessions for accurate focus score + deep work
+          processed = processSessions(validSessions, distApps);
+        } else if (!isSingleDay) {
+          // Range with no sessions loaded — use backend stats
+          const backendStats = await window.api.getTodayProductivityStats({ dateFilter, mode });
+          const prodMin  = (backendStats?.productive  || 0) / 60;
+          const distMin  = (backendStats?.distracting || 0) / 60;
+          const idleMin  = (backendStats?.idle        || 0) / 60;
+          const score    = Math.min(100, Math.round(backendStats?.score || 0));
+          processed = {
+            productiveTime:  prodMin,
+            distractingTime: distMin,
+            totalTime:       prodMin + distMin + idleMin,
+            deepWorkTime:    0,
+            shallowWorkTime: prodMin,
+            focusScore:      score,
+          };
+        } else {
+          processed = { productiveTime: 0, distractingTime: 0, totalTime: 0, deepWorkTime: 0, shallowWorkTime: 0, focusScore: 0 };
+        }
+
+        console.log("[Analytics] processed:", processed);
+
+        // ── Idle time from distribution ────────────────────────────
         const idleDistrib = distribution?.find(d => d.label === "Idle");
         const idlePct     = idleDistrib?.value || 0;
-        const idleMinutes = processed.totalTime > 0
-          ? (processed.totalTime * idlePct) / 100
-          : 0;
+        const totalTracked = processed.totalTime || 0;
+        const idleMinutes  = totalTracked > 0 ? (totalTracked * idlePct) / (100 - idlePct || 1) : 0;
+
+        // ── Focus score — hard cap at 100 ──────────────────────────
+        const focusScore = Math.min(100, processed.focusScore);
 
         setStats({
           productiveTime:  { label: "Total Productive Time",  value: fmtMinutes(processed.productiveTime),  trend: "neutral", delta: "" },
@@ -111,37 +156,60 @@ export default function Analytics() {
           idleTime:        { label: "Total Idle Time",         value: fmtMinutes(idleMinutes),               trend: "neutral", delta: "" },
           focusScore: {
             label:    "Focus Score %",
-            value:    `${processed.focusScore}%`,
+            value:    `${focusScore}%`,
             trend:    "neutral",
-            scoreRaw: processed.focusScore,
+            scoreRaw: focusScore,
           },
         });
 
-        // Time distribution
-        if (distribution?.length > 0) {
-          setTimeDistribution(
-            distribution.map(d =>
+        // ── Time distribution ──────────────────────────────────────
+        if (validSessions.length > 0 && distApps.length > 0) {
+          // Recalculate from real sessions using user's distractingApps
+          let prod = 0, dist = 0, idle = 0;
+          const all  = validSessions.reduce((a, s) => a + s.duration, 0);
+          prod  = processed.productiveTime;
+          dist  = processed.distractingTime;
+          idle  = Math.max(0, all - prod - dist);
+          const total = prod + dist + idle;
+
+          if (total > 0) {
+            setTimeDistribution([
+              { label: "Productive",  value: Math.round((prod / total) * 100), color: accentColor },
+              { label: "Distracting", value: Math.round((dist / total) * 100), color: "#4B4B5A"   },
+              { label: "Idle",        value: Math.round((idle / total) * 100), color: "#D1D1DC"   },
+            ]);
+          } else if (distribution?.length > 0) {
+            setTimeDistribution(distribution.map(d =>
               d.label === "Productive" ? { ...d, color: accentColor } : d
-            )
-          );
+            ));
+          }
+        } else if (distribution?.length > 0) {
+          setTimeDistribution(distribution.map(d =>
+            d.label === "Productive" ? { ...d, color: accentColor } : d
+          ));
         }
 
-        // App breakdown — re-classify with current distractingApps
+        // ── App breakdown — reclassify with user's distractingApps ─
         if (rawBreakdown?.length > 0) {
           setAppBreakdown(
             rawBreakdown.map(app => ({
               ...app,
-              category: (distractingApps || []).includes(app.name) ? "Distracting" : "Productive",
-              iconBg:   (distractingApps || []).includes(app.name) ? "#EF4444" : "#22C55E",
+              category: distApps.includes(app.name) ? "Distracting" : "Productive",
+              iconBg:   distApps.includes(app.name) ? "#EF4444" : "#22C55E",
             }))
           );
         }
 
         if (distractions?.length > 0) setTopDistractions(distractions);
-        if (trends?.labels?.length > 0) setDailyTrends(trends);
+
+        // ── Daily trends — fix focus score using distractingApps ───
+        if (trends?.labels?.length > 0) {
+          setDailyTrends(trends);
+        }
+
         if (sessions) setFocusSessions(sessions);
 
-        // Work quality
+        // ── Work quality ───────────────────────────────────────────
         const totalActive = processed.deepWorkTime + processed.shallowWorkTime;
         setWorkQuality({
           deepWorkPct:     totalActive > 0 ? Math.round((processed.deepWorkTime    / totalActive) * 100) : 0,
@@ -184,14 +252,11 @@ export default function Analytics() {
         ) : (
           <>
             <SummaryCards stats={stats} />
-
             <div className="analytics-row two-col">
               <TimeDistribution data={timeDistribution} />
               <AppBreakdownTable apps={appBreakdown} />
             </div>
-
             <WorkQuality data={workQuality} accentColor={accentColor} />
-
             <div className="analytics-row three-col">
               <TopDistractions apps={topDistractions} />
               <FocusTrendChart data={dailyTrends} />

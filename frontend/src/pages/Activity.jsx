@@ -18,8 +18,6 @@ function resolveDate(label) {
   return str(now);
 }
 
-// Group by hour using the session's own hourLabel from backend
-// This preserves the correct hour boundaries
 function groupByHour(sessions) {
   const map = {};
 
@@ -32,12 +30,14 @@ function groupByHour(sessions) {
       map[label] = {
         timeLabel:    label,
         items:        [],
-        totalMinutes: 0,
+        totalMinutes: 0,   // sum of ACTUAL durationMinutes in this hour only
         sortKey:      hour,
         hour,
       };
     }
     map[label].items.push(s);
+    // Only add the portion of this session that falls within this hour
+    // Since backend already splits sessions by hour, durationMinutes is correct
     map[label].totalMinutes += s.durationMinutes || 0;
   }
 
@@ -48,10 +48,10 @@ function groupByHour(sessions) {
   return sorted;
 }
 
-// Compute header totals — durationMinutes is always in minutes
 function computeTotals(sessions) {
   const nonIdle  = sessions.filter(s => s.category !== "Idle");
   const totalMin = nonIdle.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
+  if (isNaN(totalMin)) return { totalSessions: nonIdle.length, totalActiveTime: "0h 0m" };
   const h = Math.floor(totalMin / 60);
   const m = Math.round(totalMin % 60);
   return {
@@ -60,7 +60,6 @@ function computeTotals(sessions) {
   };
 }
 
-// Format duration in minutes to display string
 function fmtDuration(minutes) {
   if (!minutes || isNaN(minutes) || minutes <= 0) return "0 min";
   const h = Math.floor(minutes / 60);
@@ -83,21 +82,24 @@ export default function Activity() {
       setLoading(true);
       try {
         const targetDate = resolveDate(date);
-        const raw  = await window.api.getActivitySessions(targetDate);
-        const valid = (raw || []).filter(s => s?.appName && s.durationMinutes > 0);
+        const raw   = await window.api.getActivitySessions(targetDate);
+        const valid = (raw || []).filter(s =>
+          s?.appName &&
+          typeof s.durationMinutes === "number" &&
+          s.durationMinutes > 0
+        );
 
-        // DO NOT merge here — merging collapses sessions across hours which
-        // breaks the timeline grouping. Keep original sessions for display.
-        // Micro-switch merging is only needed for stats (Dashboard/Analytics).
+        // DO NOT merge sessions here — merging across hours breaks
+        // the timeline. Keep each raw session in its correct hour bucket.
+        // Re-classify category from user's distractingApps list.
         const display = valid.map(s => ({
           ...s,
-          // Re-classify category using current distractingApps list
-          category: (distractingApps || []).includes(s.appName)
-            ? "Distracting"
-            : s.category === "Idle"
+          category: s.category === "Idle"
             ? "Idle"
+            : (distractingApps || []).includes(s.appName)
+            ? "Distracting"
             : "Productive",
-          // Ensure duration display string is correct
+          // Ensure duration string matches durationMinutes (not accumulated total)
           duration: fmtDuration(s.durationMinutes),
         }));
 
@@ -114,10 +116,7 @@ export default function Activity() {
   }, [date, distractingApps]);
 
   const filtered = useMemo(() => sessions.filter(s => {
-    const matchFilter =
-      filter === "All" ||
-      s.category === filter ||
-      (filter === "Idle" && s.category === "Idle");
+    const matchFilter = filter === "All" || s.category === filter;
     const matchSearch =
       !search ||
       s.appName?.toLowerCase().includes(search.toLowerCase()) ||
