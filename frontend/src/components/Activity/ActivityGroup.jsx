@@ -2,7 +2,7 @@ import React from "react";
 import { Clock } from "lucide-react";
 import ActivityItem from "./ActivityItem";
 
-export default function ActivityGroup({ group }) {
+export default function ActivityGroup({ group, showIdleDetails = false }) {
   const { timeLabel, items, totalMinutes } = group;
 
   const hours = Math.floor(totalMinutes / 60);
@@ -34,6 +34,7 @@ export default function ActivityGroup({ group }) {
             key={item.id ?? i}
             item={item}
             isIdle={item.category === "Idle"}
+            showIdleDetails={showIdleDetails}
           />
         ))}
       </div>

@@ -138,6 +138,8 @@ export default function Analytics() {
     }
 
     loadAll();
+    const refreshId = setInterval(loadAll, 60000);
+    return () => clearInterval(refreshId);
   }, [filter, accentColor]);
 
   return (

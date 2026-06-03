@@ -53,7 +53,9 @@ export function getTodayProductivityStats(dateFilter = null, mode = "single") {
 
     for (const row of rows) {
       if (row.is_idle) {
+        // Count idle time both as idle for display and as distracting for score.
         idle += row.total;
+        distracting += row.total;
         continue;
       }
       if (productiveApps.length === 0) {

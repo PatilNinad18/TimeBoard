@@ -76,12 +76,35 @@ async function trackActiveApp() {
     const idle = isUserIdle();
 
     if (idle) {
-      // Save current session as idle then reset
-      if (currentSession) {
-        const duration = Number(((Date.now() - startTime) / 1000).toFixed(2));
-        saveSession(currentSession.name, currentSession.title, null, duration, 0, true);
-        currentSession = null;
-        startTime      = null;
+      if (currentSession && !currentSession.isIdle) {
+        // Close the active session before recording idle time.
+        const duration    = Number(((Date.now() - startTime) / 1000).toFixed(2));
+        const prevDomain  = extractDomain(currentSession.name, currentSession.title);
+        const productivity = classifyApp(currentSession.name);
+
+        saveSession(
+          currentSession.name,
+          currentSession.title,
+          prevDomain,
+          duration,
+          productivity,
+          false
+        );
+
+        // Keep the idle session attributed to the previous app so activity shows total app time.
+        currentSession = {
+          name: currentSession.name,
+          title: currentSession.title,
+          domain: prevDomain,
+          isIdle: true,
+        };
+        startTime = Date.now();
+        return;
+      }
+
+      if (!currentSession || !currentSession.isIdle) {
+        currentSession = { name: "Idle", title: "Idle", domain: null, isIdle: true };
+        startTime      = Date.now();
       }
       return;
     }
@@ -92,11 +115,26 @@ async function trackActiveApp() {
     const appName     = win.owner.name;
     const windowTitle = win.title || "";
     const domain      = extractDomain(appName, windowTitle);
+    const productivity = classifyApp(appName);
 
     // Skip blocked apps entirely — don't even record them
     if (isBlocked(appName)) {
       console.log(`[Tracker] Blocked: ${appName}`);
       return;
+    }
+
+    if (currentSession && currentSession.isIdle) {
+      const duration = Number(((Date.now() - startTime) / 1000).toFixed(2));
+      saveSession(
+        currentSession.name,
+        currentSession.title,
+        null,
+        duration,
+        0,
+        true
+      );
+      currentSession = null;
+      startTime      = null;
     }
 
     // First detection — start tracking, nothing to save yet

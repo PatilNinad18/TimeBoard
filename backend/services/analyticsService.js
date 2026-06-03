@@ -54,7 +54,7 @@ export function getAppBreakdown(dateFilter = null, mode = "single") {
     const rows = fetchRows(cond, param, `
       SELECT app_name, COALESCE(SUM(duration),0) as total_time
       FROM app_usage
-      WHERE __COND__ AND is_idle=0
+      WHERE __COND__ AND app_name != 'Idle'
       GROUP BY app_name
       ORDER BY total_time DESC
     `);
@@ -88,7 +88,7 @@ export function getTopDistractions(dateFilter = null, mode = "single") {
     const rows = fetchRows(cond, param, `
       SELECT app_name, COALESCE(SUM(duration),0) as total_time
       FROM app_usage
-      WHERE __COND__ AND is_idle=0
+      WHERE __COND__ AND app_name != 'Idle'
       GROUP BY app_name
       ORDER BY total_time DESC
     `);

@@ -17,7 +17,6 @@ export function getActivitySessions(dateStr = null) {
     SELECT id, app_name, window_title, duration, is_productive, is_idle, timestamp
     FROM app_usage
     WHERE date(timestamp) = ?
-      AND is_idle = 0
       AND duration > 0
     ORDER BY timestamp ASC
   `).all(targetDate);
@@ -45,14 +44,21 @@ export function getActivitySessions(dateStr = null) {
     const hourLabel = `${String(hour).padStart(2, "0")}:00 - ${String(nextHour).padStart(2, "0")}:00`;
 
     const totalSeconds = Math.round(row.duration || 0);
-    const durationMinutes = Math.max(1, Math.round(totalSeconds / 60));
-    const durationHours = Math.floor(durationMinutes / 60);
-    const durationRemMins = durationMinutes % 60;
-    const durationStr = durationHours > 0
-      ? `${durationHours}h ${durationRemMins}m`
-      : `${durationMinutes} min`;
+    const durationMinutes = Math.max(1, Math.ceil(totalSeconds / 60));
+    const durationHours = Math.floor(totalSeconds / 3600);
+    const remainingSeconds = totalSeconds % 60;
+    const durationRemMins = Math.floor((totalSeconds % 3600) / 60);
 
-    const category = row.is_productive ? "Productive" : "Distracting";
+    let durationStr;
+    if (totalSeconds < 60) {
+      durationStr = `${totalSeconds}s`;
+    } else if (durationHours > 0) {
+      durationStr = `${durationHours}h ${durationRemMins}m ${remainingSeconds}s`;
+    } else {
+      durationStr = `${durationRemMins}m ${remainingSeconds}s`;
+    }
+
+    const category = row.is_idle ? "Idle" : row.is_productive ? "Productive" : "Distracting";
 
     console.log(`📝 [${index + 1}] ${row.app_name} | ${exactTime} (${hourLabel}) | ${durationStr}`);
 

@@ -1,6 +1,15 @@
 import React from "react";
 import { Moon } from "lucide-react";
 
+function formatDuration(seconds) {
+  if (!seconds || seconds < 60) return `${seconds || 0}s`;
+  const hours = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  if (hours > 0) return `${hours}h ${mins}m ${secs}s`;
+  return `${mins}m ${secs}s`;
+}
+
 const APP_COLORS = {
   "VS Code": "#007ACC",
   Chrome: "#4285F4",
@@ -18,7 +27,7 @@ const CategoryBadge = ({ cat }) => (
   <span className={`item-cat-badge cat-${cat?.toLowerCase()}`}>{cat}</span>
 );
 
-export default function ActivityItem({ item, isIdle = false }) {
+export default function ActivityItem({ item, isIdle = false, showIdleDetails = false }) {
   if (isIdle) {
     return (
       <div className="activity-item idle-item">
@@ -50,6 +59,11 @@ export default function ActivityItem({ item, isIdle = false }) {
         {item.windowTitle && (
           <span className="item-window-title" title={item.windowTitle}>
             {item.windowTitle}
+          </span>
+        )}
+        {showIdleDetails && item.idleSeconds > 0 && item.idleSeconds < item.durationSeconds && (
+          <span className="item-idle-summary">
+            {formatDuration(item.idleSeconds)} idle
           </span>
         )}
       </div>

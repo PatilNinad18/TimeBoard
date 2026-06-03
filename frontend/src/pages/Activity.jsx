@@ -46,11 +46,71 @@ function groupByHour(sessions) {
   return sorted;
 }
 
+function formatDuration(seconds) {
+  if (seconds < 60) return `${seconds}s`;
+  const hours = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  if (hours > 0) return `${hours}h ${mins}m ${secs}s`;
+  return `${mins}m ${secs}s`;
+}
+
+function mergeSessions(sessions) {
+  const merged = [];
+  for (const session of sessions) {
+    const last = merged[merged.length - 1];
+
+    // If an Idle row follows a real app session, attach it to the last app row.
+    if (session.appName === "Idle" && last && last.appName !== "Idle") {
+      last.durationSeconds += session.durationSeconds || 0;
+      last.idleSeconds += session.durationSeconds || 0;
+      last.durationMinutes = Math.max(1, Math.ceil(last.durationSeconds / 60));
+      last.duration = formatDuration(last.durationSeconds);
+      last.hasIdle = true;
+      continue;
+    }
+
+    const sameApp = last && last.appName === session.appName;
+    const mergeable = sameApp && (
+      last.category === "Idle" ||
+      session.category === "Idle" ||
+      last.windowTitle === session.windowTitle
+    );
+
+    if (mergeable) {
+      last.durationSeconds += session.durationSeconds || 0;
+      last.idleSeconds += session.category === "Idle" ? (session.durationSeconds || 0) : 0;
+      last.productiveSeconds += session.category === "Productive" ? (session.durationSeconds || 0) : 0;
+      last.distractingSeconds += session.category === "Distracting" ? (session.durationSeconds || 0) : 0;
+      last.hasIdle = last.hasIdle || session.category === "Idle";
+      last.hasProductive = last.hasProductive || session.category === "Productive";
+      last.hasDistracting = last.hasDistracting || session.category === "Distracting";
+      last.durationMinutes = Math.max(1, Math.ceil(last.durationSeconds / 60));
+      last.duration = formatDuration(last.durationSeconds);
+      last.exactTime = last.exactTime || session.exactTime;
+      last.fullTimestamp = last.fullTimestamp || session.fullTimestamp;
+      last.windowTitle = last.windowTitle || session.windowTitle;
+    } else {
+      merged.push({
+        ...session,
+        idleSeconds: session.category === "Idle" ? (session.durationSeconds || 0) : 0,
+        productiveSeconds: session.category === "Productive" ? (session.durationSeconds || 0) : 0,
+        distractingSeconds: session.category === "Distracting" ? (session.durationSeconds || 0) : 0,
+        hasIdle: session.category === "Idle",
+        hasProductive: session.category === "Productive",
+        hasDistracting: session.category === "Distracting",
+      });
+    }
+  }
+  return merged;
+}
+
 function computeTotals(sessions) {
-  const nonIdle = sessions.filter((s) => s.category !== "Idle");
-  const totalMin = nonIdle.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
+  const activeSessions = sessions.filter((s) => s.hasProductive || s.hasDistracting);
+  const totalSeconds = activeSessions.reduce((acc, s) => acc + ((s.productiveSeconds || 0) + (s.distractingSeconds || 0)), 0);
+  const totalMin = Math.max(0, Math.ceil(totalSeconds / 60));
   return {
-    totalSessions: nonIdle.length,
+    totalSessions: activeSessions.length,
     totalActiveTime: `${Math.floor(totalMin / 60)}h ${totalMin % 60}m`,
   };
 }
@@ -71,7 +131,8 @@ export default function Activity() {
         const targetDate = resolveDate(date);
         console.log(`[Activity] Loading for: ${date} → ${targetDate}`);
         const data = await window.api.getActivitySessions(targetDate);
-        setSessions((data || []).filter((s) => s?.appName && s.durationMinutes > 0));
+        const filtered = (data || []).filter((s) => s?.appName && s.durationMinutes > 0);
+        setSessions(mergeSessions(filtered));
       } catch (err) {
         console.error("Activity load error:", err);
         setSessions([]);
@@ -81,12 +142,22 @@ export default function Activity() {
     }
 
     load();
+    const refreshId = setInterval(load, 15000);
+    window.addEventListener("focus", load);
+    return () => {
+      clearInterval(refreshId);
+      window.removeEventListener("focus", load);
+    };
   }, [date]);
 
   const filtered = useMemo(() => sessions.filter((s) => {
     const matchFilter =
-      filter === "All" || s.category === filter ||
-      (filter === "Idle" && s.category === "Idle");
+      filter === "All" ? s.appName !== "Idle" :
+      filter === "Productive" ? s.hasProductive :
+      filter === "Distracting" ? s.hasDistracting :
+      filter === "Neutral" ? s.category === "Neutral" :
+      filter === "Idle" ? s.hasIdle || s.appName === "Idle" :
+      true;
     const matchSearch =
       !search ||
       s.appName?.toLowerCase().includes(search.toLowerCase()) ||
@@ -107,7 +178,7 @@ export default function Activity() {
         />
       </div>
       <div className="activity-toolbar">
-        <ActivityFilters filter={filter} setFilter={setFilter} />
+        <ActivityFilters active={filter} onFilterChange={setFilter} />
         <ActivitySearch  search={search}  setSearch={setSearch} />
       </div>
       <div className="activity-scroll-area">
@@ -133,7 +204,7 @@ export default function Activity() {
             <p className="state-sub">Try a different filter or search term.</p>
           </div>
         ) : (
-          <ActivityTimeline groups={groups} />
+          <ActivityTimeline groups={groups} showIdleDetails={filter === "Idle"} />
         )}
       </div>
     </div>

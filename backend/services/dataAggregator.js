@@ -12,10 +12,10 @@ export function getTodayUsage() {
   const rows = db.prepare(`
     SELECT app_name,
            COALESCE(SUM(duration), 0) as total_time,
-           CASE WHEN is_productive = 1 THEN 'Productive' ELSE 'Distracting' END as category
+           CASE WHEN MAX(is_productive) = 1 THEN 'Productive' ELSE 'Distracting' END as category
     FROM app_usage
-    WHERE date(timestamp) = ? AND is_idle = 0
-    GROUP BY app_name, is_productive
+    WHERE date(timestamp) = ? AND app_name != 'Idle'
+    GROUP BY app_name
     ORDER BY total_time DESC
   `).all(today);
 
