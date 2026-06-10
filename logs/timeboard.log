@@ -2442,3 +2442,165 @@
 [2026-06-03T09:24:21.389Z] [INFO] [StatsService] productive apps: []
 [2026-06-03T09:24:21.390Z] [INFO] [StatsService] raw rows count: 10
 [2026-06-03T09:24:21.391Z] [INFO] [StatsService] result — productive:0s distracting:1388.6699999999998s idle:761.38s score:0.0%
+[2026-06-03T10:07:01.142Z] [INFO] [Main] All IPC handlers registered
+[2026-06-03T10:07:01.144Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-03T10:07:04.073Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:07:04.075Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:07:04.077Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:07:04.079Z] [INFO] [StatsService] raw rows count: 10
+[2026-06-03T10:07:04.080Z] [INFO] [StatsService] result — productive:0s distracting:1388.6699999999998s idle:761.38s score:0.0%
+[2026-06-03T10:08:01.306Z] [INFO] [Health] 7 apps today | 44 total records
+[2026-06-03T10:09:01.314Z] [INFO] [Health] 7 apps today | 48 total records
+[2026-06-03T10:09:04.399Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:09:04.400Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:09:04.402Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:09:04.404Z] [INFO] [StatsService] raw rows count: 10
+[2026-06-03T10:09:04.406Z] [INFO] [StatsService] result — productive:0s distracting:1463.35s idle:761.38s score:0.0%
+[2026-06-03T10:10:01.326Z] [INFO] [Health] 7 apps today | 59 total records
+[2026-06-03T10:11:01.332Z] [INFO] [Health] 7 apps today | 66 total records
+[2026-06-03T10:11:04.380Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:11:04.382Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:11:04.384Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:11:04.387Z] [INFO] [StatsService] raw rows count: 10
+[2026-06-03T10:11:04.389Z] [INFO] [StatsService] result — productive:0s distracting:1630.07s idle:761.38s score:0.0%
+[2026-06-03T10:12:01.334Z] [INFO] [Health] 8 apps today | 71 total records
+[2026-06-03T10:13:01.342Z] [INFO] [Health] 8 apps today | 72 total records
+[2026-06-03T10:13:04.392Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:13:04.394Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:13:04.396Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:13:04.398Z] [INFO] [StatsService] raw rows count: 11
+[2026-06-03T10:13:04.400Z] [INFO] [StatsService] result — productive:0s distracting:1740.22s idle:761.38s score:0.0%
+[2026-06-03T10:14:01.345Z] [INFO] [Health] 8 apps today | 72 total records
+[2026-06-03T10:15:01.347Z] [INFO] [Health] 8 apps today | 72 total records
+[2026-06-03T10:15:04.393Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:15:04.394Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:15:04.395Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:15:04.397Z] [INFO] [StatsService] raw rows count: 11
+[2026-06-03T10:15:04.398Z] [INFO] [StatsService] result — productive:0s distracting:1740.22s idle:761.38s score:0.0%
+[2026-06-03T10:16:01.353Z] [INFO] [Health] 8 apps today | 73 total records
+[2026-06-03T10:17:01.356Z] [INFO] [Health] 8 apps today | 75 total records
+[2026-06-03T10:17:04.388Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:17:04.390Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:17:04.392Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:17:04.394Z] [INFO] [StatsService] raw rows count: 12
+[2026-06-03T10:17:04.395Z] [INFO] [StatsService] result — productive:0s distracting:1969.7099999999998s idle:917.05s score:0.0%
+[2026-06-03T10:18:01.371Z] [INFO] [Health] 8 apps today | 76 total records
+[2026-06-03T10:19:01.379Z] [INFO] [Health] 10 apps today | 82 total records
+[2026-06-03T10:19:04.387Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:19:04.388Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:19:04.390Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:19:04.392Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:19:04.393Z] [INFO] [StatsService] result — productive:0s distracting:2066.6899999999996s idle:936.24s score:0.0%
+[2026-06-03T10:20:01.386Z] [INFO] [Health] 10 apps today | 83 total records
+[2026-06-03T10:21:01.400Z] [INFO] [Health] 10 apps today | 83 total records
+[2026-06-03T10:21:44.394Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:21:44.395Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:21:44.396Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:21:44.398Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:21:44.400Z] [INFO] [StatsService] result — productive:0s distracting:2147.5799999999995s idle:936.24s score:0.0%
+[2026-06-03T10:22:01.410Z] [INFO] [Health] 10 apps today | 83 total records
+[2026-06-03T10:23:01.417Z] [INFO] [Health] 10 apps today | 83 total records
+[2026-06-03T10:23:44.386Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:23:44.387Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:23:44.388Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:23:44.390Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:23:44.391Z] [INFO] [StatsService] result — productive:0s distracting:2147.5799999999995s idle:936.24s score:0.0%
+[2026-06-03T10:24:01.419Z] [INFO] [Health] 10 apps today | 83 total records
+[2026-06-03T10:25:01.421Z] [INFO] [Health] 10 apps today | 84 total records
+[2026-06-03T10:25:44.395Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:25:44.396Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:25:44.398Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:25:44.400Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:25:44.403Z] [INFO] [StatsService] result — productive:0s distracting:2450.83s idle:1239.49s score:0.0%
+[2026-06-03T10:26:01.425Z] [INFO] [Health] 10 apps today | 85 total records
+[2026-06-03T10:27:01.434Z] [INFO] [Health] 10 apps today | 88 total records
+[2026-06-03T10:27:44.385Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:27:44.387Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:27:44.389Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:27:44.391Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:27:44.393Z] [INFO] [StatsService] result — productive:0s distracting:2585.33s idle:1241.51s score:0.0%
+[2026-06-03T10:28:01.438Z] [INFO] [Health] 10 apps today | 88 total records
+[2026-06-03T10:29:01.445Z] [INFO] [Health] 10 apps today | 90 total records
+[2026-06-03T10:29:44.395Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:29:44.397Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:29:44.399Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:29:44.402Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:29:44.404Z] [INFO] [StatsService] result — productive:0s distracting:2682.3599999999997s idle:1269.78s score:0.0%
+[2026-06-03T10:30:01.449Z] [INFO] [Health] 10 apps today | 90 total records
+[2026-06-03T10:31:01.464Z] [INFO] [Health] 10 apps today | 91 total records
+[2026-06-03T10:31:44.384Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:31:44.386Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:31:44.387Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:31:44.389Z] [INFO] [StatsService] raw rows count: 14
+[2026-06-03T10:31:44.390Z] [INFO] [StatsService] result — productive:0s distracting:2815.81s idle:1269.78s score:0.0%
+[2026-06-03T10:32:01.472Z] [INFO] [Health] 10 apps today | 91 total records
+[2026-06-03T10:33:01.475Z] [INFO] [Health] 11 apps today | 99 total records
+[2026-06-03T10:33:44.381Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:33:44.383Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:33:44.384Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:33:44.387Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T10:33:44.388Z] [INFO] [StatsService] result — productive:0s distracting:2934.02s idle:1269.78s score:0.0%
+[2026-06-03T10:34:01.480Z] [INFO] [Health] 11 apps today | 99 total records
+[2026-06-03T10:35:01.490Z] [INFO] [Health] 11 apps today | 99 total records
+[2026-06-03T10:35:44.389Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:35:44.391Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:35:44.394Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:35:44.396Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T10:35:44.398Z] [INFO] [StatsService] result — productive:0s distracting:3078.5300000000007s idle:1269.78s score:0.0%
+[2026-06-03T10:36:01.504Z] [INFO] [Health] 11 apps today | 100 total records
+[2026-06-03T10:37:01.506Z] [INFO] [Health] 11 apps today | 100 total records
+[2026-06-03T10:37:44.391Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:37:44.392Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:37:44.394Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:37:44.397Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T10:37:44.398Z] [INFO] [StatsService] result — productive:0s distracting:3214.9800000000005s idle:1406.23s score:0.0%
+[2026-06-03T10:38:01.509Z] [INFO] [Health] 11 apps today | 101 total records
+[2026-06-03T10:39:01.515Z] [INFO] [Health] 11 apps today | 102 total records
+[2026-06-03T10:39:44.385Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T10:39:44.387Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T10:39:44.389Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T10:39:44.390Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T10:39:44.392Z] [INFO] [StatsService] result — productive:0s distracting:3305.0000000000005s idle:1406.23s score:0.0%
+[2026-06-03T10:40:01.530Z] [INFO] [Health] 11 apps today | 102 total records
+[2026-06-03T10:41:01.535Z] [INFO] [Health] 11 apps today | 102 total records
+[2026-06-03T11:13:42.827Z] [INFO] [Health] 11 apps today | 102 total records
+[2026-06-03T11:13:47.972Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T11:13:47.973Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T11:13:47.974Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T11:13:47.976Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T11:13:47.977Z] [INFO] [StatsService] result — productive:0s distracting:3305.0000000000005s idle:1406.23s score:0.0%
+[2026-06-03T11:13:54.802Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T11:13:54.804Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T11:13:54.806Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T11:13:54.808Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T11:13:54.809Z] [INFO] [StatsService] result — productive:0s distracting:3305.0000000000005s idle:1406.23s score:0.0%
+[2026-06-03T11:14:42.837Z] [INFO] [Health] 11 apps today | 102 total records
+[2026-06-03T11:15:42.847Z] [INFO] [Health] 11 apps today | 102 total records
+[2026-06-03T11:15:55.382Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-03T11:15:55.383Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-03T11:15:55.385Z] [INFO] [StatsService] productive apps: []
+[2026-06-03T11:15:55.387Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-03T11:15:55.388Z] [INFO] [StatsService] result — productive:0s distracting:3305.0000000000005s idle:1406.23s score:0.0%
+[2026-06-10T19:20:22.474Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T19:20:22.478Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T19:20:30.734Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:20:30.735Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:20:30.737Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:20:30.739Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-10T19:20:30.740Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-10T19:20:34.289Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:20:34.290Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:20:34.291Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:20:34.292Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-10T19:20:34.293Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-10T19:20:35.235Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:20:35.236Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:20:35.237Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:20:35.238Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-10T19:20:35.238Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-10T19:20:43.601Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:20:43.602Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:20:43.603Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:20:43.608Z] [INFO] [StatsService] raw rows count: 2
+[2026-06-10T19:20:43.609Z] [INFO] [StatsService] result — productive:0s distracting:14.15s idle:0s score:0.0%
+[2026-06-10T19:21:22.904Z] [INFO] [Health] 3 apps today | 116 total records
