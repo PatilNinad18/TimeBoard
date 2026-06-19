@@ -1,1 +1,22 @@
-node_modules
+# Build outputs
+backend/release/
+frontend/dist/
+
+# Logs
+*.log
+logs/
+
+# Node modules
+node_modules/
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Electron
+backend/release/**
