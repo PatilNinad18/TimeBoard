@@ -168,4 +168,13 @@
   .dash-main                { grid-template-columns: 1fr; }
   .dash-side                { grid-template-columns: 1fr; }
   .dash-chart .chart-body   { min-height: 240px; max-height: 280px; }
+  .chart-card               { padding: 16px; }
+  .chart-header             { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+@media (max-width: 420px) {
+  .dash-topbar { padding: 10px 12px 0; }
+  .dash-body   { padding: 10px 12px 24px; }
+  .chart-card  { padding: 16px; }
+  .chart-header { flex-direction: column; align-items: flex-start; gap: 6px; }
 }

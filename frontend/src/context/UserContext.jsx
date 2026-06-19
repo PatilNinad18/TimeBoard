@@ -9,6 +9,12 @@ export function UserProvider({ children }) {
   const [loading, setLoading]             = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
+  const triggerRefresh = () => {
+    setTimeout(() => {
+      setRefreshTrigger((prev) => prev + 1);
+    }, 500);
+  };
+
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("timeboard_user");
@@ -45,6 +51,40 @@ export function UserProvider({ children }) {
     }
   };
 
+  const updateProductiveApps = async (apps) => {
+    console.log("[UserContext] updateProductiveApps called with:", apps);
+
+    const current = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
+    const updated = { ...current, productiveApps: apps };
+    localStorage.setItem("timeboard_user", JSON.stringify(updated));
+
+    if (window.api) {
+      try {
+        await window.api.setProductiveApps(apps);
+
+        const usage = await window.api.getUsage();
+        if (usage?.length > 0) {
+          const distApps = usage
+            .filter((u) => !apps.includes(u.app))
+            .map((u) => u.app);
+
+          console.log("[UserContext] Setting distracting apps to:", distApps);
+          setDistractingApps(distApps);
+
+          const persisted = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
+          localStorage.setItem(
+            "timeboard_user",
+            JSON.stringify({ ...persisted, distractingApps: distApps })
+          );
+        }
+      } catch (err) {
+        console.error("updateProductiveApps error:", err);
+      }
+    }
+
+    triggerRefresh();
+  };
+
   const updateDistractingApps = async (apps) => {
     console.log("[UserContext] updateDistractingApps called with:", apps);
     const current = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
@@ -69,19 +109,13 @@ export function UserProvider({ children }) {
 
     // Trigger refresh for all components after a small delay to ensure backend updates
     console.log("[UserContext] Triggering refresh after delay...");
-    setTimeout(() => {
-      setRefreshTrigger(prev => {
-        const newTrigger = prev + 1;
-        console.log("[UserContext] Refresh trigger updated to:", newTrigger);
-        return newTrigger;
-      });
-    }, 500); // 500ms delay
+    triggerRefresh();
   };
 
   return (
     <UserContext.Provider value={{
       userName, distractingApps, onboarded, loading, refreshTrigger,
-      saveUser, updateDistractingApps,
+      saveUser, updateDistractingApps, updateProductiveApps,
       setUserName, setDistractingApps,
     }}>
       {children}

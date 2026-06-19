@@ -68,7 +68,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"cd frontend && npm run dev\" \"wait-on http://localhost:5173 && cd backend && npm run start\"",
-    "start": "cd backend && npm run start"
+    "start": "cd backend && npm run start",
+    "build:frontend": "cd frontend && npm run build",
+    "build:exe": "npm run build:frontend && cd backend && npm run dist"
   },
   "keywords": [],
   "author": "",

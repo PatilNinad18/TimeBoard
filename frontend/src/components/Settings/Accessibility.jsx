@@ -14,10 +14,10 @@ export default function Accessibility({
           <h3 className="card-title">Accessibility</h3>
           <p className="card-subtitle">Version: {version}</p>
         </div>
-        <label className="small-toggle">
+        {/* <label className="small-toggle">
           <input type="checkbox" checked={enabled} onChange={(e) => onToggle?.(e.target.checked)} />
           <span className="small-toggle-track" />
-        </label>
+        </label> */}
       </div>
 
       <button className="export-btn" onClick={onExport}>

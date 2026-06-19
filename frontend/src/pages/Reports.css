@@ -400,3 +400,13 @@
   .reports-table-wrap   { margin: 0 16px; }
   .reports-pagination   { padding: 10px 16px 16px; flex-direction: column; gap: 10px; }
 }
+
+@media (max-width: 420px) {
+  .reports-title      { font-size: 1.4rem; }
+  .reports-title-block { gap: 10px; align-items: flex-start; }
+  .reports-title-bar  { height: 28px; }
+  .reports-export-btn { width: 100%; justify-content: center; }
+  .reports-tabs       { width: 100%; overflow-x: auto; }
+  .reports-tab        { flex: 1 0 auto; }
+  .reports-summary-card { padding: 16px; }
+}

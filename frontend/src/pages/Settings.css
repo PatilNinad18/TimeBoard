@@ -658,6 +658,14 @@
   .settings-grid   { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 420px) {
+  .settings-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .settings-title  { font-size: 1.6rem; }
+  .settings-card   { padding: 16px; }
+  .custom-app-row  { flex-direction: column; align-items: stretch; }
+  .custom-app-row .ctrl-btn { width: 100%; justify-content: center; }
+}
+
 /* ── Distracting app tags ──────────────────────── */
 .dist-app-tags {
   display: flex;

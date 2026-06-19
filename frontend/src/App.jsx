@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import { useUser } from "./context/UserContext";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
@@ -28,7 +28,6 @@ export default function App() {
 
   // Returning user -> full app
   return (
-    <BrowserRouter>
       <div className="app-root">
         <Sidebar />
         <div className="app-content">
@@ -41,6 +40,5 @@ export default function App() {
           </Routes>
         </div>
       </div>
-    </BrowserRouter>
   );
 }

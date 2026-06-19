@@ -1,12 +1,11 @@
 import React from "react";
 
-const FILTERS = ["All", "Productive", "Distracting", "Neutral", "Idle"];
+const FILTERS = ["All", "Productive", "Distracting", "Idle"];
 
 const FILTER_DOTS = {
   All: null,
   Productive: "#16a34a",
   Distracting: "#dc2626",
-  Neutral: "#6b6b80",
   Idle: "#d1d1dc",
 };
 

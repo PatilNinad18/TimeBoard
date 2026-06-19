@@ -17,19 +17,39 @@ export function getReportSummary(period = "weekly") {
   try {
     const days = period === "daily" ? 1 : period === "monthly" ? 30 : 7;
 
-    const rows = db.prepare(`
+    const productiveApps = db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
+  const rows = db.prepare(`
       SELECT
         date(timestamp) as day,
-        COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-        COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
-        COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle
+        app_name,
+        is_idle,
+        COALESCE(SUM(duration),0) as total
       FROM app_usage
       WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp)
+      GROUP BY date(timestamp), app_name, is_idle
       ORDER BY day ASC
     `).all(`-${days} days`);
 
-    if (rows.length === 0) {
+  const aggregated = rows.reduce((acc, row) => {
+    const day = row.day;
+    if (!acc[day]) acc[day] = { productive: 0, distracting: 0, idle: 0 };
+    if (row.is_idle) {
+      acc[day].idle += row.total;
+    } else if (productiveApps.length === 0) {
+      acc[day].distracting += row.total;
+    } else if (productiveApps.includes(row.app_name)) {
+      acc[day].productive += row.total;
+    } else {
+      acc[day].distracting += row.total;
+    }
+    return acc;
+  }, {});
+
+  const rowsByDay = Object.entries(aggregated)
+    .map(([day, values]) => ({ day, ...values }))
+    .sort((a, b) => a.day.localeCompare(b.day));
+
+    if (rowsByDay.length === 0) {
       return {
         bestFocusDay: { day: "—", value: "0h 0m" },
         avgFocusHours: "0h 0m",
@@ -39,11 +59,11 @@ export function getReportSummary(period = "weekly") {
       };
     }
 
-    const bestDay        = rows.reduce((b, r) => r.productive > b.productive ? r : b, rows[0]);
+    const bestDay        = rowsByDay.reduce((b, r) => r.productive > b.productive ? r : b, rowsByDay[0]);
     const bestDayDate    = new Date(bestDay.day + "T00:00:00");
     const dayNames       = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-    const totalProductive = rows.reduce((s, r) => s + r.productive, 0);
-    const productiveDays  = rows.filter(r => r.productive > r.distracting).length;
+    const totalProductive = rowsByDay.reduce((s, r) => s + r.productive, 0);
+    const productiveDays  = rowsByDay.filter(r => r.productive > r.distracting).length;
 
     return {
       bestFocusDay: {
@@ -80,22 +100,42 @@ export function getReportTable(period = "weekly", page = 1, pageSize = 10) {
       WHERE date(timestamp) >= date('now','localtime',?)
     `).get(`-${days} days`);
 
-    const rows = db.prepare(`
+    const productiveApps = db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
+
+    const rowsByPage = db.prepare(`
       SELECT
         date(timestamp) as day,
-        COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-        COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
-        COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle,
+        app_name,
+        is_idle,
         COALESCE(SUM(duration),0) as total
       FROM app_usage
       WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp)
+      GROUP BY date(timestamp), app_name, is_idle
       ORDER BY day DESC
       LIMIT ? OFFSET ?
     `).all(`-${days} days`, pageSize, offset);
 
-    // Top app per day — only for the current page's days
-    const dayList = rows.map(r => r.day);
+    const rows = rowsByPage.reduce((acc, row) => {
+      const day = row.day;
+      if (!acc[day]) acc[day] = { productive: 0, distracting: 0, idle: 0, total: 0 };
+      if (row.is_idle) {
+        acc[day].idle += row.total;
+      } else if (productiveApps.length === 0) {
+        acc[day].distracting += row.total;
+      } else if (productiveApps.includes(row.app_name)) {
+        acc[day].productive += row.total;
+      } else {
+        acc[day].distracting += row.total;
+      }
+      acc[day].total += row.total;
+      return acc;
+    }, {});
+
+    const rowsList = Object.entries(rows)
+      .map(([day, values]) => ({ day, ...values }))
+      .sort((a, b) => b.day.localeCompare(a.day));
+
+    const dayList = rowsList.map(r => r.day);
     const topApps = dayList.length > 0
       ? db.prepare(`
           SELECT date(timestamp) as day, app_name, SUM(duration) as t
@@ -114,7 +154,7 @@ export function getReportTable(period = "weekly", page = 1, pageSize = 10) {
 
     const fullDayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-    const data = rows.map((row, i) => {
+    const data = rowsList.map((row, i) => {
       const d           = new Date(row.day + "T00:00:00");
       const activeTotal = row.productive + row.distracting;
       return {
@@ -123,7 +163,7 @@ export function getReportTable(period = "weekly", page = 1, pageSize = 10) {
         dayName:        fullDayNames[d.getDay()],
         totalTime:      fmt(row.total),
         productiveTime: fmt(row.productive),
-        distractingTime:fmt(row.distracting),
+        distractingTime: fmt(row.distracting),
         idleTime:       fmt(row.idle),
         focusScore:     activeTotal === 0 ? 0 : Math.round((row.productive / activeTotal) * 100),
         topApp:         topAppMap[row.day] || "—",
@@ -155,18 +195,37 @@ export function getReportCSV(period = "weekly") {
     // Get all rows without pagination for CSV export
     const days = period === "daily" ? 1 : period === "monthly" ? 30 : 7;
 
-    const rows = db.prepare(`
+    const productiveApps = db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
+
+    const aggregated = db.prepare(`
       SELECT
         date(timestamp) as day,
-        COALESCE(SUM(CASE WHEN is_productive=1 AND is_idle=0 THEN duration ELSE 0 END),0) as productive,
-        COALESCE(SUM(CASE WHEN is_productive=0 AND is_idle=0 THEN duration ELSE 0 END),0) as distracting,
-        COALESCE(SUM(CASE WHEN is_idle=1 THEN duration ELSE 0 END),0) as idle,
+        app_name,
+        is_idle,
         COALESCE(SUM(duration),0) as total
       FROM app_usage
       WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp)
+      GROUP BY date(timestamp), app_name, is_idle
       ORDER BY day DESC
-    `).all(`-${days} days`);
+    `).all(`-${days} days`).reduce((acc, row) => {
+      const day = row.day;
+      if (!acc[day]) acc[day] = { productive: 0, distracting: 0, idle: 0, total: 0 };
+      if (row.is_idle) {
+        acc[day].idle += row.total;
+      } else if (productiveApps.length === 0) {
+        acc[day].distracting += row.total;
+      } else if (productiveApps.includes(row.app_name)) {
+        acc[day].productive += row.total;
+      } else {
+        acc[day].distracting += row.total;
+      }
+      acc[day].total += row.total;
+      return acc;
+    }, {});
+
+    const rows = Object.entries(aggregated)
+      .map(([day, values]) => ({ day, ...values }))
+      .sort((a, b) => b.day.localeCompare(a.day));
 
     const topApps = db.prepare(`
       SELECT date(timestamp) as day, app_name, SUM(duration) as t

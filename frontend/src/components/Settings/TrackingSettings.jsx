@@ -33,24 +33,6 @@ export default function TrackingSettings({
         </div>
       </div>
 
-      {/* Controls Card */}
-      <div className="settings-card tracking-controls">
-        <h3 className="card-title">Tracking — Controls</h3>
-        <div className="control-buttons">
-          <button className="ctrl-btn primary" onClick={onStartTracking}>
-            <Play size={14} fill="currentColor" /> Start Tracking
-          </button>
-          <button className="ctrl-btn primary" onClick={onStopTracking}>
-            <Square size={14} fill="currentColor" /> Stop Tracking
-          </button>
-          <button className="ctrl-btn primary" onClick={onPauseTracking}>
-            <Pause size={14} fill="currentColor" /> Pause Tracking
-          </button>
-          <button className="ctrl-btn outline" onClick={onResetData}>
-            <RotateCcw size={14} /> Reset Today's Data
-          </button>
-        </div>
-      </div>
     </>
   );
 }

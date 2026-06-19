@@ -1,16 +1,21 @@
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
+import { app } from "electron";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
+// Store DB in user's AppData/Roaming/TimeBoard/data
+const dbDir = path.join(
+  app.getPath("userData"),
+  "data"
+);
 
-const dbPath = path.join(__dirname, "../data/timeboard.db");
-
-if (!fs.existsSync(path.dirname(dbPath))) {
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
 }
+
+const dbPath = path.join(dbDir, "timeboard.db");
+
+console.log("[DB] Path:", dbPath);
 
 const db = new Database(dbPath);
 
@@ -71,6 +76,63 @@ if (!colNames.includes("domain")) {
 if (!colNames.includes("is_idle")) {
   db.exec("ALTER TABLE app_usage ADD COLUMN is_idle INTEGER DEFAULT 0");
   console.log("[DB] Migrated: added is_idle column");
+}
+
+// Normalize old Electron records to the app's real name.
+try {
+  const usageUpdate = db.prepare(`
+    UPDATE app_usage
+    SET app_name = ?
+    WHERE app_name = ?
+  `).run("TimeBoard", "Electron");
+
+  if (usageUpdate.changes > 0) {
+    console.log(`[DB] Migrated: renamed ${usageUpdate.changes} app_usage rows from Electron to TimeBoard`);
+  }
+
+  const productiveExists = db.prepare(`
+    SELECT 1 FROM user_productive_apps WHERE app_name = ?
+  `).get("TimeBoard");
+
+  if (productiveExists) {
+    const deleted = db.prepare(`
+      DELETE FROM user_productive_apps
+      WHERE app_name = ?
+    `).run("Electron");
+
+    if (deleted.changes > 0) {
+      console.log(`[DB] Migrated: removed ${deleted.changes} duplicate Electron productive app rows`);
+    }
+  } else {
+    const productiveUpdate = db.prepare(`
+      UPDATE user_productive_apps
+      SET app_name = ?
+      WHERE app_name = ?
+    `).run("TimeBoard", "Electron");
+
+    if (productiveUpdate.changes > 0) {
+      console.log(`[DB] Migrated: renamed ${productiveUpdate.changes} productive app rows from Electron to TimeBoard`);
+    }
+  }
+
+  const blockedExists = db.prepare(`
+    SELECT 1 FROM blocked_apps WHERE app_name = ?
+  `).get("TimeBoard");
+
+  if (blockedExists) {
+    db.prepare(`
+      DELETE FROM blocked_apps
+      WHERE app_name = ?
+    `).run("Electron");
+  } else {
+    db.prepare(`
+      UPDATE blocked_apps
+      SET app_name = ?
+      WHERE app_name = ?
+    `).run("TimeBoard", "Electron");
+  }
+} catch (err) {
+  console.error("[DB] Electron rename migration error:", err.message);
 }
 
 // ── Indexes — critical for performance with large datasets ─────────────────

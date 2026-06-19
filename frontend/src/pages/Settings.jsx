@@ -25,7 +25,7 @@ export default function Settings() {
   const [accessEnabled, setAccessEnabled]     = useState(false);
   const [dataMgmtEnabled, setDataMgmtEnabled] = useState(false);
   const [toast, setToast]                     = useState(null);
-  const { userName, distractingApps, updateDistractingApps } = useUser();
+  const { userName, distractingApps, updateDistractingApps, updateProductiveApps } = useUser();
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -63,7 +63,7 @@ export default function Settings() {
     if (!window.api) return;
     try {
       const names = updated.filter((a) => a.type === "productive").map((a) => a.name);
-      await window.api.setProductiveApps(names);
+      await updateProductiveApps(names);
       setProductiveApps(names);
       showToast("Productivity rules saved");
     } catch {
@@ -133,16 +133,9 @@ export default function Settings() {
           </div>
 
           <div className="settings-col">
-            <BlockingRules rules={blockingRules} onRulesChange={setBlockingRules} />
+            {/* <BlockingRules rules={blockingRules} onRulesChange={setBlockingRules} /> */}
             <DistractingAppsSettings onSave={() => showToast("Distracting apps updated")} />
             {/* <Categories categories={categories} onCategoriesChange={setCategories} /> */}
-            <DataManagement
-              version="12.0"
-              enabled={dataMgmtEnabled}
-              onToggle={setDataMgmtEnabled}
-              onDeleteToday={handleDeleteToday}
-              onClearAll={handleClearAll}
-            />
           </div>
 
           <div className="settings-col">
@@ -160,6 +153,14 @@ export default function Settings() {
               accentColor={accentColor}
               onThemeChange={(t) => setDarkMode(t === "Dark mode")}
               onAccentChange={setAccentColor}
+            />
+
+            <DataManagement
+              version="12.0"
+              enabled={dataMgmtEnabled}
+              onToggle={setDataMgmtEnabled}
+              onDeleteToday={handleDeleteToday}
+              onClearAll={handleClearAll}
             />
           </div>
 

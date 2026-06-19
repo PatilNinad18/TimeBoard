@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "../context/UserContext";
 import "./Reports.css";
 
 const PERIOD_OPTIONS = ["daily", "weekly", "monthly"];
@@ -14,6 +15,7 @@ function FocusScoreBadge({ score }) {
 }
 
 export default function Reports() {
+  const { refreshTrigger } = useUser();
   const [period,     setPeriod]     = useState("weekly");
   const [summary,    setSummary]    = useState(null);
   const [tableData,  setTableData]  = useState([]);
@@ -23,17 +25,11 @@ export default function Reports() {
   const [error,      setError]      = useState(null);
   const [search,     setSearch]     = useState("");
 
-  // Load summary when period changes
   useEffect(() => {
     if (!window.api) { setLoading(false); return; }
     loadSummary();
-  }, [period]);
-
-  // Load table when period or page changes
-  useEffect(() => {
-    if (!window.api) return;
     loadTable(pagination.page);
-  }, [period]);
+  }, [period, refreshTrigger, pagination.page]);
 
   async function loadSummary() {
     setLoading(true);
@@ -48,7 +44,7 @@ export default function Reports() {
     }
   }
 
-  async function loadTable(page) {
+  async function loadTable(page = pagination.page) {
     setTableLoad(true);
     try {
       const result = await window.api.getReportTable(period, page, PAGE_SIZE);
@@ -140,7 +136,10 @@ export default function Reports() {
             <button
               key={p}
               className={`reports-tab ${period === p ? "active" : ""}`}
-              onClick={() => { setPeriod(p); loadTable(1); }}
+              onClick={() => {
+                setPeriod(p);
+                setPagination((prev) => ({ ...prev, page: 1 }));
+              }}
             >
               {p.charAt(0).toUpperCase() + p.slice(1)}
             </button>

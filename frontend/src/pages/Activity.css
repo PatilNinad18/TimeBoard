@@ -603,3 +603,14 @@
   .activity-search { min-width: 0; }
   .item-window-title { max-width: 180px; }
 }
+
+@media (max-width: 420px) {
+  .activity-page { padding: 14px 12px 40px; }
+  .activity-title { font-size: 1.6rem; }
+  .ah-stat { padding: 9px 12px; }
+  .group-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .item-window-title { max-width: 140px; }
+  .item-app-name { white-space: normal; }
+  .activity-item { align-items: flex-start; }
+  .item-right { align-items: flex-start; }
+}

@@ -2604,3 +2604,884 @@
 [2026-06-10T19:20:43.608Z] [INFO] [StatsService] raw rows count: 2
 [2026-06-10T19:20:43.609Z] [INFO] [StatsService] result — productive:0s distracting:14.15s idle:0s score:0.0%
 [2026-06-10T19:21:22.904Z] [INFO] [Health] 3 apps today | 116 total records
+[2026-06-10T19:21:27.788Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:21:27.790Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:21:27.791Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:21:27.792Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:21:27.793Z] [INFO] [StatsService] result — productive:0s distracting:56.48s idle:0s score:0.0%
+[2026-06-10T19:22:22.908Z] [INFO] [Health] 3 apps today | 123 total records
+[2026-06-10T19:23:22.907Z] [INFO] [Health] 3 apps today | 139 total records
+[2026-06-10T19:23:27.990Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:23:27.992Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:23:27.993Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:23:27.994Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:23:27.996Z] [INFO] [StatsService] result — productive:0s distracting:164.89s idle:0s score:0.0%
+[2026-06-10T19:24:22.926Z] [INFO] [Health] 3 apps today | 142 total records
+[2026-06-10T19:24:38.450Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T19:24:38.452Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T19:24:41.454Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:24:41.455Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:24:41.457Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:24:41.458Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:24:41.459Z] [INFO] [StatsService] result — productive:0s distracting:241.78s idle:0s score:0.0%
+[2026-06-10T19:24:54.825Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:24:54.826Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:24:54.827Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:24:54.828Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:24:54.829Z] [INFO] [StatsService] result — productive:0s distracting:241.78s idle:0s score:0.0%
+[2026-06-10T19:25:02.001Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:25:04.312Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:25:04.313Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:25:04.314Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:25:04.314Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:04.315Z] [INFO] [StatsService] result — productive:103.88s distracting:137.9s idle:0s score:43.0%
+[2026-06-10T19:25:11.080Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:25:11.081Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:25:11.082Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:25:11.083Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:11.084Z] [INFO] [StatsService] result — productive:103.88s distracting:137.9s idle:0s score:43.0%
+[2026-06-10T19:25:15.682Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-06-10T19:25:16.738Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:25:16.739Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:25:16.740Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:25:16.741Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:16.741Z] [INFO] [StatsService] result — productive:0s distracting:241.78s idle:0s score:0.0%
+[2026-06-10T19:25:20.522Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:25:32.166Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:25:32.167Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:25:32.168Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:25:32.169Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:32.170Z] [INFO] [StatsService] result — productive:103.88s distracting:137.9s idle:0s score:43.0%
+[2026-06-10T19:25:37.080Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:25:37.081Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:25:37.082Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:25:37.083Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:37.084Z] [INFO] [StatsService] result — productive:103.88s distracting:137.9s idle:0s score:43.0%
+[2026-06-10T19:25:38.416Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:25:38.417Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:25:38.418Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:25:38.419Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:38.419Z] [INFO] [StatsService] result — productive:103.88s distracting:137.9s idle:0s score:43.0%
+[2026-06-10T19:25:38.681Z] [INFO] [Health] 3 apps today | 146 total records
+[2026-06-10T19:25:46.218Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:25:46.219Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:25:46.220Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:25:46.221Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:25:46.221Z] [INFO] [StatsService] result — productive:103.88s distracting:137.9s idle:0s score:43.0%
+[2026-06-10T19:26:05.794Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-06-10T19:26:06.587Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:26:06.588Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:26:06.588Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:26:06.589Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:26:06.590Z] [INFO] [StatsService] result — productive:0s distracting:241.78s idle:0s score:0.0%
+[2026-06-10T19:26:12.290Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:26:38.691Z] [INFO] [Health] 3 apps today | 151 total records
+[2026-06-10T19:27:38.704Z] [INFO] [Health] 3 apps today | 166 total records
+[2026-06-10T19:28:38.716Z] [INFO] [Health] 3 apps today | 175 total records
+[2026-06-10T19:29:38.721Z] [INFO] [Health] 3 apps today | 189 total records
+[2026-06-10T19:30:26.078Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:30:26.079Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:30:26.080Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:30:26.081Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:30:26.081Z] [INFO] [StatsService] result — productive:254.60999999999999s distracting:321.70000000000005s idle:0s score:44.2%
+[2026-06-10T19:30:38.730Z] [INFO] [Health] 3 apps today | 197 total records
+[2026-06-10T19:30:59.962Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:31:01.242Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:01.243Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:01.244Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron"]
+[2026-06-10T19:31:01.245Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:01.245Z] [INFO] [StatsService] result — productive:453.63s distracting:122.68s idle:0s score:78.7%
+[2026-06-10T19:31:07.622Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:31:07.623Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:31:07.624Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron"]
+[2026-06-10T19:31:07.625Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:07.626Z] [INFO] [StatsService] result — productive:453.63s distracting:122.68s idle:0s score:78.7%
+[2026-06-10T19:31:13.610Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:31:14.674Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:14.675Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:14.676Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:31:14.677Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:14.678Z] [INFO] [StatsService] result — productive:576.31s distracting:0s idle:0s score:100.0%
+[2026-06-10T19:31:17.509Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:31:18.411Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:18.411Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:18.412Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron"]
+[2026-06-10T19:31:18.413Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:18.414Z] [INFO] [StatsService] result — productive:453.63s distracting:122.68s idle:0s score:78.7%
+[2026-06-10T19:31:22.697Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:31:23.826Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:23.827Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:23.828Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:31:23.829Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:23.830Z] [INFO] [StatsService] result — productive:254.60999999999999s distracting:321.70000000000005s idle:0s score:44.2%
+[2026-06-10T19:31:27.978Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:31:28.393Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:31:29.290Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:29.291Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:29.291Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:31:29.293Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:29.293Z] [INFO] [StatsService] result — productive:576.31s distracting:0s idle:0s score:100.0%
+[2026-06-10T19:31:33.345Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:31:33.873Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:31:34.808Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:34.809Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:34.810Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:31:34.811Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:34.812Z] [INFO] [StatsService] result — productive:576.31s distracting:0s idle:0s score:100.0%
+[2026-06-10T19:31:38.742Z] [INFO] [Health] 3 apps today | 197 total records
+[2026-06-10T19:31:40.106Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:31:42.148Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:42.149Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:42.150Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer"]
+[2026-06-10T19:31:42.151Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:42.152Z] [INFO] [StatsService] result — productive:377.28999999999996s distracting:199.02s idle:0s score:65.5%
+[2026-06-10T19:31:44.841Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:31:45.954Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:31:46.466Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:31:55.018Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:31:57.244Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:31:57.245Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:31:57.246Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:31:57.247Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:31:57.248Z] [INFO] [StatsService] result — productive:254.60999999999999s distracting:321.70000000000005s idle:0s score:44.2%
+[2026-06-10T19:32:11.444Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:32:11.445Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:32:11.445Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:32:11.447Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:32:11.447Z] [INFO] [StatsService] result — productive:254.60999999999999s distracting:321.70000000000005s idle:0s score:44.2%
+[2026-06-10T19:32:15.272Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:32:15.286Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:32:15.287Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:32:15.288Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:32:15.289Z] [INFO] [StatsService] result — productive:254.60999999999999s distracting:321.70000000000005s idle:0s score:44.2%
+[2026-06-10T19:32:17.064Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:32:17.065Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:32:17.066Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:32:17.067Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:32:17.068Z] [INFO] [StatsService] result — productive:254.60999999999999s distracting:321.70000000000005s idle:0s score:44.2%
+[2026-06-10T19:32:38.757Z] [INFO] [Health] 3 apps today | 197 total records
+[2026-06-10T19:33:38.762Z] [INFO] [Health] 3 apps today | 205 total records
+[2026-06-10T19:34:38.768Z] [INFO] [Health] 3 apps today | 215 total records
+[2026-06-10T19:34:44.799Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:34:44.800Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:34:44.801Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:34:44.802Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:34:44.802Z] [INFO] [StatsService] result — productive:349.63s distracting:494.53000000000003s idle:0s score:41.4%
+[2026-06-10T19:34:49.522Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:34:49.523Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:34:49.524Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:34:49.525Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:34:49.526Z] [INFO] [StatsService] result — productive:349.63s distracting:494.53000000000003s idle:0s score:41.4%
+[2026-06-10T19:34:51.373Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:34:51.374Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:34:51.375Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:34:51.376Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:34:51.376Z] [INFO] [StatsService] result — productive:349.63s distracting:494.53000000000003s idle:0s score:41.4%
+[2026-06-10T19:35:38.835Z] [INFO] [Health] 3 apps today | 224 total records
+[2026-06-10T19:35:45.957Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:35:45.958Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:35:45.959Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:35:45.960Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:35:45.961Z] [INFO] [StatsService] result — productive:386.06s distracting:520.8s idle:0s score:42.6%
+[2026-06-10T19:35:49.609Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-10","mode":"single"}
+[2026-06-10T19:35:49.610Z] [INFO] [StatsService] called — dateFilter: 2026-06-10, mode: single
+[2026-06-10T19:35:49.611Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:35:49.612Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-10T19:35:49.613Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-10T19:35:50.384Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-05","mode":"range"}
+[2026-06-10T19:35:50.385Z] [INFO] [StatsService] called — dateFilter: 2026-06-05, mode: range
+[2026-06-10T19:35:50.386Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:35:50.387Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:35:50.387Z] [INFO] [StatsService] result — productive:386.06s distracting:520.8s idle:0s score:42.6%
+[2026-06-10T19:35:51.271Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-05-13","mode":"range"}
+[2026-06-10T19:35:51.272Z] [INFO] [StatsService] called — dateFilter: 2026-05-13, mode: range
+[2026-06-10T19:35:51.272Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:35:51.274Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-10T19:35:51.275Z] [INFO] [StatsService] result — productive:681.15s distracting:5787.9400000000005s idle:3658.43s score:10.5%
+[2026-06-10T19:35:52.175Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-05-13","mode":"range"}
+[2026-06-10T19:35:52.176Z] [INFO] [StatsService] called — dateFilter: 2026-05-13, mode: range
+[2026-06-10T19:35:52.177Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:35:52.178Z] [INFO] [StatsService] raw rows count: 15
+[2026-06-10T19:35:52.179Z] [INFO] [StatsService] result — productive:681.15s distracting:5787.9400000000005s idle:3658.43s score:10.5%
+[2026-06-10T19:35:54.690Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:35:54.691Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:35:54.691Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:35:54.692Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:35:54.693Z] [INFO] [StatsService] result — productive:386.06s distracting:520.8s idle:0s score:42.6%
+[2026-06-10T19:36:38.850Z] [INFO] [Health] 3 apps today | 233 total records
+[2026-06-10T19:36:40.435Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:36:40.435Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:36:40.436Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:36:40.436Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:36:40.437Z] [INFO] [StatsService] result — productive:424.54s distracting:537.06s idle:0s score:44.1%
+[2026-06-10T19:36:51.569Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:36:52.610Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:36:52.611Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:36:52.612Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron"]
+[2026-06-10T19:36:52.613Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:36:52.614Z] [INFO] [StatsService] result — productive:836.87s distracting:124.73s idle:0s score:87.0%
+[2026-06-10T19:36:56.738Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:37:04.074Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-06-10T19:37:05.288Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:37:05.289Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:37:05.290Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:37:05.291Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:37:05.292Z] [INFO] [StatsService] result — productive:0s distracting:961.6s idle:0s score:0.0%
+[2026-06-10T19:37:09.338Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:37:11.257Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:37:11.258Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:37:11.259Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:37:11.259Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:37:11.260Z] [INFO] [StatsService] result — productive:424.54s distracting:537.06s idle:0s score:44.1%
+[2026-06-10T19:37:14.098Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:37:14.881Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:37:15.738Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:37:15.739Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:37:15.740Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:37:15.741Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:37:15.741Z] [INFO] [StatsService] result — productive:961.6s distracting:0s idle:0s score:100.0%
+[2026-06-10T19:37:17.793Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:37:19.105Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:37:20.106Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:37:20.121Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:37:20.123Z] [INFO] [StatsService] productive apps: ["Visual Studio Code"]
+[2026-06-10T19:37:20.124Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:37:20.125Z] [INFO] [StatsService] result — productive:424.54s distracting:537.06s idle:0s score:44.1%
+[2026-06-10T19:37:30.490Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:37:31.377Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:37:32.418Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:37:32.419Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:37:32.419Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:37:32.420Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:37:32.421Z] [INFO] [StatsService] result — productive:961.6s distracting:0s idle:0s score:100.0%
+[2026-06-10T19:37:38.851Z] [INFO] [Health] 3 apps today | 234 total records
+[2026-06-10T19:38:38.865Z] [INFO] [Health] 3 apps today | 235 total records
+[2026-06-10T19:38:50.747Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:38:50.748Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:38:50.749Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:38:50.749Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-10T19:38:50.750Z] [INFO] [StatsService] result — productive:1083.06s distracting:0s idle:0s score:100.0%
+[2026-06-10T19:39:38.974Z] [INFO] [Health] 3 apps today | 242 total records
+[2026-06-10T19:40:39.035Z] [INFO] [Health] 4 apps today | 248 total records
+[2026-06-10T19:41:39.043Z] [INFO] [Health] 4 apps today | 249 total records
+[2026-06-10T19:42:39.122Z] [INFO] [Health] 4 apps today | 249 total records
+[2026-06-10T19:43:39.128Z] [INFO] [Health] 4 apps today | 252 total records
+[2026-06-10T19:44:39.133Z] [INFO] [Health] 4 apps today | 252 total records
+[2026-06-10T19:45:39.139Z] [INFO] [Health] 4 apps today | 252 total records
+[2026-06-10T19:46:32.035Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:46:32.036Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:46:32.036Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:46:32.038Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:46:32.039Z] [INFO] [StatsService] result — productive:1193.2800000000002s distracting:358.6s idle:93.92s score:76.9%
+[2026-06-10T19:46:37.715Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-06-10T19:46:39.147Z] [INFO] [Health] 4 apps today | 257 total records
+[2026-06-10T19:46:40.146Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:46:41.881Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-06-10T19:46:43.464Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:46:43.465Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:46:43.466Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Google Chrome","Windows Explorer"]
+[2026-06-10T19:46:43.467Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:46:43.468Z] [INFO] [StatsService] result — productive:1457.96s distracting:93.92s idle:93.92s score:93.9%
+[2026-06-10T19:46:47.258Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:46:48.395Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:46:48.396Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:46:48.397Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Electron","Windows Explorer"]
+[2026-06-10T19:46:48.397Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:46:48.398Z] [INFO] [StatsService] result — productive:1193.2800000000002s distracting:358.6s idle:93.92s score:76.9%
+[2026-06-10T19:46:52.538Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:46:53.617Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:46:53.618Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:46:53.619Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer"]
+[2026-06-10T19:46:53.620Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:46:53.621Z] [INFO] [StatsService] result — productive:688.69s distracting:863.1899999999999s idle:93.92s score:44.4%
+[2026-06-10T19:47:00.002Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:47:00.683Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-06-10T19:47:01.410Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-10T19:47:02.106Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:47:02.970Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:47:05.023Z] [INFO] [IPC] set-productive-apps | {"count":0}
+[2026-06-10T19:47:05.746Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:47:05.747Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:47:05.748Z] [INFO] [StatsService] productive apps: []
+[2026-06-10T19:47:05.748Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:47:05.749Z] [INFO] [StatsService] result — productive:0s distracting:1551.88s idle:93.92s score:0.0%
+[2026-06-10T19:47:11.834Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:47:13.394Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:47:14.233Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-10T19:47:19.209Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-10T19:47:21.818Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:47:21.819Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:47:21.819Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:47:21.820Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:47:21.821Z] [INFO] [StatsService] result — productive:827.6400000000001s distracting:724.24s idle:93.92s score:53.3%
+[2026-06-10T19:47:39.156Z] [INFO] [Health] 4 apps today | 257 total records
+[2026-06-10T19:47:54.883Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:47:54.884Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:47:54.885Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:47:54.886Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:47:54.887Z] [INFO] [StatsService] result — productive:827.6400000000001s distracting:724.24s idle:93.92s score:53.3%
+[2026-06-10T19:47:55.868Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:47:55.869Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:47:55.870Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:47:55.871Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:47:55.872Z] [INFO] [StatsService] result — productive:827.6400000000001s distracting:724.24s idle:93.92s score:53.3%
+[2026-06-10T19:48:05.583Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:48:05.584Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:48:05.585Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:48:05.586Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:48:05.586Z] [INFO] [StatsService] result — productive:827.6400000000001s distracting:724.24s idle:93.92s score:53.3%
+[2026-06-10T19:48:07.830Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:48:07.831Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:48:07.832Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:48:07.833Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:48:07.833Z] [INFO] [StatsService] result — productive:827.6400000000001s distracting:724.24s idle:93.92s score:53.3%
+[2026-06-10T19:48:24.857Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:48:24.858Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:48:24.859Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:48:24.860Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:48:24.860Z] [INFO] [StatsService] result — productive:827.6400000000001s distracting:824.37s idle:93.92s score:50.1%
+[2026-06-10T19:48:39.163Z] [INFO] [Health] 4 apps today | 259 total records
+[2026-06-10T19:49:39.168Z] [INFO] [Health] 4 apps today | 265 total records
+[2026-06-10T19:50:24.912Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:50:24.913Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:50:24.914Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:50:24.918Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:50:24.922Z] [INFO] [StatsService] result — productive:929.9100000000001s distracting:827.43s idle:93.92s score:52.9%
+[2026-06-10T19:50:34.519Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:50:34.521Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:50:34.523Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:50:34.541Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:50:34.543Z] [INFO] [StatsService] result — productive:929.9100000000001s distracting:827.43s idle:93.92s score:52.9%
+[2026-06-10T19:50:39.182Z] [INFO] [Health] 4 apps today | 266 total records
+[2026-06-10T19:51:33.731Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:51:33.732Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:51:33.733Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:51:33.734Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:51:33.735Z] [INFO] [StatsService] result — productive:1013.84s distracting:830.5s idle:93.92s score:55.0%
+[2026-06-10T19:51:39.184Z] [INFO] [Health] 4 apps today | 270 total records
+[2026-06-10T19:51:51.313Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T19:51:51.316Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T19:51:51.718Z] [INFO] [Main] Startup sync — 2 productive, 9 distracting
+[2026-06-10T19:51:54.596Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:51:54.598Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:51:54.599Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:51:54.601Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:51:54.601Z] [INFO] [StatsService] result — productive:1013.84s distracting:830.5s idle:93.92s score:55.0%
+[2026-06-10T19:52:07.128Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:52:07.130Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:52:07.131Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:52:07.133Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:52:07.133Z] [INFO] [StatsService] result — productive:1013.84s distracting:830.5s idle:93.92s score:55.0%
+[2026-06-10T19:52:20.001Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:52:20.002Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:52:20.003Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:52:20.005Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-10T19:52:20.005Z] [INFO] [StatsService] result — productive:1013.84s distracting:830.5s idle:93.92s score:55.0%
+[2026-06-10T19:52:51.730Z] [INFO] [Health] 4 apps today | 271 total records
+[2026-06-10T19:53:51.734Z] [INFO] [Health] 6 apps today | 281 total records
+[2026-06-10T19:54:20.911Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:54:20.912Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:54:20.914Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:54:20.915Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T19:54:20.917Z] [INFO] [StatsService] result — productive:1069.49s distracting:882.8299999999999s idle:93.92s score:54.8%
+[2026-06-10T19:54:51.751Z] [INFO] [Health] 6 apps today | 281 total records
+[2026-06-10T19:55:38.459Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T19:55:38.461Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T19:55:38.695Z] [INFO] [Main] Startup sync — 2 productive, 10 distracting
+[2026-06-10T19:55:41.627Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:55:41.629Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:55:41.630Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:55:41.632Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T19:55:41.632Z] [INFO] [StatsService] result — productive:1169.57s distracting:885.87s idle:93.92s score:56.9%
+[2026-06-10T19:56:38.709Z] [INFO] [Health] 6 apps today | 290 total records
+[2026-06-10T19:57:25.529Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T19:57:25.531Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T19:57:25.825Z] [INFO] [Main] Startup sync — 2 productive, 10 distracting
+[2026-06-10T19:57:28.687Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:57:28.688Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:57:28.690Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:57:28.691Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T19:57:28.692Z] [INFO] [StatsService] result — productive:1245.4099999999999s distracting:901.89s idle:93.92s score:58.0%
+[2026-06-10T19:57:40.517Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:57:40.519Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:57:40.520Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:57:40.521Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T19:57:40.522Z] [INFO] [StatsService] result — productive:1245.4099999999999s distracting:901.89s idle:93.92s score:58.0%
+[2026-06-10T19:58:04.988Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T19:58:04.989Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T19:58:04.990Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:58:04.991Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T19:58:04.992Z] [INFO] [StatsService] result — productive:1245.4099999999999s distracting:901.89s idle:93.92s score:58.0%
+[2026-06-10T19:58:07.900Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T19:58:07.902Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T19:58:07.903Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T19:58:07.905Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T19:58:07.905Z] [INFO] [StatsService] result — productive:1245.4099999999999s distracting:901.89s idle:93.92s score:58.0%
+[2026-06-10T19:58:25.842Z] [INFO] [Health] 6 apps today | 295 total records
+[2026-06-10T19:59:25.845Z] [INFO] [Health] 6 apps today | 295 total records
+[2026-06-10T20:00:07.919Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:00:07.920Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:00:07.922Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:00:07.924Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:00:07.926Z] [INFO] [StatsService] result — productive:1339.55s distracting:952.26s idle:93.92s score:58.4%
+[2026-06-10T20:00:25.854Z] [INFO] [Health] 6 apps today | 296 total records
+[2026-06-10T20:01:25.865Z] [INFO] [Health] 6 apps today | 297 total records
+[2026-06-10T20:02:07.913Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:02:07.915Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:02:07.916Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:02:07.918Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:02:07.919Z] [INFO] [StatsService] result — productive:1339.55s distracting:1029.1200000000001s idle:170.78s score:56.6%
+[2026-06-10T20:02:25.874Z] [INFO] [Health] 6 apps today | 297 total records
+[2026-06-10T20:03:25.887Z] [INFO] [Health] 6 apps today | 304 total records
+[2026-06-10T20:03:26.220Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:03:26.220Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:03:26.221Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:03:26.223Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:03:26.223Z] [INFO] [StatsService] result — productive:1467.99s distracting:1029.1200000000001s idle:170.78s score:58.8%
+[2026-06-10T20:04:25.898Z] [INFO] [Health] 6 apps today | 308 total records
+[2026-06-10T20:04:31.891Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T20:04:31.892Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T20:04:31.892Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:04:31.893Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:04:31.894Z] [INFO] [StatsService] result — productive:1500.4s distracting:1043.32s idle:170.78s score:59.0%
+[2026-06-10T20:05:25.909Z] [INFO] [Health] 6 apps today | 315 total records
+[2026-06-10T20:06:25.915Z] [INFO] [Health] 6 apps today | 319 total records
+[2026-06-10T20:07:25.929Z] [INFO] [Health] 6 apps today | 319 total records
+[2026-06-10T20:08:25.935Z] [INFO] [Health] 6 apps today | 320 total records
+[2026-06-10T20:09:25.945Z] [INFO] [Health] 6 apps today | 322 total records
+[2026-06-10T20:10:25.956Z] [INFO] [Health] 6 apps today | 322 total records
+[2026-06-10T20:11:25.969Z] [INFO] [Health] 6 apps today | 322 total records
+[2026-06-10T20:12:25.975Z] [INFO] [Health] 6 apps today | 324 total records
+[2026-06-10T20:13:25.991Z] [INFO] [Health] 6 apps today | 328 total records
+[2026-06-10T20:13:52.287Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T20:13:52.288Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T20:13:52.565Z] [INFO] [Main] Startup sync — 2 productive, 10 distracting
+[2026-06-10T20:13:55.980Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:13:55.981Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:13:55.982Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:13:55.983Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:13:55.983Z] [INFO] [StatsService] result — productive:1946.56s distracting:1170.9899999999998s idle:239.53s score:62.4%
+[2026-06-10T20:14:12.424Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T20:14:12.425Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T20:14:12.426Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:14:12.427Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:14:12.428Z] [INFO] [StatsService] result — productive:1950.61s distracting:1173.8799999999999s idle:239.53s score:62.4%
+[2026-06-10T20:14:27.878Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:14:27.880Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:14:27.881Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:14:27.882Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:14:27.883Z] [INFO] [StatsService] result — productive:1950.61s distracting:1173.8799999999999s idle:239.53s score:62.4%
+[2026-06-10T20:14:52.575Z] [INFO] [Health] 6 apps today | 338 total records
+[2026-06-10T20:15:52.657Z] [INFO] [Health] 6 apps today | 342 total records
+[2026-06-10T20:16:27.909Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:16:27.910Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:16:27.912Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:16:27.914Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:16:27.915Z] [INFO] [StatsService] result — productive:2045.9099999999999s distracting:1218.46s idle:239.53s score:62.7%
+[2026-06-10T20:16:52.659Z] [INFO] [Health] 6 apps today | 344 total records
+[2026-06-10T20:17:19.667Z] [INFO] [Main] All IPC handlers registered
+[2026-06-10T20:17:19.670Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-10T20:17:20.056Z] [INFO] [Main] Startup sync — 2 productive, 10 distracting
+[2026-06-10T20:17:23.349Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:17:23.350Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:17:23.352Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:17:23.353Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:17:23.354Z] [INFO] [StatsService] result — productive:2086.31s distracting:1226.53s idle:239.53s score:63.0%
+[2026-06-10T20:17:32.905Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-11","mode":"single"}
+[2026-06-10T20:17:32.906Z] [INFO] [StatsService] called — dateFilter: 2026-06-11, mode: single
+[2026-06-10T20:17:32.907Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:17:32.908Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-10T20:17:32.909Z] [INFO] [StatsService] result — productive:2086.31s distracting:1226.53s idle:239.53s score:63.0%
+[2026-06-10T20:18:20.059Z] [INFO] [Health] 6 apps today | 358 total records
+[2026-06-10T20:19:20.073Z] [INFO] [Health] 6 apps today | 358 total records
+[2026-06-10T20:20:20.086Z] [INFO] [Health] 6 apps today | 362 total records
+[2026-06-10T20:21:20.095Z] [INFO] [Health] 7 apps today | 364 total records
+[2026-06-10T20:22:20.100Z] [INFO] [Health] 7 apps today | 365 total records
+[2026-06-10T20:23:20.111Z] [INFO] [Health] 7 apps today | 367 total records
+[2026-06-10T20:24:20.116Z] [INFO] [Health] 7 apps today | 375 total records
+[2026-06-10T20:25:20.119Z] [INFO] [Health] 9 apps today | 387 total records
+[2026-06-10T20:26:20.131Z] [INFO] [Health] 9 apps today | 388 total records
+[2026-06-10T20:27:20.132Z] [INFO] [Health] 9 apps today | 394 total records
+[2026-06-10T20:28:20.146Z] [INFO] [Health] 9 apps today | 409 total records
+[2026-06-10T20:28:26.489Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-10T20:28:26.490Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-10T20:28:26.491Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-10T20:28:26.492Z] [INFO] [StatsService] raw rows count: 10
+[2026-06-10T20:28:26.493Z] [INFO] [StatsService] result — productive:2527.61s distracting:1449.3499999999997s idle:239.53s score:63.6%
+[2026-06-10T20:29:16.776Z] [INFO] [Main] All windows closed
+[2026-06-18T18:52:36.332Z] [INFO] [Main] All IPC handlers registered
+[2026-06-18T18:52:36.334Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-18T18:52:36.513Z] [INFO] [Main] Startup sync — 2 productive, 12 distracting
+[2026-06-18T18:52:43.195Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:52:43.197Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:52:43.199Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:52:43.200Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-18T18:52:43.201Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-18T18:52:46.574Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-18T18:52:46.575Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-18T18:52:46.576Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:52:46.578Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-18T18:52:46.579Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-18T18:52:47.673Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:52:47.673Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:52:47.674Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:52:47.675Z] [INFO] [StatsService] raw rows count: 0
+[2026-06-18T18:52:47.676Z] [INFO] [StatsService] result — productive:0s distracting:0s idle:0s score:0.0%
+[2026-06-18T18:52:58.720Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:52:58.721Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:52:58.722Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:52:58.723Z] [INFO] [StatsService] raw rows count: 2
+[2026-06-18T18:52:58.724Z] [INFO] [StatsService] result — productive:0s distracting:10.11s idle:0s score:0.0%
+[2026-06-18T18:53:36.526Z] [INFO] [Health] 3 apps today | 421 total records
+[2026-06-18T18:53:57.506Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-18T18:53:57.508Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-18T18:53:57.508Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:53:57.509Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-18T18:53:57.510Z] [INFO] [StatsService] result — productive:3.03s distracting:71.62s idle:0s score:4.1%
+[2026-06-18T18:53:58.353Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:53:58.354Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:53:58.355Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:53:58.356Z] [INFO] [StatsService] raw rows count: 3
+[2026-06-18T18:53:58.357Z] [INFO] [StatsService] result — productive:3.03s distracting:71.62s idle:0s score:4.1%
+[2026-06-18T18:54:36.536Z] [INFO] [Health] 5 apps today | 432 total records
+[2026-06-18T18:55:36.540Z] [INFO] [Health] 5 apps today | 432 total records
+[2026-06-18T18:55:57.626Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:55:57.627Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:55:57.628Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:55:57.629Z] [INFO] [StatsService] raw rows count: 6
+[2026-06-18T18:55:57.643Z] [INFO] [StatsService] result — productive:100.19s distracting:95.90000000000002s idle:0s score:51.1%
+[2026-06-18T18:56:36.555Z] [INFO] [Health] 6 apps today | 452 total records
+[2026-06-18T18:57:36.566Z] [INFO] [Health] 6 apps today | 456 total records
+[2026-06-18T18:57:57.926Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:57:57.928Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:57:57.929Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:57:57.930Z] [INFO] [StatsService] raw rows count: 6
+[2026-06-18T18:57:57.931Z] [INFO] [StatsService] result — productive:192.93s distracting:117.71s idle:0s score:62.1%
+[2026-06-18T18:58:19.367Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-18T18:58:19.368Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-18T18:58:19.369Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:58:19.370Z] [INFO] [StatsService] raw rows count: 6
+[2026-06-18T18:58:19.371Z] [INFO] [StatsService] result — productive:216.18s distracting:121.75s idle:0s score:64.0%
+[2026-06-18T18:58:44.820Z] [INFO] [Main] All IPC handlers registered
+[2026-06-18T18:58:44.822Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-18T18:58:45.019Z] [INFO] [Main] Startup sync — 2 productive, 12 distracting
+[2026-06-18T18:58:46.909Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T18:58:46.910Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T18:58:46.912Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T18:58:46.913Z] [INFO] [StatsService] raw rows count: 6
+[2026-06-18T18:58:46.914Z] [INFO] [StatsService] result — productive:217.19000000000003s distracting:133.89000000000001s idle:0s score:61.9%
+[2026-06-18T18:59:45.033Z] [INFO] [Health] 6 apps today | 476 total records
+[2026-06-18T19:00:45.047Z] [INFO] [Health] 6 apps today | 478 total records
+[2026-06-18T19:00:46.933Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:00:46.934Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:00:46.936Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:00:46.937Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-18T19:00:46.938Z] [INFO] [StatsService] result — productive:293.07000000000005s distracting:148.92000000000002s idle:8.09s score:66.3%
+[2026-06-18T19:01:45.064Z] [INFO] [Health] 6 apps today | 478 total records
+[2026-06-18T19:02:45.077Z] [INFO] [Health] 6 apps today | 485 total records
+[2026-06-18T19:02:46.929Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:02:46.930Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:02:46.931Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:02:46.933Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-18T19:02:46.934Z] [INFO] [StatsService] result — productive:430.63s distracting:148.92000000000002s idle:8.09s score:74.3%
+[2026-06-18T19:03:45.080Z] [INFO] [Health] 6 apps today | 490 total records
+[2026-06-18T19:04:45.086Z] [INFO] [Health] 6 apps today | 501 total records
+[2026-06-18T19:04:46.928Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:04:46.929Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:04:46.930Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:04:46.932Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-18T19:04:46.933Z] [INFO] [StatsService] result — productive:552.04s distracting:150.94000000000003s idle:8.09s score:78.5%
+[2026-06-18T19:05:45.089Z] [INFO] [Health] 6 apps today | 509 total records
+[2026-06-18T19:06:45.094Z] [INFO] [Health] 7 apps today | 518 total records
+[2026-06-18T19:06:46.931Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:06:46.932Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:06:46.934Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:06:46.938Z] [INFO] [StatsService] raw rows count: 8
+[2026-06-18T19:06:46.940Z] [INFO] [StatsService] result — productive:669.52s distracting:153.98000000000002s idle:8.09s score:81.3%
+[2026-06-18T19:07:45.100Z] [INFO] [Health] 7 apps today | 532 total records
+[2026-06-18T19:08:45.114Z] [INFO] [Health] 7 apps today | 545 total records
+[2026-06-18T19:08:46.956Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:08:46.958Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:08:46.960Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:08:46.966Z] [INFO] [StatsService] raw rows count: 8
+[2026-06-18T19:08:46.968Z] [INFO] [StatsService] result — productive:767.69s distracting:181.36s idle:8.09s score:80.9%
+[2026-06-18T19:09:45.150Z] [INFO] [Health] 7 apps today | 550 total records
+[2026-06-18T19:10:45.150Z] [INFO] [Health] 8 apps today | 552 total records
+[2026-06-18T19:10:46.925Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:10:46.926Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:10:46.927Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:10:46.928Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:10:46.929Z] [INFO] [StatsService] result — productive:826.47s distracting:187.66000000000003s idle:8.09s score:81.5%
+[2026-06-18T19:11:45.162Z] [INFO] [Health] 8 apps today | 553 total records
+[2026-06-18T19:12:45.165Z] [INFO] [Health] 8 apps today | 553 total records
+[2026-06-18T19:13:27.945Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:13:27.946Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:13:27.948Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:13:27.950Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:13:27.951Z] [INFO] [StatsService] result — productive:935.69s distracting:276.71s idle:8.09s score:77.2%
+[2026-06-18T19:13:45.177Z] [INFO] [Health] 8 apps today | 554 total records
+[2026-06-18T19:14:45.188Z] [INFO] [Health] 8 apps today | 557 total records
+[2026-06-18T19:15:29.922Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:15:29.924Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:15:29.925Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:15:29.926Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:15:29.928Z] [INFO] [StatsService] result — productive:997.23s distracting:349.56s idle:80.94s score:74.0%
+[2026-06-18T19:15:45.199Z] [INFO] [Health] 8 apps today | 558 total records
+[2026-06-18T19:16:45.205Z] [INFO] [Health] 8 apps today | 558 total records
+[2026-06-18T19:17:31.930Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:17:31.931Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:17:31.933Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:17:31.935Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:17:31.936Z] [INFO] [StatsService] result — productive:997.23s distracting:443.25999999999993s idle:174.64s score:69.2%
+[2026-06-18T19:17:45.216Z] [INFO] [Health] 8 apps today | 559 total records
+[2026-06-18T19:18:45.220Z] [INFO] [Health] 8 apps today | 559 total records
+[2026-06-18T19:18:55.881Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:18:55.883Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:18:55.885Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:18:55.887Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:18:55.888Z] [INFO] [StatsService] result — productive:1115.35s distracting:445.25999999999993s idle:174.64s score:71.5%
+[2026-06-18T19:19:04.292Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-18T19:19:04.292Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-18T19:19:04.293Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:19:04.294Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:19:04.294Z] [INFO] [StatsService] result — productive:1115.35s distracting:446.2699999999999s idle:174.64s score:71.4%
+[2026-06-18T19:19:05.035Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:19:05.036Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:19:05.036Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:19:05.037Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:19:05.037Z] [INFO] [StatsService] result — productive:1115.35s distracting:446.2699999999999s idle:174.64s score:71.4%
+[2026-06-18T19:19:27.072Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:19:27.072Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:19:27.073Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Google Chrome"]
+[2026-06-18T19:19:27.074Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:19:27.074Z] [INFO] [StatsService] result — productive:1115.35s distracting:446.2699999999999s idle:174.64s score:71.4%
+[2026-06-18T19:19:45.225Z] [INFO] [Health] 8 apps today | 565 total records
+[2026-06-18T19:19:45.237Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-18T19:19:48.589Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-18T19:19:50.017Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:19:50.018Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:19:50.018Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code","TimeBoard"]
+[2026-06-18T19:19:50.019Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:19:50.019Z] [INFO] [StatsService] result — productive:1228.86s distracting:332.75999999999993s idle:174.64s score:78.7%
+[2026-06-18T19:20:02.109Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-18T19:20:02.109Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-18T19:20:02.110Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code","TimeBoard"]
+[2026-06-18T19:20:02.110Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:02.111Z] [INFO] [StatsService] result — productive:1228.86s distracting:332.75999999999993s idle:174.64s score:78.7%
+[2026-06-18T19:20:17.565Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-18T19:20:19.036Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:19.036Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:19.037Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code"]
+[2026-06-18T19:20:19.037Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:19.038Z] [INFO] [StatsService] result — productive:1115.35s distracting:446.2699999999999s idle:174.64s score:71.4%
+[2026-06-18T19:20:24.449Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-18T19:20:26.738Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:26.739Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:26.739Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code","TimeBoard"]
+[2026-06-18T19:20:26.740Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:26.740Z] [INFO] [StatsService] result — productive:1228.86s distracting:332.75999999999993s idle:174.64s score:78.7%
+[2026-06-18T19:20:31.131Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-18T19:20:32.283Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:32.283Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:32.284Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code"]
+[2026-06-18T19:20:32.285Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:32.285Z] [INFO] [StatsService] result — productive:1115.35s distracting:446.2699999999999s idle:174.64s score:71.4%
+[2026-06-18T19:20:35.275Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-18T19:20:36.733Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:36.733Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:36.734Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code","TimeBoard"]
+[2026-06-18T19:20:36.734Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:36.735Z] [INFO] [StatsService] result — productive:1228.86s distracting:332.75999999999993s idle:174.64s score:78.7%
+[2026-06-18T19:20:40.844Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-18T19:20:42.148Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:42.148Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:42.150Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","TimeBoard"]
+[2026-06-18T19:20:42.151Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:42.151Z] [INFO] [StatsService] result — productive:432.46s distracting:1129.16s idle:174.64s score:27.7%
+[2026-06-18T19:20:45.240Z] [INFO] [Health] 8 apps today | 565 total records
+[2026-06-18T19:20:47.931Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:47.931Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:47.932Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","TimeBoard"]
+[2026-06-18T19:20:47.933Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:47.933Z] [INFO] [StatsService] result — productive:432.46s distracting:1129.16s idle:174.64s score:27.7%
+[2026-06-18T19:20:51.763Z] [INFO] [IPC] set-productive-apps | {"count":3}
+[2026-06-18T19:20:52.554Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-18T19:20:52.554Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-18T19:20:52.555Z] [INFO] [StatsService] productive apps: ["Google Chrome","Visual Studio Code","TimeBoard"]
+[2026-06-18T19:20:52.556Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-18T19:20:52.556Z] [INFO] [StatsService] result — productive:1228.86s distracting:332.75999999999993s idle:174.64s score:78.7%
+[2026-06-19T04:03:22.162Z] [INFO] [Main] All IPC handlers registered
+[2026-06-19T04:03:22.164Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-19T04:03:29.077Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:03:29.079Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:03:29.080Z] [INFO] [StatsService] productive apps: []
+[2026-06-19T04:03:29.081Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:03:29.081Z] [INFO] [StatsService] result — productive:0s distracting:481.23s idle:0s score:0.0%
+[2026-06-19T04:03:35.263Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:03:35.263Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:03:35.265Z] [INFO] [StatsService] productive apps: []
+[2026-06-19T04:03:35.266Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:03:35.266Z] [INFO] [StatsService] result — productive:0s distracting:481.23s idle:0s score:0.0%
+[2026-06-19T04:03:42.163Z] [INFO] [IPC] set-productive-apps | {"count":1}
+[2026-06-19T04:03:43.613Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:03:43.614Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:03:43.614Z] [INFO] [StatsService] productive apps: ["TimeBoard"]
+[2026-06-19T04:03:43.615Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:03:43.616Z] [INFO] [StatsService] result — productive:95.59s distracting:385.64s idle:0s score:19.9%
+[2026-06-19T04:03:47.818Z] [INFO] [IPC] set-productive-apps | {"count":2}
+[2026-06-19T04:03:49.122Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:03:49.123Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:03:49.124Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code"]
+[2026-06-19T04:03:49.125Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:03:49.125Z] [INFO] [StatsService] result — productive:137.98000000000002s distracting:343.25s idle:0s score:28.7%
+[2026-06-19T04:04:00.022Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:04:00.023Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:04:00.024Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code"]
+[2026-06-19T04:04:00.025Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:04:00.025Z] [INFO] [StatsService] result — productive:137.98000000000002s distracting:343.25s idle:0s score:28.7%
+[2026-06-19T04:04:00.565Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:04:00.566Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:04:00.567Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code"]
+[2026-06-19T04:04:00.568Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:04:00.568Z] [INFO] [StatsService] result — productive:137.98000000000002s distracting:343.25s idle:0s score:28.7%
+[2026-06-19T04:04:22.336Z] [INFO] [Health] 5 apps today | 45 total records
+[2026-06-19T04:05:01.204Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:05:01.205Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:05:01.206Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code"]
+[2026-06-19T04:05:01.207Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:05:01.208Z] [INFO] [StatsService] result — productive:225.77s distracting:344.26s idle:0s score:39.6%
+[2026-06-19T04:05:10.846Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:05:10.847Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:05:10.848Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code"]
+[2026-06-19T04:05:10.849Z] [INFO] [StatsService] raw rows count: 5
+[2026-06-19T04:05:10.850Z] [INFO] [StatsService] result — productive:225.77s distracting:344.26s idle:0s score:39.6%
+[2026-06-19T04:05:22.348Z] [INFO] [Health] 5 apps today | 53 total records
+[2026-06-19T04:28:56.151Z] [INFO] [Main] All IPC handlers registered
+[2026-06-19T04:28:56.153Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-19T04:28:56.299Z] [INFO] [Main] Startup sync — 2 productive, 4 distracting
+[2026-06-19T04:29:33.458Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:29:33.459Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:29:33.460Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code"]
+[2026-06-19T04:29:33.461Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:29:33.462Z] [INFO] [StatsService] result — productive:690.3000000000001s distracting:639.29s idle:56.3s score:51.9%
+[2026-06-19T04:29:33.518Z] [INFO] [IPC] set-productive-apps | {"count":5}
+[2026-06-19T04:29:45.177Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:29:45.178Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:29:45.179Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:29:45.179Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:29:45.180Z] [INFO] [StatsService] result — productive:736.6800000000001s distracting:592.91s idle:56.3s score:55.4%
+[2026-06-19T04:29:56.306Z] [INFO] [Health] 6 apps today | 92 total records
+[2026-06-19T04:30:56.312Z] [INFO] [Health] 6 apps today | 92 total records
+[2026-06-19T04:31:56.318Z] [INFO] [Health] 6 apps today | 92 total records
+[2026-06-19T04:32:56.325Z] [INFO] [Health] 6 apps today | 96 total records
+[2026-06-19T04:33:20.125Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:33:20.126Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:33:20.127Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:33:20.128Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:33:20.128Z] [INFO] [StatsService] result — productive:1235.45s distracting:613.09s idle:74.46s score:66.8%
+[2026-06-19T04:33:25.508Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-06-19T04:33:26.553Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:33:26.554Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:33:26.555Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:33:26.556Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:33:26.556Z] [INFO] [StatsService] result — productive:214.06s distracting:1634.48s idle:74.46s score:11.6%
+[2026-06-19T04:33:33.147Z] [INFO] [IPC] set-productive-apps | {"count":5}
+[2026-06-19T04:33:33.971Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-06-19T04:33:36.428Z] [INFO] [IPC] set-productive-apps | {"count":5}
+[2026-06-19T04:33:37.549Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:33:37.550Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:33:37.551Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:33:37.552Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:33:37.552Z] [INFO] [StatsService] result — productive:1250.7200000000003s distracting:613.09s idle:74.46s score:67.1%
+[2026-06-19T04:33:56.343Z] [INFO] [Health] 6 apps today | 111 total records
+[2026-06-19T04:34:56.374Z] [INFO] [Health] 6 apps today | 111 total records
+[2026-06-19T04:35:10.278Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:35:10.278Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:35:10.279Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:35:10.280Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:35:10.280Z] [INFO] [StatsService] result — productive:1346.8s distracting:613.09s idle:74.46s score:68.7%
+[2026-06-19T04:35:56.385Z] [INFO] [Health] 6 apps today | 113 total records
+[2026-06-19T04:36:10.930Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:36:10.931Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:36:10.932Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:36:10.933Z] [INFO] [StatsService] raw rows count: 7
+[2026-06-19T04:36:10.934Z] [INFO] [StatsService] result — productive:1350.85s distracting:613.09s idle:74.46s score:68.8%
+[2026-06-19T04:36:56.395Z] [INFO] [Health] 6 apps today | 114 total records
+[2026-06-19T04:37:10.928Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:37:10.929Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:37:10.930Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:37:10.931Z] [INFO] [StatsService] raw rows count: 8
+[2026-06-19T04:37:10.932Z] [INFO] [StatsService] result — productive:1433.8s distracting:648.44s idle:109.81s score:68.9%
+[2026-06-19T04:37:56.405Z] [INFO] [Health] 7 apps today | 120 total records
+[2026-06-19T04:38:10.934Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:38:10.938Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:38:10.939Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:38:10.941Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:38:10.942Z] [INFO] [StatsService] result — productive:1443.99s distracting:691.1700000000001s idle:109.81s score:67.6%
+[2026-06-19T04:38:56.413Z] [INFO] [Health] 7 apps today | 129 total records
+[2026-06-19T04:39:05.548Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:05.548Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:05.549Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:05.550Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:05.551Z] [INFO] [StatsService] result — productive:1455.08s distracting:740.73s idle:109.81s score:66.3%
+[2026-06-19T04:39:18.529Z] [INFO] [Main] All IPC handlers registered
+[2026-06-19T04:39:18.530Z] [INFO] [Main] Creating window | preload exists: true
+[2026-06-19T04:39:18.670Z] [INFO] [Main] Startup sync — 5 productive, 2 distracting
+[2026-06-19T04:39:20.071Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:39:20.072Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:39:20.073Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:20.074Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:20.075Z] [INFO] [StatsService] result — productive:1458.1100000000001s distracting:741.7400000000001s idle:109.81s score:66.3%
+[2026-06-19T04:39:22.698Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:22.699Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:22.699Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:22.700Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:22.701Z] [INFO] [StatsService] result — productive:1458.1100000000001s distracting:741.7400000000001s idle:109.81s score:66.3%
+[2026-06-19T04:39:26.099Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:26.100Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:26.101Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:26.102Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:26.102Z] [INFO] [StatsService] result — productive:1458.1100000000001s distracting:741.7400000000001s idle:109.81s score:66.3%
+[2026-06-19T04:39:28.480Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:39:28.481Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:39:28.482Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:28.483Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:28.484Z] [INFO] [StatsService] result — productive:1458.1100000000001s distracting:741.7400000000001s idle:109.81s score:66.3%
+[2026-06-19T04:39:31.252Z] [INFO] [IPC] set-productive-apps | {"count":4}
+[2026-06-19T04:39:32.572Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:39:32.573Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:39:32.574Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:32.575Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:32.576Z] [INFO] [StatsService] result — productive:404.23s distracting:1795.6200000000001s idle:109.81s score:18.4%
+[2026-06-19T04:39:35.031Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:35.032Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:35.032Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:35.033Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:35.034Z] [INFO] [StatsService] result — productive:404.23s distracting:1795.6200000000001s idle:109.81s score:18.4%
+[2026-06-19T04:39:38.654Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:38.655Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:38.656Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:38.657Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:38.658Z] [INFO] [StatsService] result — productive:404.23s distracting:1795.6200000000001s idle:109.81s score:18.4%
+[2026-06-19T04:39:40.382Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:39:40.383Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:39:40.384Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:40.385Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:40.386Z] [INFO] [StatsService] result — productive:404.23s distracting:1795.6200000000001s idle:109.81s score:18.4%
+[2026-06-19T04:39:43.645Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:43.646Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:43.646Z] [INFO] [StatsService] productive apps: ["Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:43.647Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:43.648Z] [INFO] [StatsService] result — productive:404.23s distracting:1795.6200000000001s idle:109.81s score:18.4%
+[2026-06-19T04:39:47.467Z] [INFO] [IPC] set-productive-apps | {"count":5}
+[2026-06-19T04:39:48.771Z] [INFO] [IPC] get-productive-stats | {"dateFilter":null,"mode":"single"}
+[2026-06-19T04:39:48.772Z] [INFO] [StatsService] called — dateFilter: null, mode: single
+[2026-06-19T04:39:48.773Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:48.774Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:48.774Z] [INFO] [StatsService] result — productive:1458.1100000000001s distracting:741.7400000000001s idle:109.81s score:66.3%
+[2026-06-19T04:39:50.666Z] [INFO] [IPC] get-productive-stats | {"dateFilter":"2026-06-19","mode":"single"}
+[2026-06-19T04:39:50.667Z] [INFO] [StatsService] called — dateFilter: 2026-06-19, mode: single
+[2026-06-19T04:39:50.667Z] [INFO] [StatsService] productive apps: ["TimeBoard","Visual Studio Code","Windows Explorer","SnippingTool.exe","SearchHost.exe"]
+[2026-06-19T04:39:50.669Z] [INFO] [StatsService] raw rows count: 9
+[2026-06-19T04:39:50.669Z] [INFO] [StatsService] result — productive:1458.1100000000001s distracting:741.7400000000001s idle:109.81s score:66.3%
+[2026-06-19T04:39:59.717Z] [INFO] [Main] All windows closed

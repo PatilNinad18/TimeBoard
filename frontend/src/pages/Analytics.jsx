@@ -7,6 +7,7 @@ import AppBreakdownTable from "../components/Analytics/AppBreakdownTable";
 import TopDistractions from "../components/Analytics/TopDistractions";
 import FocusTrendChart from "../components/Analytics/FocusTrendChart";
 import FocusSessions from "../components/Analytics/FocusSessions";
+import { useUser } from "../context/UserContext";
 import "./Analytics.css";
 
 function localDateStr(d) {
@@ -59,6 +60,7 @@ const EMPTY_STATS = {
 
 export default function Analytics() {
   const { accentColor } = useTheme();
+  const { refreshTrigger } = useUser();
   const [filter, setFilter] = useState("Today");
 
   const [stats,            setStats]            = useState(EMPTY_STATS);
@@ -140,7 +142,7 @@ export default function Analytics() {
     loadAll();
     const refreshId = setInterval(loadAll, 60000);
     return () => clearInterval(refreshId);
-  }, [filter, accentColor]);
+  }, [filter, accentColor, refreshTrigger]);
 
   return (
     <div className="analytics-page" style={{ "--accent-color": accentColor }}>
@@ -171,7 +173,7 @@ export default function Analytics() {
             </div>
             <div className="analytics-row three-col">
               <TopDistractions apps={topDistractions} />
-              <FocusTrendChart data={dailyTrends} />
+              {/* <FocusTrendChart data={dailyTrends} /> */}
               <FocusSessions
                 longestStreak={focusSessions.longestStreak}
                 sessionCount={focusSessions.sessionCount}

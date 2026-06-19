@@ -7,6 +7,14 @@ import { isUserIdle } from "./idleService.js";
 let currentSession = null;
 let startTime      = null;
 
+function normalizeAppName(appName) {
+  if (appName === "Electron") {
+    return "TimeBoard";
+  }
+
+  return appName;
+}
+
 // In-memory list of distracting app names — updated from main.js when user saves settings
 let distractingAppNames = [];
 
@@ -35,15 +43,17 @@ function localISOString() {
 // 3. Everything else → 1 (productive by default)
 //    This ensures focus score works from day one without manual config
 function classifyApp(appName) {
+  const normalizedAppName = normalizeAppName(appName);
+
   // Check in-memory user distracting list first (fastest)
-  if (distractingAppNames.includes(appName.toLowerCase())) {
+  if (distractingAppNames.includes(normalizedAppName.toLowerCase())) {
     return 0;
   }
 
   // Check blocked_apps table in DB
   const blocked = db.prepare(
     "SELECT 1 FROM blocked_apps WHERE LOWER(app_name) = LOWER(?)"
-  ).get(appName);
+  ).get(normalizedAppName);
 
   if (blocked) return 0;
 
@@ -112,7 +122,7 @@ async function trackActiveApp() {
     const win = await activeWindow();
     if (!win) return;
 
-    const appName     = win.owner.name;
+    const appName     = normalizeAppName(win.owner.name);
     const windowTitle = win.title || "";
     const domain      = extractDomain(appName, windowTitle);
     const productivity = classifyApp(appName);

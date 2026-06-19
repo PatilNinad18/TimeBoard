@@ -372,6 +372,38 @@
   .three-col { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 900px) {
+  .analytics-top   { padding: 18px 16px 0; }
+  .analytics-body  { padding: 14px 16px 40px; }
+  .analytics-header { align-items: flex-start; gap: 12px; flex-direction: column; }
+  .date-filter     { width: 100%; }
+  .filter-pills    { width: 100%; }
+  .custom-date-popup {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .date-inputs     { width: 100%; flex-direction: column; align-items: stretch; }
+  .date-sep        { display: none; }
+  .apply-dates-btn { width: 100%; }
+  .analytics-card  { padding: 16px; }
+  .donut-legend    { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .table-footer    { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 640px) {
+  .analytics-title    { font-size: 1.6rem; }
+  .analytics-body     { gap: 12px; }
+  .analytics-card     { padding: 14px; }
+  .card-header        { flex-wrap: wrap; align-items: flex-start; }
+  .card-filename      { margin-left: 0; }
+  .donut-section      { margin-bottom: 10px; }
+  .breakdown-table th,
+  .breakdown-table td { padding-left: 6px; padding-right: 6px; }
+  .session-stat-value { font-size: 1.65rem; }
+  .session-stat-value.big { font-size: 2rem; }
+}
+
 /* ── Time Distribution ─────────────────────────── */
 .dates-toggle {
   margin-left: auto;

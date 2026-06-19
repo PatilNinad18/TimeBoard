@@ -29,7 +29,13 @@ function DonutChart({ data, size = 200, thickness = 44 }) {
 
   return (
     <div className="donut-wrap">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg
+        width="100%"
+        height="auto"
+        viewBox={`0 0 ${size} ${size}`}
+        preserveAspectRatio="xMidYMid meet"
+        style={{ maxWidth: size }}
+      >
         {/* bg ring */}
         <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--surface-2)" strokeWidth={thickness} />
         {slices.map((s, i) => (

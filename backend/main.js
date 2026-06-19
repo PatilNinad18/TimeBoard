@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, Menu, ipcMain } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
@@ -47,11 +47,15 @@ function safeHandle(channel, handler) {
 
 function createWindow() {
   const preloadPath = path.join(__dirname, "preload.cjs");
+  const windowIcon = path.join(__dirname, "../frontend/src/assets/time-management.png");
   logger.info("Main", `Creating window | preload exists: ${fs.existsSync(preloadPath)}`);
 
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    autoHideMenuBar: true,
+    title: "TimeBoard",
+    icon: path.join(__dirname, "assets/logo.ico"),
     webPreferences: {
       preload: preloadPath,
       contextIsolation: true,
@@ -61,11 +65,23 @@ function createWindow() {
   });
 
   if (isDev) {
-    mainWindow.loadURL("http://localhost:5173");
-    mainWindow.webContents.openDevTools();
+  mainWindow.loadURL("http://localhost:5173");
   } else {
-    mainWindow.loadFile(path.join(__dirname, "../frontend/dist/index.html"));
+    const htmlPath = path.join(
+      process.resourcesPath,
+      "frontend-dist",
+      "index.html"
+    );
+
+    console.log("Loading:", htmlPath);
+    mainWindow.loadFile(htmlPath);
+    // mainWindow.webContents.openDevTools();
   }
+
+  mainWindow.setTitle("TimeBoard");
+  mainWindow.setMenuBarVisibility(false);
+  mainWindow.removeMenu();
+  mainWindow.maximize();
 
   mainWindow.on("crashed", () => {
     logger.error("Main", "Window crashed — attempting reload");
@@ -74,6 +90,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  Menu.setApplicationMenu(null);
 
   // ── Stats ─────────────────────────────────────────────────────────────────
   safeHandle("get-productive-stats", (_, payload) => {

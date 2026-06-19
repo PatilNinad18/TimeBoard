@@ -155,7 +155,6 @@ export default function Activity() {
       filter === "All" ? s.appName !== "Idle" :
       filter === "Productive" ? s.hasProductive :
       filter === "Distracting" ? s.hasDistracting :
-      filter === "Neutral" ? s.category === "Neutral" :
       filter === "Idle" ? s.hasIdle || s.appName === "Idle" :
       true;
     const matchSearch =
