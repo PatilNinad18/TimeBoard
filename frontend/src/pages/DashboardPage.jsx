@@ -7,6 +7,7 @@ import AppUsage from "../components/Dashboard/AppUsage";
 import ProductiveVsDistracting from "../components/Dashboard/ProductiveVsDistracting";
 import { FaClock, FaChartLine } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
+import { useUser } from "../context/UserContext";
 import "./Dashboard.css";
 
 function formatTime(seconds) {
@@ -17,6 +18,7 @@ function formatTime(seconds) {
 
 const Dashboard = ({ landingData }) => {
   const { darkMode, accentColor } = useTheme();
+  const { refreshTrigger } = useUser();
   const [stats, setStats] = useState({
     productive: "0h 0m",
     distracting: "0h 0m",
@@ -60,9 +62,9 @@ const Dashboard = ({ landingData }) => {
     }
 
     loadData();
-    const id = setInterval(loadData, 120000);
+    const id = setInterval(loadData, 15000);
     return () => clearInterval(id);
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <div 

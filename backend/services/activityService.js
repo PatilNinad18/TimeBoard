@@ -1,4 +1,5 @@
 import db from "../db/database.js";
+import { classifyJoins, effectiveProductiveExpr } from "./classificationService.js";
 
 export function getActivitySessions(dateStr = null) {
   const now = new Date();
@@ -14,11 +15,14 @@ export function getActivitySessions(dateStr = null) {
 
   // Since we now store local timestamps, date(timestamp) works correctly — no 'localtime' modifier needed
   const rows = db.prepare(`
-    SELECT id, app_name, window_title, duration, is_productive, is_idle, timestamp
-    FROM app_usage
-    WHERE date(timestamp) = ?
-      AND duration > 0
-    ORDER BY timestamp ASC
+    SELECT
+      a.id, a.app_name, a.window_title, a.duration, a.is_idle, a.timestamp,
+      (${effectiveProductiveExpr()}) AS effective_productive
+    FROM app_usage a
+    ${classifyJoins()}
+    WHERE date(a.timestamp) = ?
+      AND a.duration > 0
+    ORDER BY a.timestamp ASC
   `).all(targetDate);
 
   console.log(`📋 Found ${rows.length} sessions for ${targetDate}`);
@@ -58,7 +62,7 @@ export function getActivitySessions(dateStr = null) {
       durationStr = `${durationRemMins}m ${remainingSeconds}s`;
     }
 
-    const category = row.is_idle ? "Idle" : row.is_productive ? "Productive" : "Distracting";
+    const category = row.is_idle ? "Idle" : row.effective_productive ? "Productive" : "Distracting";
 
     console.log(`📝 [${index + 1}] ${row.app_name} | ${exactTime} (${hourLabel}) | ${durationStr}`);
 

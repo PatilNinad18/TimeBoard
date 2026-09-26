@@ -1,25 +1,24 @@
 import db from "../db/database.js";
 import logger from "../logger.js";
+import { classifyJoins, effectiveProductiveExpr } from "./classificationService.js";
+
+// Bug 2/3 fix: ALL queries in this file now resolve classification at read
+// time by LEFT JOINing user_productive_apps and blocked_apps rather than
+// trusting the is_productive value baked into each row at recording time.
+// A single CASE expression (effectiveProductiveExpr) is the one authoritative
+// classification logic shared with statsService and reportsService.
 
 function buildCond(dateFilter, mode) {
   if (!dateFilter) {
-    return { cond: `date(timestamp) = date('now','localtime')`, param: null };
+    return { cond: `date(a.timestamp) = date('now','localtime')`, param: null };
   }
   if (mode === "single") {
-    return { cond: `date(timestamp) = ?`, param: dateFilter };
+    return { cond: `date(a.timestamp) = ?`, param: dateFilter };
   }
   return {
-    cond: `date(timestamp) >= ? AND date(timestamp) <= date('now','localtime')`,
+    cond: `date(a.timestamp) >= ? AND date(a.timestamp) <= date('now','localtime')`,
     param: dateFilter,
   };
-}
-
-function getProductiveApps() {
-  try {
-    return db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
-  } catch {
-    return [];
-  }
 }
 
 function localDateStr(d) {
@@ -41,38 +40,58 @@ function getDistractingColor(i) {
 // ── Shared row fetcher — single param string, never spread ────────────────
 function fetchRows(cond, param, sql) {
   return param
-    ? db.prepare(sql.replace("__COND__", cond)).all(param)
-    : db.prepare(sql.replace("__COND__", cond)).all();
+    ? db.prepare(sql).all(param)
+    : db.prepare(sql).all();
 }
 
 // ── App Breakdown ─────────────────────────────────────────────────────────
+// Bug 3 fix: instead of using a majority vote on stale stored is_productive,
+// we now compute effective_productive from the CURRENT classification tables.
+// One app_name → one current category. No majority vote needed.
 export function getAppBreakdown(dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
 
-    const rows = fetchRows(cond, param, `
-      SELECT app_name, COALESCE(SUM(duration),0) as total_time
-      FROM app_usage
-      WHERE __COND__ AND app_name != 'Idle'
-      GROUP BY app_name
+    const sql = `
+      SELECT
+        a.app_name,
+        COALESCE(SUM(a.duration), 0) as total_time,
+        (${effectiveProductiveExpr()}) as effective_productive
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE ${cond} AND a.app_name != 'Idle' AND a.is_idle = 0
+      GROUP BY a.app_name, effective_productive
       ORDER BY total_time DESC
-    `);
+    `;
 
-    return rows.map((row, i) => {
-      const category = productiveApps.includes(row.app_name) ? "Productive" : "Distracting";
-      const h = Math.floor(row.total_time / 3600);
-      const m = Math.floor((row.total_time % 3600) / 60);
-      return {
-        id: i + 1,
-        name: row.app_name,
-        icon: row.app_name.charAt(0).toUpperCase(),
-        iconBg: getCategoryColor(category),
-        time: h > 0 ? `${h}h ${m}m` : `${m}m`,
-        totalSeconds: row.total_time,
-        category,
-      };
-    });
+    const rows = fetchRows(cond, param, sql);
+
+    // Collapse per-app rows (there should be exactly one per app now, but
+    // handle the edge case where an app has rows straddling a schema migration)
+    const appMap = new Map();
+    for (const row of rows) {
+      if (!appMap.has(row.app_name)) {
+        appMap.set(row.app_name, { total_time: 0, effective_productive: row.effective_productive });
+      }
+      appMap.get(row.app_name).total_time += row.total_time;
+    }
+
+    return [...appMap.entries()]
+      .sort((a, b) => b[1].total_time - a[1].total_time)
+      .map(([appName, data], i) => {
+        const category = data.effective_productive ? "Productive" : "Distracting";
+        const h = Math.floor(data.total_time / 3600);
+        const m = Math.floor((data.total_time % 3600) / 60);
+        return {
+          id: i + 1,
+          name: appName,
+          icon: appName.charAt(0).toUpperCase(),
+          iconBg: getCategoryColor(category),
+          time: h > 0 ? `${h}h ${m}m` : `${m}m`,
+          totalSeconds: data.total_time,
+          category,
+        };
+      });
   } catch (err) {
     logger.error("Analytics", `getAppBreakdown: ${err.message}`);
     return [];
@@ -83,31 +102,46 @@ export function getAppBreakdown(dateFilter = null, mode = "single") {
 export function getTopDistractions(dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
 
-    const rows = fetchRows(cond, param, `
-      SELECT app_name, COALESCE(SUM(duration),0) as total_time
-      FROM app_usage
-      WHERE __COND__ AND app_name != 'Idle'
-      GROUP BY app_name
+    const sql = `
+      SELECT
+        a.app_name,
+        COALESCE(SUM(a.duration), 0) as total_time,
+        (${effectiveProductiveExpr()}) as effective_productive
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE ${cond} AND a.app_name != 'Idle' AND a.is_idle = 0
+      GROUP BY a.app_name, effective_productive
       ORDER BY total_time DESC
-    `);
+    `;
 
-    const distracting = rows
-      .filter(r => !productiveApps.includes(r.app_name))
+    const rawRows = fetchRows(cond, param, sql);
+
+    // Collapse duplicates then filter to distracting only
+    const appMap = new Map();
+    for (const row of rawRows) {
+      if (!appMap.has(row.app_name)) {
+        appMap.set(row.app_name, { total_time: 0, effective_productive: row.effective_productive });
+      }
+      appMap.get(row.app_name).total_time += row.total_time;
+    }
+
+    const distracting = [...appMap.entries()]
+      .filter(([, data]) => !data.effective_productive)
+      .sort((a, b) => b[1].total_time - a[1].total_time)
       .slice(0, 6);
 
     if (distracting.length === 0) return [];
-    const maxMinutes = Math.max(...distracting.map(r => r.total_time / 60));
+    const maxMinutes = Math.max(...distracting.map(([, d]) => d.total_time / 60));
 
-    return distracting.map((row, i) => {
-      const minutes = Math.round(row.total_time / 60);
+    return distracting.map(([appName, data], i) => {
+      const minutes = Math.round(data.total_time / 60);
       const h = Math.floor(minutes / 60);
       const m = minutes % 60;
       return {
         id: i + 1,
-        name: row.app_name,
-        icon: row.app_name.charAt(0).toUpperCase(),
+        name: appName,
+        icon: appName.charAt(0).toUpperCase(),
         iconBg: getDistractingColor(i),
         time: h > 0 ? `${h}h ${m}m` : `${m}m`,
         minutes,
@@ -124,23 +158,26 @@ export function getTopDistractions(dateFilter = null, mode = "single") {
 export function getTimeDistribution(dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
 
-    const rows = fetchRows(cond, param, `
-      SELECT app_name, is_idle, COALESCE(SUM(duration),0) as total
-      FROM app_usage
-      WHERE __COND__
-      GROUP BY app_name, is_idle
-    `);
+    const sql = `
+      SELECT
+        a.is_idle,
+        (${effectiveProductiveExpr()}) as effective_productive,
+        COALESCE(SUM(a.duration), 0) as total
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE ${cond}
+      GROUP BY a.is_idle, effective_productive
+    `;
+
+    const rows = fetchRows(cond, param, sql);
 
     let productive = 0, distracting = 0, idle = 0;
 
     for (const row of rows) {
       if (row.is_idle) {
         idle += row.total;
-      } else if (productiveApps.length === 0) {
-        distracting += row.total;
-      } else if (productiveApps.includes(row.app_name)) {
+      } else if (row.effective_productive) {
         productive += row.total;
       } else {
         distracting += row.total;
@@ -172,27 +209,26 @@ export function getTimeDistribution(dateFilter = null, mode = "single") {
 // ── Daily Trends ──────────────────────────────────────────────────────────
 export function getDailyTrends(days = 7) {
   try {
-    const productiveApps = getProductiveApps();
-
-    const rows = db.prepare(`
+    const sql = `
       SELECT
-        date(timestamp) as day,
-        app_name,
-        is_idle,
-        COALESCE(SUM(duration),0) as total_duration
-      FROM app_usage
-      WHERE date(timestamp) >= date('now','localtime',?)
-      GROUP BY date(timestamp), app_name, is_idle
+        date(a.timestamp) as day,
+        a.is_idle,
+        (${effectiveProductiveExpr()}) as effective_productive,
+        COALESCE(SUM(a.duration), 0) as total_duration
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE date(a.timestamp) >= date('now','localtime',?)
+      GROUP BY date(a.timestamp), a.is_idle, effective_productive
       ORDER BY day ASC
-    `).all(`-${days} days`);
+    `;
+
+    const rows = db.prepare(sql).all(`-${days} days`);
 
     const dayMap = {};
     for (const row of rows) {
       if (!dayMap[row.day]) dayMap[row.day] = { productive: 0, distracting: 0 };
       if (row.is_idle) continue;
-      if (productiveApps.length === 0) {
-        dayMap[row.day].distracting += row.total_duration;
-      } else if (productiveApps.includes(row.app_name)) {
+      if (row.effective_productive) {
         dayMap[row.day].productive += row.total_duration;
       } else {
         dayMap[row.day].distracting += row.total_duration;
@@ -226,21 +262,24 @@ export function getDailyTrends(days = 7) {
 export function getFocusSessions(thresholdMinutes = 25, dateFilter = null, mode = "single") {
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
 
-    const rows = fetchRows(cond, param, `
-      SELECT duration, app_name, is_idle
-      FROM app_usage
-      WHERE __COND__
-      ORDER BY timestamp ASC
-    `);
+    const sql = `
+      SELECT
+        a.duration,
+        a.is_idle,
+        (${effectiveProductiveExpr()}) as effective_productive
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE ${cond}
+      ORDER BY a.timestamp ASC
+    `;
+
+    const rows = fetchRows(cond, param, sql);
 
     let longestStreak = 0, currentStreak = 0, sessionCount = 0;
 
     for (const row of rows) {
-      const isProductive = !row.is_idle && (
-        productiveApps.length === 0 || productiveApps.includes(row.app_name)
-      );
+      const isProductive = !row.is_idle && row.effective_productive;
 
       if (isProductive) {
         currentStreak += row.duration;

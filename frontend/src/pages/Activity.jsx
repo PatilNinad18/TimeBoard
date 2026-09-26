@@ -3,6 +3,7 @@ import ActivityHeader from "../components/Activity/ActivityHeader";
 import ActivityFilters from "../components/Activity/ActivityFilters";
 import ActivitySearch from "../components/Activity/ActivitySearch";
 import ActivityTimeline from "../components/Activity/ActivityTimeline";
+import { useUser } from "../context/UserContext";
 import "./Activity.css";
 
 // Convert filter label → YYYY-MM-DD local date string
@@ -116,6 +117,7 @@ function computeTotals(sessions) {
 }
 
 export default function Activity() {
+  const { refreshTrigger } = useUser();
   const [filter,   setFilter]   = useState("All");
   const [search,   setSearch]   = useState("");
   const [date,     setDate]     = useState("Today");
@@ -148,7 +150,7 @@ export default function Activity() {
       clearInterval(refreshId);
       window.removeEventListener("focus", load);
     };
-  }, [date]);
+  }, [date, refreshTrigger]);
 
   const filtered = useMemo(() => sessions.filter((s) => {
     const matchFilter =

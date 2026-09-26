@@ -4,10 +4,12 @@ import { fileURLToPath } from "url";
 import fs from "fs";
 import logger from "./logger.js";
 import { getTodayUsage }              from "./services/dataAggregator.js";
-import startTracking, { updateDistractingApps } from "./services/appTracker.js";
+import startTracking, { updateDistractingApps, updateProductiveApps } from "./services/appTracker.js";
 import { generateProductivityInsights }         from "./services/aiInsightsService.js";
 import { getTodayProductivityStats }            from "./services/statsService.js";
 import { setProductiveApps, getProductiveApps } from "./services/productivityService.js";
+import { setBlockedApps, getBlockedApps }       from "./services/blockChecker.js";
+import { setSingleAppClassification }           from "./services/classificationService.js";
 import {
   getAppBreakdown, getTopDistractions,
   getDailyTrends,  getFocusSessions, getTimeDistribution,
@@ -104,8 +106,6 @@ app.whenReady().then(() => {
   });
 
   // ── Analytics ─────────────────────────────────────────────────────────────
-  safeHandle("get-productive-apps", () => getProductiveApps());
-
   safeHandle("get-time-distribution", (_, payload) => {
     const { dateFilter, mode } = payload || {};
     return getTimeDistribution(dateFilter || null, mode || "single");
@@ -128,17 +128,43 @@ app.whenReady().then(() => {
     return getFocusSessions(25, dateFilter || null, mode || "single");
   });
 
-  // ── Settings ──────────────────────────────────────────────────────────────
+  function syncTrackerLists() {
+    try {
+      const prod = getProductiveApps();
+      const blocked = getBlockedApps();
+      updateProductiveApps(prod);
+      updateDistractingApps(blocked);
+      logger.info("Main", `Tracker sync — ${prod.length} productive, ${blocked.length} distracting`);
+    } catch (err) {
+      logger.warn("Main", "Tracker sync error", err.message);
+    }
+  }
+
+  // ── Settings & Classification ─────────────────────────────────────────────
   safeHandle("set-productive-apps", (_, apps) => {
     logger.info("IPC", "set-productive-apps", { count: apps?.length });
     const result = setProductiveApps(apps);
-    try {
-      const all = db.prepare("SELECT DISTINCT app_name FROM app_usage").all().map(r => r.app_name);
-      updateDistractingApps(all.filter(a => !(apps || []).includes(a)));
-    } catch (err) {
-      logger.warn("Main", "Tracker sync failed", err.message);
-    }
+    syncTrackerLists();
     return result;
+  });
+
+  safeHandle("get-productive-apps", () => getProductiveApps());
+
+  safeHandle("set-blocked-apps", (_, apps) => {
+    logger.info("IPC", "set-blocked-apps", { count: apps?.length });
+    const result = setBlockedApps(apps);
+    syncTrackerLists();
+    return result;
+  });
+
+  safeHandle("get-blocked-apps", () => getBlockedApps());
+
+  safeHandle("set-app-classification", (_, payload) => {
+    const { appName, category } = payload || {};
+    logger.info("IPC", "set-app-classification", { appName, category });
+    setSingleAppClassification(appName, category);
+    syncTrackerLists();
+    return { success: true };
   });
 
   // ── Reports — now paginated ───────────────────────────────────────────────
@@ -173,16 +199,7 @@ app.whenReady().then(() => {
   startTracking();
 
   // Sync saved preferences on startup
-  try {
-    const saved = getProductiveApps();
-    if (saved.length > 0) {
-      const all = db.prepare("SELECT DISTINCT app_name FROM app_usage").all().map(r => r.app_name);
-      updateDistractingApps(all.filter(a => !saved.includes(a)));
-      logger.info("Main", `Startup sync — ${saved.length} productive, ${all.length - saved.length} distracting`);
-    }
-  } catch (err) {
-    logger.warn("Main", "Startup sync error", err.message);
-  }
+  syncTrackerLists();
 
   // Health check every 60s
   setInterval(() => {

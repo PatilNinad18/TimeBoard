@@ -1,51 +1,45 @@
 import db from "../db/database.js";
 import logger from "../logger.js";
+import { classifyJoins, effectiveProductiveExpr } from "./classificationService.js";
 
 function buildCond(dateFilter, mode) {
   if (!dateFilter) {
-    return { cond: `date(timestamp) = date('now','localtime')`, param: null };
+    return { cond: `date(a.timestamp) = date('now','localtime')`, param: null };
   }
   if (mode === "single") {
-    return { cond: `date(timestamp) = ?`, param: dateFilter };
+    return { cond: `date(a.timestamp) = ?`, param: dateFilter };
   }
   return {
-    cond: `date(timestamp) >= ? AND date(timestamp) <= date('now','localtime')`,
+    cond: `date(a.timestamp) >= ? AND date(a.timestamp) <= date('now','localtime')`,
     param: dateFilter,
   };
 }
 
-function getProductiveApps() {
-  try {
-    return db.prepare(`SELECT app_name FROM user_productive_apps`).all().map(r => r.app_name);
-  } catch {
-    return [];
-  }
-}
-
+// Bug 2/5 fix: resolve classification at read time by JOINing the current
+// user_productive_apps / blocked_apps tables instead of trusting the
+// is_productive value baked into each row at recording time.
+// This means a Settings change (VS Code → Productive) is reflected
+// immediately in all calculated totals without rewriting historical rows.
 export function getTodayProductivityStats(dateFilter = null, mode = "single") {
   logger.info("StatsService", `called — dateFilter: ${dateFilter}, mode: ${mode}`);
 
   try {
     const { cond, param } = buildCond(dateFilter, mode);
-    const productiveApps  = getProductiveApps();
 
-    logger.info("StatsService", `productive apps: ${JSON.stringify(productiveApps)}`);
+    const sql = `
+      SELECT
+        a.is_idle,
+        ${effectiveProductiveExpr()} AS effective_productive,
+        COALESCE(SUM(a.duration), 0) AS total
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE ${cond}
+      GROUP BY a.is_idle, effective_productive
+    `;
 
-    // Fetch ALL rows for the period — classify in JS, not SQL
-    // This completely avoids the IN () empty list bug AND the param binding bug
     const rows = param
-      ? db.prepare(`
-          SELECT app_name, is_idle, COALESCE(SUM(duration), 0) as total
-          FROM app_usage
-          WHERE ${cond}
-          GROUP BY app_name, is_idle
-        `).all(param)          // ← single string param, NOT spread
-      : db.prepare(`
-          SELECT app_name, is_idle, COALESCE(SUM(duration), 0) as total
-          FROM app_usage
-          WHERE ${cond}
-          GROUP BY app_name, is_idle
-        `).all();              // ← no params needed
+      ? db.prepare(sql).all(param)
+      : db.prepare(sql).all();
 
     logger.info("StatsService", `raw rows count: ${rows.length}`);
 
@@ -53,15 +47,9 @@ export function getTodayProductivityStats(dateFilter = null, mode = "single") {
 
     for (const row of rows) {
       if (row.is_idle) {
-        // Count idle time both as idle for display and as distracting for score.
+        // Idle is neither productive nor distracting — never folded into either bucket.
         idle += row.total;
-        distracting += row.total;
-        continue;
-      }
-      if (productiveApps.length === 0) {
-        // No config yet — treat all as distracting
-        distracting += row.total;
-      } else if (productiveApps.includes(row.app_name)) {
+      } else if (row.effective_productive) {
         productive += row.total;
       } else {
         distracting += row.total;

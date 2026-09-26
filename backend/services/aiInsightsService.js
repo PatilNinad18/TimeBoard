@@ -1,17 +1,24 @@
 // AI Productivity Insights Service
 import db from "../db/database.js";
+import { classifyJoins, effectiveProductiveExpr } from "./classificationService.js";
 
 export function generateProductivityInsights() {
   try {
     // Get today's activity data
     const today = new Date().toISOString().split('T')[0];
     const activities = db.prepare(`
-      SELECT app, duration, timestamp, is_productive, is_idle
-      FROM app_usage 
-      WHERE date(timestamp) = date(?)
-      ORDER BY timestamp DESC
+      SELECT
+        a.app_name AS app,
+        a.duration,
+        a.timestamp,
+        (${effectiveProductiveExpr()}) AS is_productive,
+        a.is_idle
+      FROM app_usage a
+      ${classifyJoins()}
+      WHERE date(a.timestamp) = date(?)
+      ORDER BY a.timestamp DESC
       LIMIT 50
-    `).all();
+    `).all(today);
 
     if (!activities.length) {
       return {

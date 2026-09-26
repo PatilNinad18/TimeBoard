@@ -1,14 +1,11 @@
 import React from "react";
 
-function ProductiveVsDistracting({ apps, distractingApps = [] }) {
-  // Classify apps based on what user selected in Settings
-  const distracting = apps.filter(app =>
-    distractingApps.includes(app.app)
-  );
+// Display-only component: lists apps segmented into Productive and Distracting.
+// App classification is managed exclusively from Settings → Distracting Apps.
 
-  const productive = apps.filter(
-    app => !distractingApps.includes(app.app)
-  );
+function ProductiveVsDistracting({ apps = [] }) {
+  const distracting = apps.filter(app => app.category === "Distracting");
+  const productive = apps.filter(app => app.category !== "Distracting");
 
   return (
     <div
@@ -18,12 +15,14 @@ function ProductiveVsDistracting({ apps, distractingApps = [] }) {
         border: "1px solid var(--border)",
       }}
     >
-      <h4
-        className="text-lg font-medium mb-3"
-        style={{ color: "var(--text-primary)" }}
-      >
-        Apps Overview
-      </h4>
+      <div className="flex justify-between items-center mb-3">
+        <h4
+          className="text-lg font-medium"
+          style={{ color: "var(--text-primary)" }}
+        >
+          Apps Overview
+        </h4>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         {/* Productive */}

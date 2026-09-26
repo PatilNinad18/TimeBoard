@@ -1,11 +1,16 @@
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
-import { app } from "electron";
+import electronPkg from "electron";
+
+const electronApp = typeof electronPkg === "object" ? (electronPkg.app || electronPkg.default?.app) : null;
+const userDataPath = electronApp?.getPath
+  ? electronApp.getPath("userData")
+  : path.join(process.env.APPDATA || process.env.USERPROFILE || process.env.HOME || ".", "TimeBoard");
 
 // Store DB in user's AppData/Roaming/TimeBoard/data
 const dbDir = path.join(
-  app.getPath("userData"),
+  userDataPath,
   "data"
 );
 
