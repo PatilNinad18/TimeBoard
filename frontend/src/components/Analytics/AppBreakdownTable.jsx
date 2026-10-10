@@ -6,8 +6,11 @@ const DEFAULT_APPS = [];
 
 const PAGE_SIZE = 5;
 
+// Read-only status indicator badge
 const CategoryBadge = ({ cat }) => (
-  <span className={`cat-badge cat-${cat.toLowerCase()}`}>{cat}</span>
+  <span className={`cat-badge cat-${(cat || "productive").toLowerCase()}`}>
+    {cat || "Productive"}
+  </span>
 );
 
 export default function AppBreakdownTable({ apps = DEFAULT_APPS }) {
@@ -21,7 +24,6 @@ export default function AppBreakdownTable({ apps = DEFAULT_APPS }) {
         <div className="header-left">
           <h3 className="section-title">App Usage Breakdown</h3>
         </div>
-        
       </div>
 
       <table className="breakdown-table">
@@ -51,7 +53,9 @@ export default function AppBreakdownTable({ apps = DEFAULT_APPS }) {
                 </div>
               </td>
               <td className="time-cell">{app.time}</td>
-              <td><CategoryBadge cat={app.category} /></td>
+              <td>
+                <CategoryBadge cat={app.category} />
+              </td>
             </tr>
           ))}
         </tbody>

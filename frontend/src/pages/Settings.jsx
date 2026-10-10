@@ -18,14 +18,13 @@ export default function Settings() {
 
   // ── Local state ──────────────────────────────────────────────────────────
   const [trackedApps, setTrackedApps]         = useState([]);
-  const [productiveApps, setProductiveApps]   = useState([]);
   const [blockingRules, setBlockingRules]     = useState([]);
   const [idleThreshold, setIdleThreshold]     = useState("30 sec");
   const [categories, setCategories]           = useState([]);
   const [accessEnabled, setAccessEnabled]     = useState(false);
   const [dataMgmtEnabled, setDataMgmtEnabled] = useState(false);
   const [toast, setToast]                     = useState(null);
-  const { userName, distractingApps, updateDistractingApps, updateProductiveApps } = useUser();
+  const { userName, distractingApps, updateDistractingApps, refreshTrigger } = useUser();
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -37,17 +36,25 @@ export default function Settings() {
     if (!window.api) return;
     async function load() {
       try {
-        const saved = await window.api.getProductiveApps();
-        setProductiveApps(saved || []);
+        const [savedBlocked, usage] = await Promise.all([
+          window.api.getBlockedApps ? window.api.getBlockedApps() : Promise.resolve([]),
+          window.api.getUsage(),
+        ]);
 
-        const usage = await window.api.getUsage();
         if (usage?.length > 0) {
+          const blockedSet = new Set((savedBlocked || []).map(a => a.toLowerCase()));
+
           setTrackedApps(
-            usage.map((u, i) => ({
-              id: i + 1,
-              name: u.app,
-              type: (saved || []).includes(u.app) ? "productive" : "distracting",
-            }))
+            usage.map((u, i) => {
+              const lower = (u.app || "").toLowerCase();
+              const type = blockedSet.has(lower) ? "distracting" : (u.category || "").toLowerCase() === "distracting" ? "distracting" : "productive";
+
+              return {
+                id: i + 1,
+                name: u.app,
+                type,
+              };
+            })
           );
         }
       } catch (err) {
@@ -55,21 +62,7 @@ export default function Settings() {
       }
     }
     load();
-  }, []);
-
-  // ── Handlers ─────────────────────────────────────────────────────────────
-  const handleAppsChange = async (updated) => {
-    setTrackedApps(updated);
-    if (!window.api) return;
-    try {
-      const names = updated.filter((a) => a.type === "productive").map((a) => a.name);
-      await updateProductiveApps(names);
-      setProductiveApps(names);
-      showToast("Productivity rules saved");
-    } catch {
-      showToast("Failed to save rules", "error");
-    }
-  };
+  }, [refreshTrigger]);
 
   const handleDistractingAppsChange = async (apps) => {
     await updateDistractingApps(apps);
@@ -123,7 +116,7 @@ export default function Settings() {
         <div className="settings-grid">
 
           <div className="settings-col">
-            <ProductivityRules apps={trackedApps} onAppsChange={handleAppsChange} />
+            <ProductivityRules apps={trackedApps} />
             <Accessibility
               version="12.0"
               enabled={accessEnabled}

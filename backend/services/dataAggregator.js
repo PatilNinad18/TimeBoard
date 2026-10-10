@@ -1,5 +1,9 @@
 import db from "../db/database.js";
+import { classifyJoins, effectiveProductiveExpr } from "./classificationService.js";
 
+// Bug 4 fix: resolve category at read time by JOINing current classification
+// tables instead of using MAX(is_productive) from stale stored rows.
+// This ensures the Dashboard App Usage list always reflects the current Settings.
 export function getTodayUsage() {
   const now = new Date();
   const today =
@@ -10,12 +14,14 @@ export function getTodayUsage() {
   console.log(`[DataAggregator] Getting usage for: ${today}`);
 
   const rows = db.prepare(`
-    SELECT app_name,
-           COALESCE(SUM(duration), 0) as total_time,
-           CASE WHEN MAX(is_productive) = 1 THEN 'Productive' ELSE 'Distracting' END as category
-    FROM app_usage
-    WHERE date(timestamp) = ? AND app_name != 'Idle'
-    GROUP BY app_name
+    SELECT
+      a.app_name,
+      COALESCE(SUM(a.duration), 0) as total_time,
+      CASE WHEN (${effectiveProductiveExpr()}) = 1 THEN 'Productive' ELSE 'Distracting' END as category
+    FROM app_usage a
+    ${classifyJoins()}
+    WHERE date(a.timestamp) = ? AND a.app_name != 'Idle' AND a.is_idle = 0
+    GROUP BY a.app_name
     ORDER BY total_time DESC
   `).all(today);
 

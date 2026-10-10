@@ -1,7 +1,6 @@
 import activeWindow from "active-win";
 import db from "../db/database.js";
-import { extractDomain } from "./domainExtractor.js";
-import { isBlocked } from "./blockChecker.js";
+import { extractDomain, detectKnownApp, isKnownAppName, coreTitle } from "./domainExtractor.js";
 import { isUserIdle } from "./idleService.js";
 
 let currentSession = null;
@@ -15,62 +14,152 @@ function normalizeAppName(appName) {
   return appName;
 }
 
-// In-memory list of distracting app names — updated from main.js when user saves settings
+// In-memory lists — updated from main.js whenever the user saves settings.
+// Both are explicit, user-managed lists (blocked_apps / user_productive_apps).
+// classifyApp() checks them directly — no guessing about "everything else".
 let distractingAppNames = [];
+let productiveAppNames  = [];
 
 export function updateDistractingApps(apps) {
   distractingAppNames = (apps || []).map((a) => a.toLowerCase());
   console.log("[Tracker] Distracting apps list updated:", distractingAppNames);
 }
 
+export function updateProductiveApps(apps) {
+  productiveAppNames = (apps || []).map((a) => a.toLowerCase());
+  console.log("[Tracker] Productive apps list updated:", productiveAppNames);
+}
+
 // Returns local ISO string like "2026-04-18T17:08:32"
-function localISOString() {
-  const now = new Date();
+function localISOString(date = new Date()) {
   const pad = (n) => String(n).padStart(2, "0");
   return (
-    now.getFullYear()     + "-" +
-    pad(now.getMonth()+1) + "-" +
-    pad(now.getDate())    + "T" +
-    pad(now.getHours())   + ":" +
-    pad(now.getMinutes()) + ":" +
-    pad(now.getSeconds())
+    date.getFullYear()     + "-" +
+    pad(date.getMonth()+1) + "-" +
+    pad(date.getDate())    + "T" +
+    pad(date.getHours())   + ":" +
+    pad(date.getMinutes()) + ":" +
+    pad(date.getSeconds())
   );
 }
 
-// Classify app:
-// 1. If user explicitly marked it as distracting → 0
-// 2. If app is in blocked_apps table → 0
-// 3. Everything else → 1 (productive by default)
-//    This ensures focus score works from day one without manual config
-function classifyApp(appName) {
-  const normalizedAppName = normalizeAppName(appName);
-
-  // Check in-memory user distracting list first (fastest)
-  if (distractingAppNames.includes(normalizedAppName.toLowerCase())) {
-    return 0;
-  }
-
-  // Check blocked_apps table in DB
-  const blocked = db.prepare(
-    "SELECT 1 FROM blocked_apps WHERE LOWER(app_name) = LOWER(?)"
-  ).get(normalizedAppName);
-
-  if (blocked) return 0;
-
-  // Default: productive
-  return 1;
+function localDateString(date = new Date()) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return (
+    date.getFullYear()     + "-" +
+    pad(date.getMonth()+1) + "-" +
+    pad(date.getDate())
+  );
 }
 
-function saveSession(appName, windowTitle, domain, durationSeconds, isProductive, isIdle) {
-  if (durationSeconds < 1) return; // skip sub-second sessions
-
-  const timestamp = localISOString();
-
+function insertUsageRow(appName, windowTitle, domain, durationSeconds, isProductive, isIdle, timestamp) {
+  if (durationSeconds < 1) return;
   db.prepare(`
     INSERT INTO app_usage
       (app_name, window_title, domain, duration, is_productive, is_idle, timestamp)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `).run(appName, windowTitle, domain, durationSeconds, isProductive, isIdle ? 1 : 0, timestamp);
+}
+
+function startOfNextDay(date) {
+  const d = new Date(date);
+  d.setHours(24, 0, 0, 0);
+  return d;
+}
+
+// Sessions can stay open across midnight (a tab with a title that never
+// changes, an idle stretch overnight, etc.). This runs on every tick and,
+// the moment it notices the running session's startTime is on a different
+// calendar day than "now", closes out the portion that happened yesterday
+// and rolls the session forward so it continues today. Ticks happen every
+// second, so a multi-day gap (e.g. the laptop was asleep) just catches up
+// one day per tick over the next couple of seconds after waking.
+function splitOngoingSessionAtMidnight(now) {
+  if (!currentSession || startTime == null) return;
+
+  const startDate = new Date(startTime);
+  if (localDateString(startDate) === localDateString(now)) return;
+
+  const midnight = startOfNextDay(startDate);
+  const beforeMidnightSeconds = Math.floor((midnight.getTime() - startDate.getTime()) / 1000);
+  const afterMidnightSeconds  = Math.max(0, (Date.now() - midnight.getTime()) / 1000);
+
+  // currentSession.domain is only ever set for idle sessions today — active
+  // sessions don't get one until they're closed. Fall back to computing it
+  // here so the "yesterday" row doesn't lose site info (e.g. "YouTube").
+  const domain = currentSession.isIdle
+    ? (currentSession.domain ?? null)
+    : (currentSession.domain ?? extractDomain(currentSession.name, currentSession.title));
+
+  const isProductive = currentSession.isIdle ? 0 : classifyApp(currentSession.name);
+
+  insertUsageRow(
+    currentSession.name,
+    currentSession.title,
+    domain,
+    beforeMidnightSeconds,
+    isProductive,
+    currentSession.isIdle,
+    localISOString(startDate)
+  );
+
+  // Keep tracking the same session, just rolled forward onto the new day —
+  // and remember the domain we just computed so it isn't lost when this
+  // session eventually closes for real.
+  currentSession = { ...currentSession, domain };
+  startTime = midnight.getTime();
+
+  console.log(
+    `[Tracker] Split ongoing session at midnight: ${currentSession.name} | ` +
+    `${beforeMidnightSeconds}s before midnight, ~${afterMidnightSeconds.toFixed(0)}s after so far`
+  );
+}
+
+// Classify app — single source of truth, consulted only here:
+// 1. Explicit "Distracting" list (Settings) wins first.
+// 2. Explicit "Productive" list (Settings) next.
+// 3. Nothing configured either way → default Productive, so focus score
+//    works day one without manual setup.
+// The is_productive value written here is trusted as-is everywhere else
+// (Dashboard/Analytics/Reports) — nothing re-derives it at read time.
+function classifyApp(appName) {
+  const normalizedAppName = normalizeAppName(appName);
+  const lower = normalizedAppName.toLowerCase();
+
+  if (distractingAppNames.includes(lower)) return 0;
+  if (productiveAppNames.includes(lower))  return 1;
+
+  return 1;
+}
+
+// Safety net: if for any reason a session's duration still spans two
+// calendar days by the time it's saved (e.g. a tick was missed), split it
+// here too. Under normal operation splitOngoingSessionAtMidnight() already
+// rolls the session forward every tick, so this should rarely fire — but
+// it's cheap insurance against losing/misdating time if a tick is skipped.
+function saveSession(appName, windowTitle, domain, durationSeconds, isProductive, isIdle) {
+  if (durationSeconds < 1) return; // skip sub-second sessions
+
+  const sessionStart = new Date(Date.now() - durationSeconds * 1000);
+  const sessionEnd    = new Date();
+
+  if (localDateString(sessionStart) !== localDateString(sessionEnd)) {
+    const midnight = startOfNextDay(sessionStart);
+    const beforeMidnightSeconds = Math.floor((midnight.getTime() - sessionStart.getTime()) / 1000);
+    const afterMidnightSeconds  = Math.max(0, durationSeconds - beforeMidnightSeconds);
+
+    insertUsageRow(appName, windowTitle, domain, beforeMidnightSeconds, isProductive, isIdle, localISOString(sessionStart));
+    insertUsageRow(appName, windowTitle, domain, afterMidnightSeconds,  isProductive, isIdle, localISOString(midnight));
+
+    console.log(
+      `[Tracker] Split session across midnight: ${appName} | ` +
+      `${beforeMidnightSeconds}s before midnight + ${afterMidnightSeconds}s after midnight`
+    );
+    return;
+  }
+
+  const timestamp = localISOString(sessionStart);
+  insertUsageRow(appName, windowTitle, domain, durationSeconds, isProductive, isIdle, timestamp);
 
   console.log(
     `[Tracker] Saved: "${appName}" | ` +
@@ -83,14 +172,15 @@ function saveSession(appName, windowTitle, domain, durationSeconds, isProductive
 
 async function trackActiveApp() {
   try {
+    splitOngoingSessionAtMidnight(new Date());
     const idle = isUserIdle();
 
     if (idle) {
       if (currentSession && !currentSession.isIdle) {
         // Close the active session before recording idle time.
-        const duration    = Number(((Date.now() - startTime) / 1000).toFixed(2));
-        const prevDomain  = extractDomain(currentSession.name, currentSession.title);
-        const productivity = classifyApp(currentSession.name);
+        const duration      = Number(((Date.now() - startTime) / 1000).toFixed(2));
+        const prevDomain    = currentSession.domain ?? extractDomain(currentSession.name, currentSession.title);
+        const productivity  = classifyApp(currentSession.name);
 
         saveSession(
           currentSession.name,
@@ -122,15 +212,24 @@ async function trackActiveApp() {
     const win = await activeWindow();
     if (!win) return;
 
-    const appName     = normalizeAppName(win.owner.name);
+    const rawAppName  = normalizeAppName(win.owner.name);
     const windowTitle = win.title || "";
-    const domain      = extractDomain(appName, windowTitle);
-    const productivity = classifyApp(appName);
+    const knownApp    = detectKnownApp(rawAppName, windowTitle);
 
-    // Skip blocked apps entirely — don't even record them
-    if (isBlocked(appName)) {
-      console.log(`[Tracker] Blocked: ${appName}`);
-      return;
+    let appName;
+    if (knownApp) {
+      appName = knownApp;
+    } else if (
+      currentSession &&
+      isKnownAppName(currentSession.name) &&
+      coreTitle(windowTitle) === coreTitle(currentSession.title)
+    ) {
+      // Same tab (title's core text matches), but this particular poll's
+      // title happened to be missing its site suffix — keep the existing
+      // classification instead of flip-flopping back to "Google Chrome".
+      appName = currentSession.name;
+    } else {
+      appName = rawAppName;
     }
 
     if (currentSession && currentSession.isIdle) {
@@ -138,7 +237,7 @@ async function trackActiveApp() {
       saveSession(
         currentSession.name,
         currentSession.title,
-        null,
+        currentSession.domain ?? null,
         duration,
         0,
         true
@@ -149,16 +248,20 @@ async function trackActiveApp() {
 
     // First detection — start tracking, nothing to save yet
     if (!currentSession) {
-      currentSession = { name: appName, title: windowTitle };
+      currentSession = { name: appName, title: windowTitle, domain: null, isIdle: false };
       startTime      = Date.now();
       return;
     }
 
-    // App or window changed — save the previous session and start new one
-    if (currentSession.name !== appName || currentSession.title !== windowTitle) {
-      const duration    = Number(((Date.now() - startTime) / 1000).toFixed(2));
-      const prevDomain  = extractDomain(currentSession.name, currentSession.title);
-      const productivity = classifyApp(currentSession.name);
+    // App changed, or it's genuinely a different tab/page — save the
+    // previous session and start a new one. Comparing on coreTitle (rather
+    // than the raw title) means a momentary suffix glitch on the SAME tab
+    // no longer counts as a switch, so one continuous video watch stays
+    // one continuous session instead of fragmenting into dozens of rows.
+    if (currentSession.name !== appName || coreTitle(currentSession.title) !== coreTitle(windowTitle)) {
+      const duration      = Number(((Date.now() - startTime) / 1000).toFixed(2));
+      const prevDomain    = currentSession.domain ?? extractDomain(currentSession.name, currentSession.title);
+      const productivity  = classifyApp(currentSession.name);
 
       saveSession(
         currentSession.name,
@@ -169,7 +272,7 @@ async function trackActiveApp() {
         false
       );
 
-      currentSession = { name: appName, title: windowTitle };
+      currentSession = { name: appName, title: windowTitle, domain: null, isIdle: false };
       startTime      = Date.now();
     }
 
@@ -179,13 +282,17 @@ async function trackActiveApp() {
 }
 
 function startTracking() {
-  // Load distracting apps from DB on startup so existing settings apply immediately
+  // Load both explicit lists from DB on startup so existing settings apply immediately
   try {
     const blocked = db.prepare("SELECT app_name FROM blocked_apps").all();
     distractingAppNames = blocked.map((r) => r.app_name.toLowerCase());
-    console.log(`[Tracker] Loaded ${distractingAppNames.length} blocked apps from DB`);
+
+    const productive = db.prepare("SELECT app_name FROM user_productive_apps").all();
+    productiveAppNames = productive.map((r) => r.app_name.toLowerCase());
+
+    console.log(`[Tracker] Loaded ${distractingAppNames.length} distracting, ${productiveAppNames.length} productive apps from DB`);
   } catch (err) {
-    console.error("[Tracker] Failed to load blocked apps:", err.message);
+    console.error("[Tracker] Failed to load app lists:", err.message);
   }
 
   console.log("[Tracker] Tracking started — polling every 1s");

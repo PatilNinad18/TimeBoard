@@ -1,33 +1,16 @@
 import React from "react";
-import { useUser } from "../../context/UserContext";
 
-function AppUsage({ apps }) {
-  const { distractingApps } = useUser();
+// Display-only component: shows today's top app usage and their authoritative category.
+// App classification is managed exclusively from Settings → Distracting Apps.
 
-  const getLabel = (appName, minutes) => {
-    if (distractingApps.includes(appName)) return "Distracting";
-    if (minutes >= 180) return "Highly Focused";
-    if (minutes >= 60) return "Needs Improvement";
-    return "Productive";
-  };
-
-  const getLabelStyle = (appName, minutes) => {
-    if (distractingApps.includes(appName)) {
+function AppUsage({ apps = [] }) {
+  const getLabelStyle = (category) => {
+    if (category === "Distracting") {
       return {
         background: "var(--distracting-bg)",
         color: "var(--distracting)",
       };
     }
-    if (minutes >= 180)
-      return {
-        background: "var(--productive-bg)",
-        color: "var(--productive)",
-      };
-    if (minutes >= 60)
-      return {
-        background: "rgba(250,204,21,0.12)",
-        color: "#facc15",
-      };
     return {
       background: "var(--productive-bg)",
       color: "var(--productive)",
@@ -42,12 +25,14 @@ function AppUsage({ apps }) {
         border: "1px solid var(--border)",
       }}
     >
-      <h4
-        className="text-lg font-medium mb-3"
-        style={{ color: "var(--text-primary)" }}
-      >
-        App Usage
-      </h4>
+      <div className="flex justify-between items-center mb-3">
+        <h4
+          className="text-lg font-medium"
+          style={{ color: "var(--text-primary)" }}
+        >
+          App Usage
+        </h4>
+      </div>
 
       {apps.length === 0 ? (
         <p style={{ color: "var(--text-secondary)" }}>
@@ -67,6 +52,7 @@ function AppUsage({ apps }) {
                 <span
                   className="truncate max-w-[120px]"
                   style={{ color: "var(--text-primary)" }}
+                  title={app.app}
                 >
                   {app.app}
                 </span>
@@ -80,10 +66,10 @@ function AppUsage({ apps }) {
                   </span>
 
                   <span
-                    className="text-xs px-2 py-1 rounded-full"
-                    style={getLabelStyle(app.app, app.minutes)}
+                    className="text-xs px-2 py-1 rounded-full font-medium"
+                    style={getLabelStyle(app.category)}
                   >
-                    {getLabel(app.app, app.minutes)}
+                    {app.category || "Productive"}
                   </span>
                 </div>
               </li>

@@ -16,11 +16,10 @@ const AppIcon = ({ name }) => {
   );
 };
 
-export default function ProductivityRules({ apps = [], onAppsChange }) {
+export default function ProductivityRules({ apps = [] }) {
   const [search, setSearch] = useState("");
   const [appList, setAppList] = useState(apps);
 
-  // Sync when parent passes updated apps (on first load from DB)
   useEffect(() => {
     setAppList(apps);
   }, [apps]);
@@ -29,20 +28,10 @@ export default function ProductivityRules({ apps = [], onAppsChange }) {
     a.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const toggleType = (id) => {
-    const updated = appList.map((a) =>
-      a.id === id
-        ? { ...a, type: a.type === "productive" ? "distracting" : "productive" }
-        : a
-    );
-    setAppList(updated);
-    onAppsChange?.(updated);
-  };
-
   return (
     <div className="settings-card productivity-rules">
       <h3 className="card-title">Productivity Rules</h3>
-      <p className="card-subtitle">Define app classification</p>
+      <p className="card-subtitle">Detected applications status</p>
 
       <div className="search-box">
         <Search size={14} className="search-icon" />
@@ -63,7 +52,7 @@ export default function ProductivityRules({ apps = [], onAppsChange }) {
           <div className="app-list-empty">No apps match "{search}"</div>
         ) : (
           filtered.map((app) => (
-            <div key={app.id} className="app-row" onClick={() => toggleType(app.id)}>
+            <div key={app.id} className="app-row" style={{ cursor: "default" }}>
               <AppIcon name={app.name} />
               <span className="app-name">{app.name}</span>
               <span className={`app-badge ${app.type}`}>

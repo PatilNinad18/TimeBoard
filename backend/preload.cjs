@@ -63,9 +63,12 @@ try {
     // Activity
     getActivitySessions: (dateStr) => safeInvoke("get-activity-sessions", dateStr),
 
-    // Settings
+    // Settings & Classification
     setProductiveApps: (apps) => safeInvoke("set-productive-apps", apps),
     getProductiveApps: ()     => safeInvoke("get-productive-apps"),
+    setBlockedApps:    (apps) => safeInvoke("set-blocked-apps", apps),
+    getBlockedApps:    ()     => safeInvoke("get-blocked-apps"),
+    setAppClassification: (appName, category) => safeInvoke("set-app-classification", { appName, category }),
 
     // AI
     getAIInsights: () => safeInvoke("get-ai-insights"),

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "electron .",
+    "test": "electron tests/classification.test.js",
     "dist": "electron-builder"
   },
   "build": {

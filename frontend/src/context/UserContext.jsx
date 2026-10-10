@@ -10,112 +10,71 @@ export function UserProvider({ children }) {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const triggerRefresh = () => {
-    setTimeout(() => {
-      setRefreshTrigger((prev) => prev + 1);
-    }, 500);
+    setRefreshTrigger((prev) => prev + 1);
   };
 
-  // Load from localStorage on mount
+  // Load from database / localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem("timeboard_user");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setUserName(parsed.userName || "");
-      setDistractingApps(parsed.distractingApps || []);
-      setOnboarded(parsed.onboarded || false);
+    async function initUser() {
+      const saved = localStorage.getItem("timeboard_user");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setUserName(parsed.userName || "");
+          setOnboarded(parsed.onboarded || false);
+        } catch (e) {
+          console.error("User parsing error:", e);
+        }
+      }
+
+      if (window.api?.getBlockedApps) {
+        try {
+          const blocked = await window.api.getBlockedApps();
+          setDistractingApps(blocked || []);
+        } catch (err) {
+          console.error("UserContext init error:", err);
+        }
+      }
+      setLoading(false);
     }
-    setLoading(false);
+
+    initUser();
   }, []);
 
   const saveUser = async (name, distApps) => {
     const data = { userName: name, distractingApps: distApps, onboarded: true };
     localStorage.setItem("timeboard_user", JSON.stringify(data));
     setUserName(name);
-    setDistractingApps(distApps);
+    setDistractingApps(distApps || []);
     setOnboarded(true);
 
-    // Also save to backend so productivity score is calculated correctly
-    if (window.api) {
+    if (window.api?.setBlockedApps) {
       try {
-        // Mark non-distracting tracked apps as productive
-        const usage = await window.api.getUsage();
-        if (usage?.length > 0) {
-          const prodApps = usage
-            .filter((u) => !distApps.includes(u.app))
-            .map((u) => u.app);
-          await window.api.setProductiveApps(prodApps);
-        }
+        await window.api.setBlockedApps(distApps || []);
       } catch (err) {
         console.error("UserContext saveUser error:", err);
       }
     }
-  };
-
-  const updateProductiveApps = async (apps) => {
-    console.log("[UserContext] updateProductiveApps called with:", apps);
-
-    const current = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
-    const updated = { ...current, productiveApps: apps };
-    localStorage.setItem("timeboard_user", JSON.stringify(updated));
-
-    if (window.api) {
-      try {
-        await window.api.setProductiveApps(apps);
-
-        const usage = await window.api.getUsage();
-        if (usage?.length > 0) {
-          const distApps = usage
-            .filter((u) => !apps.includes(u.app))
-            .map((u) => u.app);
-
-          console.log("[UserContext] Setting distracting apps to:", distApps);
-          setDistractingApps(distApps);
-
-          const persisted = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
-          localStorage.setItem(
-            "timeboard_user",
-            JSON.stringify({ ...persisted, distractingApps: distApps })
-          );
-        }
-      } catch (err) {
-        console.error("updateProductiveApps error:", err);
-      }
-    }
-
     triggerRefresh();
   };
 
   const updateDistractingApps = async (apps) => {
     console.log("[UserContext] updateDistractingApps called with:", apps);
-    const current = JSON.parse(localStorage.getItem("timeboard_user") || "{}");
-    const updated = { ...current, distractingApps: apps };
-    localStorage.setItem("timeboard_user", JSON.stringify(updated));
-    setDistractingApps(apps);
-
-    if (window.api) {
+    setDistractingApps(apps || []);
+    if (window.api?.setBlockedApps) {
       try {
-        const usage = await window.api.getUsage();
-        if (usage?.length > 0) {
-          const prodApps = usage
-            .filter((u) => !apps.includes(u.app))
-            .map((u) => u.app);
-          console.log("[UserContext] Setting productive apps to:", prodApps);
-          await window.api.setProductiveApps(prodApps);
-        }
+        await window.api.setBlockedApps(apps || []);
       } catch (err) {
         console.error("updateDistractingApps error:", err);
       }
     }
-
-    // Trigger refresh for all components after a small delay to ensure backend updates
-    console.log("[UserContext] Triggering refresh after delay...");
     triggerRefresh();
   };
 
   return (
     <UserContext.Provider value={{
       userName, distractingApps, onboarded, loading, refreshTrigger,
-      saveUser, updateDistractingApps, updateProductiveApps,
+      saveUser, updateDistractingApps, triggerRefresh,
       setUserName, setDistractingApps,
     }}>
       {children}
