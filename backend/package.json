@@ -1,6 +1,6 @@
 {
   "name": "timeboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "main.js",
   "type": "module",
   "scripts": {
@@ -17,6 +17,10 @@
     },
     "files": [
       "**/*",
+      "!data/*.db",
+      "!data/*.db-shm",
+      "!data/*.db-wal",
+      "!data/*.db-journal",
       "../frontend/dist/**/*"
     ],
     "extraResources": [

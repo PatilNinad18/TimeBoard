@@ -7,7 +7,7 @@
     "wait-on": "^9.0.1"
   },
   "name": "timeboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "dependencies": {
     "active-win": "^8.2.1",
