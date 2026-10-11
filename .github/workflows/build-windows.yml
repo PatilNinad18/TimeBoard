@@ -23,6 +23,18 @@ jobs:
         with:
           node-version: 22
 
+      - name: Setup Python for native modules
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Configure Python for node-gyp
+        shell: pwsh
+        run: |
+          "npm_config_python=${{ steps.setup-python.outputs.python-path }}" |
+            Out-File -FilePath $env:GITHUB_ENV -Append
+
       - name: Install root dependencies
         run: npm install
 
