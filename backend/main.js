@@ -2,28 +2,50 @@ import { app, BrowserWindow, Menu, ipcMain } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+
 import logger from "./logger.js";
-import { getTodayUsage }              from "./services/dataAggregator.js";
-import startTracking, { updateDistractingApps, updateProductiveApps } from "./services/appTracker.js";
-import { generateProductivityInsights }         from "./services/aiInsightsService.js";
-import { getTodayProductivityStats }            from "./services/statsService.js";
-import { setProductiveApps, getProductiveApps } from "./services/productivityService.js";
-import { setBlockedApps, getBlockedApps }       from "./services/blockChecker.js";
-import { setSingleAppClassification }           from "./services/classificationService.js";
+import { getTodayUsage } from "./services/dataAggregator.js";
+import startTracking, {
+  updateDistractingApps,
+  updateProductiveApps,
+} from "./services/appTracker.js";
+import { generateProductivityInsights } from "./services/aiInsightsService.js";
+import { getTodayProductivityStats } from "./services/statsService.js";
 import {
-  getAppBreakdown, getTopDistractions,
-  getDailyTrends,  getFocusSessions, getTimeDistribution,
+  setProductiveApps,
+  getProductiveApps,
+} from "./services/productivityService.js";
+import {
+  setBlockedApps,
+  getBlockedApps,
+} from "./services/blockChecker.js";
+import { setSingleAppClassification } from "./services/classificationService.js";
+import {
+  getAppBreakdown,
+  getTopDistractions,
+  getDailyTrends,
+  getFocusSessions,
+  getTimeDistribution,
 } from "./services/analyticsService.js";
-import { getReportSummary, getReportTable, getReportCSV } from "./services/reportsService.js";
+import {
+  getReportSummary,
+  getReportTable,
+  getReportCSV,
+} from "./services/reportsService.js";
 import { getActivitySessions } from "./services/activityService.js";
 import db from "./db/database.js";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
-const isDev      = !app.isPackaged;
+const __dirname = path.dirname(__filename);
+const isDev = !app.isPackaged;
+
 let mainWindow;
 
-// ── Global crash handlers ─────────────────────────────────────────────────
+// Set TEMP_OPEN_DEVTOOLS=true to enable DevTools temporarily.
+// Remove this environment variable after resetting onboarding.
+const openDevTools = process.env.TEMP_OPEN_DEVTOOLS === "true";
+
+// Global crash handlers
 process.on("uncaughtException", (err) => {
   logger.error("Process", "Uncaught exception", err.message);
 });
@@ -32,16 +54,19 @@ process.on("unhandledRejection", (reason) => {
   logger.error("Process", "Unhandled promise rejection", String(reason));
 });
 
-// ── Safe IPC wrapper — every handler gets try/catch + logging ─────────────
+// Safe IPC wrapper
 function safeHandle(channel, handler) {
   ipcMain.handle(channel, async (event, ...args) => {
     try {
-      logger.debug("IPC", `${channel} called`, args.length ? args : undefined);
-      const result = await handler(event, ...args);
-      return result;
+      logger.debug(
+        "IPC",
+        `${channel} called`,
+        args.length ? args : undefined
+      );
+
+      return await handler(event, ...args);
     } catch (err) {
       logger.error("IPC", `${channel} failed: ${err.message}`);
-      // Return a safe fallback instead of crashing the renderer
       return null;
     }
   });
@@ -49,8 +74,11 @@ function safeHandle(channel, handler) {
 
 function createWindow() {
   const preloadPath = path.join(__dirname, "preload.cjs");
-  const windowIcon = path.join(__dirname, "../frontend/src/assets/time-management.png");
-  logger.info("Main", `Creating window | preload exists: ${fs.existsSync(preloadPath)}`);
+
+  logger.info(
+    "Main",
+    `Creating window | preload exists: ${fs.existsSync(preloadPath)}`
+  );
 
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -66,8 +94,9 @@ function createWindow() {
     },
   });
 
+  // Load the correct frontend
   if (isDev) {
-  mainWindow.loadURL("http://localhost:5173");
+    mainWindow.loadURL("http://localhost:5173");
   } else {
     const htmlPath = path.join(
       process.resourcesPath,
@@ -75,9 +104,15 @@ function createWindow() {
       "index.html"
     );
 
-    console.log("Loading:", htmlPath);
+    logger.info("Main", `Loading frontend: ${htmlPath}`);
     mainWindow.loadFile(htmlPath);
-    // mainWindow.webContents.openDevTools();
+  }
+
+  // Temporary debugging: open DevTools after the page loads.
+  if (openDevTools) {
+    mainWindow.webContents.once("did-finish-load", () => {
+      mainWindow.webContents.openDevTools({ mode: "detach" });
+    });
   }
 
   mainWindow.setTitle("TimeBoard");
@@ -85,64 +120,95 @@ function createWindow() {
   mainWindow.removeMenu();
   mainWindow.maximize();
 
-  mainWindow.on("crashed", () => {
-    logger.error("Main", "Window crashed — attempting reload");
-    mainWindow.reload();
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
+
+  mainWindow.webContents.on("render-process-gone", (_event, details) => {
+    logger.error(
+      "Main",
+      `Renderer process terminated: ${details.reason}`
+    );
   });
 }
 
 app.whenReady().then(() => {
   Menu.setApplicationMenu(null);
 
-  // ── Stats ─────────────────────────────────────────────────────────────────
+  // Stats
   safeHandle("get-productive-stats", (_, payload) => {
     const { dateFilter, mode } = payload || {};
-    logger.info("IPC", "get-productive-stats", { dateFilter, mode });
-    return getTodayProductivityStats(dateFilter || null, mode || "single");
+
+    return getTodayProductivityStats(
+      dateFilter || null,
+      mode || "single"
+    );
   });
 
-  safeHandle("get-usage", () => {
-    return getTodayUsage();
-  });
+  safeHandle("get-usage", () => getTodayUsage());
 
-  // ── Analytics ─────────────────────────────────────────────────────────────
+  // Analytics
   safeHandle("get-time-distribution", (_, payload) => {
     const { dateFilter, mode } = payload || {};
-    return getTimeDistribution(dateFilter || null, mode || "single");
+
+    return getTimeDistribution(
+      dateFilter || null,
+      mode || "single"
+    );
   });
 
   safeHandle("get-app-breakdown", (_, payload) => {
     const { dateFilter, mode } = payload || {};
-    return getAppBreakdown(dateFilter || null, mode || "single");
+
+    return getAppBreakdown(
+      dateFilter || null,
+      mode || "single"
+    );
   });
 
   safeHandle("get-top-distractions", (_, payload) => {
     const { dateFilter, mode } = payload || {};
-    return getTopDistractions(dateFilter || null, mode || "single");
+
+    return getTopDistractions(
+      dateFilter || null,
+      mode || "single"
+    );
   });
 
-  safeHandle("get-daily-trends", (_, days) => getDailyTrends(days || 7));
+  safeHandle("get-daily-trends", (_, days) => {
+    return getDailyTrends(days || 7);
+  });
 
   safeHandle("get-focus-sessions", (_, payload) => {
     const { dateFilter, mode } = payload || {};
-    return getFocusSessions(25, dateFilter || null, mode || "single");
+
+    return getFocusSessions(
+      25,
+      dateFilter || null,
+      mode || "single"
+    );
   });
 
+  // Synchronize saved app classifications with the tracker.
   function syncTrackerLists() {
     try {
-      const prod = getProductiveApps();
+      const productive = getProductiveApps();
       const blocked = getBlockedApps();
-      updateProductiveApps(prod);
+
+      updateProductiveApps(productive);
       updateDistractingApps(blocked);
-      logger.info("Main", `Tracker sync — ${prod.length} productive, ${blocked.length} distracting`);
+
+      logger.info(
+        "Main",
+        `Tracker sync — ${productive.length} productive, ${blocked.length} distracting`
+      );
     } catch (err) {
       logger.warn("Main", "Tracker sync error", err.message);
     }
   }
 
-  // ── Settings & Classification ─────────────────────────────────────────────
+  // Settings and classification
   safeHandle("set-productive-apps", (_, apps) => {
-    logger.info("IPC", "set-productive-apps", { count: apps?.length });
     const result = setProductiveApps(apps);
     syncTrackerLists();
     return result;
@@ -151,7 +217,6 @@ app.whenReady().then(() => {
   safeHandle("get-productive-apps", () => getProductiveApps());
 
   safeHandle("set-blocked-apps", (_, apps) => {
-    logger.info("IPC", "set-blocked-apps", { count: apps?.length });
     const result = setBlockedApps(apps);
     syncTrackerLists();
     return result;
@@ -161,23 +226,29 @@ app.whenReady().then(() => {
 
   safeHandle("set-app-classification", (_, payload) => {
     const { appName, category } = payload || {};
-    logger.info("IPC", "set-app-classification", { appName, category });
+
     setSingleAppClassification(appName, category);
     syncTrackerLists();
+
     return { success: true };
   });
 
-  // ── Reports — now paginated ───────────────────────────────────────────────
+  // Reports
   safeHandle("get-report-summary", (_, period) => {
     return getReportSummary(period || "weekly");
   });
 
   safeHandle("get-report-table", (_, payload) => {
-    // payload can be string (legacy) or { period, page, pageSize }
     if (typeof payload === "string") {
       return getReportTable(payload, 1, 10);
     }
-    const { period = "weekly", page = 1, pageSize = 10 } = payload || {};
+
+    const {
+      period = "weekly",
+      page = 1,
+      pageSize = 10,
+    } = payload || {};
+
     return getReportTable(period, page, pageSize);
   });
 
@@ -185,39 +256,50 @@ app.whenReady().then(() => {
     return getReportCSV(period || "weekly");
   });
 
-  // ── Activity ──────────────────────────────────────────────────────────────
+  // Activity
   safeHandle("get-activity-sessions", (_, dateStr) => {
     return getActivitySessions(dateStr || null);
   });
 
-  // ── AI ────────────────────────────────────────────────────────────────────
-  safeHandle("get-ai-insights", () => generateProductivityInsights());
+  // AI
+  safeHandle("get-ai-insights", () => {
+    return generateProductivityInsights();
+  });
 
   logger.info("Main", "All IPC handlers registered");
 
   createWindow();
   startTracking();
-
-  // Sync saved preferences on startup
   syncTrackerLists();
 
-  // Health check every 60s
+  // Health check every 60 seconds
   setInterval(() => {
     try {
       const usage = getTodayUsage();
-      const count = db.prepare("SELECT COUNT(*) as c FROM app_usage").get();
-      logger.info("Health", `${usage.length} apps today | ${count.c} total records`);
+      const count = db
+        .prepare("SELECT COUNT(*) AS c FROM app_usage")
+        .get();
+
+      logger.info(
+        "Health",
+        `${usage.length} apps today | ${count.c} total records`
+      );
     } catch (err) {
       logger.warn("Health", "Check failed", err.message);
     }
   }, 60000);
 
   app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
   });
 });
 
 app.on("window-all-closed", () => {
   logger.info("Main", "All windows closed");
-  if (process.platform !== "darwin") app.quit();
+
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
 });
