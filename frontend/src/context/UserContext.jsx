@@ -14,32 +14,33 @@ export function UserProvider({ children }) {
   };
 
   // Load from database / localStorage on mount
+  
   useEffect(() => {
     async function initUser() {
-      const saved = localStorage.getItem("timeboard_user");
-      if (saved) {
-        try {
+      try {
+        const saved = localStorage.getItem("timeboard_user");
+
+        if (saved) {
           const parsed = JSON.parse(saved);
           setUserName(parsed.userName || "");
-          setOnboarded(parsed.onboarded || false);
-        } catch (e) {
-          console.error("User parsing error:", e);
+          setOnboarded(parsed.onboarded === true);
+          setDistractingApps(parsed.distractingApps || []);
         }
-      }
 
-      if (window.api?.getBlockedApps) {
-        try {
+        if (window.api?.getBlockedApps) {
           const blocked = await window.api.getBlockedApps();
           setDistractingApps(blocked || []);
-        } catch (err) {
-          console.error("UserContext init error:", err);
         }
+      } catch (err) {
+        console.error("[UserContext] Initialization error:", err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
 
     initUser();
   }, []);
+
 
   const saveUser = async (name, distApps) => {
     const data = { userName: name, distractingApps: distApps, onboarded: true };

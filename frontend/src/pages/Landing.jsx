@@ -25,12 +25,21 @@ export default function Landing() {
 
   // Load real tracked apps from backend
   useEffect(() => {
-    if (!window.api) return;
-    window.api.getUsage().then((usage) => {
-      if (usage?.length > 0) {
-        setTrackedApps(usage.map((u) => u.app));
-      }
-    }).catch(() => {});
+    if (!window.api?.getUsage) return;
+
+    window.api.getUsage()
+      .then((usage) => {
+        if (usage?.length > 0) {
+          const apps = usage
+            .map((u) => u.app ?? u.app_name)
+            .filter(Boolean);
+
+          setTrackedApps([...new Set(apps)]);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load tracked apps:", err);
+      });
   }, []);
 
   const appPool = [
