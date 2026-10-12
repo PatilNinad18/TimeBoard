@@ -1,0 +1,56 @@
+
+name: Build TimeBoard for macOS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build:frontend
+
+      - name: Rebuild native modules
+        working-directory: backend
+        run: npx electron-rebuild -f -w better-sqlite3
+
+      - name: Build macOS DMG
+        working-directory: backend
+        run: npm run dist -- --mac dmg --arm64
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TimeBoard-macOS-ARM64
+          path: backend/release/*.dmg
+          if-no-files-found: error
+          retention-days: 14
