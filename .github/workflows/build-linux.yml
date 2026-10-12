@@ -1,0 +1,72 @@
+
+name: Build TimeBoard for Linux
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            libx11-dev \
+            libxkbfile-dev \
+            libsecret-1-dev \
+            libnss3 \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libgtk-3-0 \
+            libgbm-dev \
+            libasound2-dev \
+            rpm
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build:frontend
+
+      - name: Rebuild native modules
+        working-directory: backend
+        run: npx electron-rebuild -f -w better-sqlite3
+
+      - name: Build Linux AppImage
+        working-directory: backend
+        run: npm run dist -- --linux AppImage --x64
+
+      - name: Upload Linux installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TimeBoard-Linux-x64
+          path: backend/release/*.AppImage
+          if-no-files-found: error
+          retention-days: 14
