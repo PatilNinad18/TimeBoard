@@ -30,6 +30,12 @@ export function updateProductiveApps(apps) {
   console.log("[Tracker] Productive apps list updated:", productiveAppNames);
 }
 
+export function resetTrackerSession() {
+  currentSession = null;
+  startTime = Date.now();
+  console.log("[Tracker] Session reset after data deletion");
+}
+
 // Returns local ISO string like "2026-04-18T17:08:32"
 function localISOString(date = new Date()) {
   const pad = (n) => String(n).padStart(2, "0");

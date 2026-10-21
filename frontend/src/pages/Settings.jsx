@@ -24,7 +24,7 @@ export default function Settings() {
   const [accessEnabled, setAccessEnabled]     = useState(false);
   const [dataMgmtEnabled, setDataMgmtEnabled] = useState(false);
   const [toast, setToast]                     = useState(null);
-  const { userName, distractingApps, updateDistractingApps, refreshTrigger } = useUser();
+  const { userName, distractingApps, updateDistractingApps, refreshTrigger, triggerRefresh } = useUser();
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -56,6 +56,8 @@ export default function Settings() {
               };
             })
           );
+        } else {
+          setTrackedApps([]);
         }
       } catch (err) {
         console.error("Settings load error:", err);
@@ -86,14 +88,42 @@ export default function Settings() {
     }
   };
 
-  const handleDeleteToday = () => {
-    if (!window.confirm("Delete today's tracking data?")) return;
-    showToast("Today's data cleared");
+  const handleDeleteToday = async () => {
+    if (!window.confirm("Are you sure you want to delete today's tracking data? This cannot be undone.")) return;
+    try {
+      if (window.api?.deleteTodayData) {
+        const res = await window.api.deleteTodayData();
+        if (res && res.success === false) {
+          showToast("Failed to delete today's data", "error");
+          return;
+        }
+      }
+      setTrackedApps([]);
+      triggerRefresh?.();
+      showToast("Today's data deleted successfully");
+    } catch (err) {
+      console.error("Error deleting today's data:", err);
+      showToast("Failed to delete today's data", "error");
+    }
   };
 
-  const handleClearAll = () => {
-    if (!window.confirm("Reset entire database?")) return;
-    showToast("All data cleared");
+  const handleClearAll = async () => {
+    if (!window.confirm("Are you sure you want to reset the database? All tracking data will be permanently cleared.")) return;
+    try {
+      if (window.api?.clearAllData) {
+        const res = await window.api.clearAllData();
+        if (res && res.success === false) {
+          showToast("Failed to clear database", "error");
+          return;
+        }
+      }
+      setTrackedApps([]);
+      triggerRefresh?.();
+      showToast("All data cleared successfully");
+    } catch (err) {
+      console.error("Error clearing database:", err);
+      showToast("Failed to clear database", "error");
+    }
   };
 
   return (

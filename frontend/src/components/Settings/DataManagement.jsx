@@ -14,10 +14,10 @@ export default function DataManagement({
           <h3 className="card-title">Data Management</h3>
           <p className="card-subtitle">Version: {version}</p>
         </div>
-        <label className="small-toggle">
+        {/* <label className="small-toggle">
           <input type="checkbox" checked={enabled} onChange={(e) => onToggle?.(e.target.checked)} />
           <span className="small-toggle-track" />
-        </label>
+        </label> */}
       </div>
 
       <div className="data-actions">

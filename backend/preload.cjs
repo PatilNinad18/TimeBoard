@@ -72,6 +72,10 @@ try {
 
     // AI
     getAIInsights: () => safeInvoke("get-ai-insights"),
+
+    // Data Management
+    deleteTodayData: () => safeInvoke("delete-today-data"),
+    clearAllData:    () => safeInvoke("clear-all-data"),
   });
 
   console.log("✅ All APIs exposed to window.api");

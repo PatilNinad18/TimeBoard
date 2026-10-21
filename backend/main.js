@@ -33,6 +33,7 @@ import {
   getReportCSV,
 } from "./services/reportsService.js";
 import { getActivitySessions } from "./services/activityService.js";
+import { deleteTodayData, clearAllData } from "./services/dataCleanup.js";
 import db from "./db/database.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -264,6 +265,15 @@ app.whenReady().then(() => {
   // AI
   safeHandle("get-ai-insights", () => {
     return generateProductivityInsights();
+  });
+
+  // Data management
+  safeHandle("delete-today-data", () => {
+    return deleteTodayData();
+  });
+
+  safeHandle("clear-all-data", () => {
+    return clearAllData();
   });
 
   logger.info("Main", "All IPC handlers registered");
