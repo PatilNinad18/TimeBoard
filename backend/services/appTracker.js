@@ -254,7 +254,8 @@ async function trackActiveApp() {
 
     // First detection — start tracking, nothing to save yet
     if (!currentSession) {
-      currentSession = { name: appName, title: windowTitle, domain: null, isIdle: false };
+      const initDomain = extractDomain(appName, windowTitle);
+      currentSession = { name: appName, title: windowTitle, domain: initDomain, isIdle: false };
       startTime      = Date.now();
       return;
     }
@@ -278,7 +279,8 @@ async function trackActiveApp() {
         false
       );
 
-      currentSession = { name: appName, title: windowTitle, domain: null, isIdle: false };
+      const nextDomain = extractDomain(appName, windowTitle);
+      currentSession = { name: appName, title: windowTitle, domain: nextDomain, isIdle: false };
       startTime      = Date.now();
     }
 

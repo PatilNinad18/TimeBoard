@@ -1,21 +1,44 @@
 import { isProductiveApp } from "./productivityService.js";
+import { isBlocked } from "./blockChecker.js";
 
-export function classifyApp(appName, domain){
+const DEFAULT_PRODUCTIVE_DOMAINS = [
+  "leetcode",
+  "github",
+  "gitlab",
+  "stackoverflow",
+  "stackexchange",
+  "geeksforgeeks",
+  "codeforces",
+  "hackerrank",
+  "coursera",
+  "udemy",
+  "edx",
+  "khanacademy",
+  "w3schools",
+  "developer.mozilla",
+  "docs.google",
+  "sheets.google",
+  "notion",
+  "overleaf",
+  "kaggle",
+];
 
-    if(isProductiveApp(appName)){
-        return 1;
-    }
-
-    if(domain) {
-        const productiveDomains = ["leetcode", "github", "stackoverflow"];
-
-        if(productiveDomains.some(d => domain.toLowerCase().includes(d))){
-            return 1;
-        }
-    }
-
-    // Everthing else  = distracting
-
+export function classifyApp(appName, domain) {
+  if (isBlocked(appName)) {
     return 0;
+  }
 
+  if (isProductiveApp(appName)) {
+    return 1;
+  }
+
+  if (domain) {
+    const domainLower = domain.toLowerCase();
+    if (DEFAULT_PRODUCTIVE_DOMAINS.some((d) => domainLower.includes(d))) {
+      return 1;
+    }
+  }
+
+  // Everything else = distracting
+  return 0;
 }
