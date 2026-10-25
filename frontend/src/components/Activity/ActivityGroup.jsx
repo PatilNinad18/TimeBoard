@@ -3,11 +3,7 @@ import { Clock } from "lucide-react";
 import ActivityItem from "./ActivityItem";
 
 export default function ActivityGroup({ group, showIdleDetails = false }) {
-  const { timeLabel, items, totalMinutes } = group;
-
-  const hours = Math.floor(totalMinutes / 60);
-  const mins  = totalMinutes % 60;
-  const totalStr = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+  const { timeLabel, items } = group;
 
   // Get the time range of actual activities in this group
   const firstItemTime = items[0]?.exactTime || '';
@@ -24,7 +20,6 @@ export default function ActivityGroup({ group, showIdleDetails = false }) {
           <Clock size={13} className="group-clock-icon" />
           <span className="group-time-label">{timeRange}</span>
         </div>
-        <span className="group-total">{totalStr} total</span>
       </div>
 
       {/* Items */}

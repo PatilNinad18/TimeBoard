@@ -32,4 +32,5 @@ logs/
 backend/data/
 *.db
 *.db-shm
-*.db-wal
+*.db-wallogs/ 
+logs/ 
